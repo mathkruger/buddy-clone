@@ -1,0 +1,17 @@
+<%- include('partials/head') %>
+
+  <%- include('partials/site-header') %>
+
+  <main class="favorites-page">
+    <section class="favorites-card">
+      <h1>My favorites</h1>
+      <p class="login-sub" id="favorites-owner"></p>
+      <div id="favorites-status" class="form-error" role="status"></div>
+      <div id="favorites-list" class="favorites-list"></div>
+    </section>
+  </main>
+
+  <%- include('partials/clouds') %>
+  <%- include('partials/footer') %>
+  <script type="module" src="/favorites.js"></script>
+  <%- include('partials/foot') %>

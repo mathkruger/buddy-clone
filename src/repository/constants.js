@@ -1,0 +1,2 @@
+export const INTERACTION_LIMIT = 50;
+export const MAX_INTERACTION_TYPES = 64;

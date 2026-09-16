@@ -1,0 +1,7 @@
+node_modules/
+data.json
+data.db
+*.tmp
+tests/.smoke/
+.playwright-mcp/
+.vscode/

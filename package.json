@@ -1,0 +1,20 @@
+{
+  "name": "buddy-clone",
+  "version": "1.0.0",
+  "description": "Buddy Poke era avatar, mood and interaction clone with original art",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3"
+  }
+}

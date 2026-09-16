@@ -1,0 +1,88 @@
+import express from "express";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { Store } from "./repository/store.js";
+import { securityHeaders } from "./middleware/security-headers.js";
+import { attachUser } from "./middleware/auth.js";
+import { authService } from "./services/auth-service.js";
+import { profileService } from "./services/profile-service.js";
+import { interactionService } from "./services/interaction-service.js";
+import { favoritesService } from "./services/favorites-service.js";
+import { searchService } from "./services/search-service.js";
+import { pageService } from "./services/page-service.js";
+import { authRouter } from "./routes/auth.js";
+import { profilesRouter } from "./routes/profiles.js";
+import { favoritesRouter } from "./routes/favorites.js";
+import { searchRouter } from "./routes/search.js";
+import { pagesRouter } from "./routes/pages.js";
+
+const SRC_DIR = path.dirname(fileURLToPath(import.meta.url));
+const PORT = process.env.PORT || 3000;
+const DB_PATH = process.env.DB_PATH || path.join(SRC_DIR, "..", "data.db");
+const DATA_FILE = process.env.DATA_FILE || path.join(SRC_DIR, "..", "data.json");
+const STORAGE_PROVIDER = process.env.STORAGE_PROVIDER || "sqlite";
+const PUBLIC_DIR = path.join(SRC_DIR, "public");
+
+const DEV_JWT_SECRET = "buddy-clone-development-secret-change-before-deploying";
+const DEFAULT_JWT_EXPIRES = "7d";
+export const AUTH_COOKIE = "buddy_token";
+
+export function authConfig() {
+  const secret = process.env.JWT_SECRET || DEV_JWT_SECRET;
+  if (!process.env.JWT_SECRET) {
+    console.warn(
+      "WARNING: JWT_SECRET is not set — using an insecure development fallback. Set JWT_SECRET in production."
+    );
+  }
+  return {
+    cookieName: AUTH_COOKIE,
+    secret,
+    expires: process.env.JWT_EXPIRES || DEFAULT_JWT_EXPIRES,
+    cookieSecure: process.env.NODE_ENV === "production"
+  };
+}
+
+export function createApp(store) {
+  const config = authConfig();
+  const auth = authService(store, config);
+  const services = {
+    auth,
+    profile: profileService(store, auth),
+    interaction: interactionService(store),
+    favorites: favoritesService(store),
+    search: searchService(store),
+    pages: pageService(store)
+  };
+
+  const app = express();
+  app.set("views", path.join(SRC_DIR, "views"));
+  app.set("view engine", "ejs");
+  app.use(securityHeaders());
+  app.use(express.json({ limit: "64kb" }));
+  app.use(attachUser(config));
+
+  app.use(authRouter(store, services, config));
+  app.use(profilesRouter(store, services, config));
+  app.use(favoritesRouter(store, services));
+  app.use(searchRouter(store, services));
+
+  app.use(express.static(PUBLIC_DIR));
+
+  app.use(pagesRouter(store, services));
+
+  return app;
+}
+
+if (process.argv[1] && import.meta.url === `file://${path.resolve(process.argv[1])}`) {
+  const store = new Store({
+    path: DB_PATH,
+    dataFile: DATA_FILE,
+    provider: STORAGE_PROVIDER
+  });
+  const app = createApp(store);
+  store.init().then(() => {
+    app.listen(PORT, () => {
+      console.log(`buddy-clone listening on http://localhost:${PORT}`);
+    });
+  });
+}

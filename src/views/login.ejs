@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+
+  <%- include('partials/site-header') %>
+
+  <main class="login-page">
+    <section class="login-card">
+      <h1>Find your buddy</h1>
+      <p class="login-sub">
+        Enter your username and password to hop back onto your own buddy.
+      </p>
+      <form id="login-form" class="login-form" novalidate>
+        <label for="login-username">Your username</label>
+        <input id="login-username" name="username" type="text" maxlength="24"
+               placeholder="e.g. bunny" autocomplete="username" spellcheck="false">
+        <label for="login-password">Your password</label>
+        <input id="login-password" name="password" type="password" maxlength="200"
+               placeholder="••••••••" autocomplete="current-password">
+        <button type="submit" class="primary">Take me to my buddy</button>
+      </form>
+      <p id="login-error" class="form-error" role="alert"></p>
+      <p class="login-alternate"><a href="/create">Forgot your buddy? Create a new one.</a></p>
+    </section>
+  </main>
+
+  <%- include('partials/clouds') %>
+  <%- include('partials/footer') %>
+  <script type="module" src="/login.js"></script>
+  <%- include('partials/foot') %>
