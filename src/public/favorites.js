@@ -1,9 +1,11 @@
 import { BuddySession } from "./session.js";
-import { renderAvatar } from "./avatar.js";
+import { mountWhenVisible } from "./buddy-3d.js";
 
 const ownerEl = document.getElementById("favorites-owner");
 const statusEl = document.getElementById("favorites-status");
 const listEl = document.getElementById("favorites-list");
+
+const watchers = [];
 
 async function boot() {
   await BuddySession.ready();
@@ -17,8 +19,14 @@ async function boot() {
   await load();
 }
 
+function disposeWatchers() {
+  for (const watcher of watchers) watcher.dispose();
+  watchers.length = 0;
+}
+
 async function load() {
   const username = BuddySession.currentUser;
+  disposeWatchers();
   statusEl.textContent = "";
   listEl.textContent = "";
 
@@ -62,7 +70,13 @@ function renderFavorite(favorite, username) {
   const avatar = document.createElement("div");
   avatar.className = "avatar-frame favorite-avatar";
   avatar.setAttribute("aria-hidden", "true");
-  avatar.innerHTML = renderAvatar(favorite.avatarDef, favorite.mood);
+  watchers.push(
+    mountWhenVisible(avatar, {
+      composition: favorite.avatarDef,
+      mood: favorite.mood,
+      label: `${favorite.username}'s avatar`
+    })
+  );
 
   const name = document.createElement("span");
   name.className = "search-name";

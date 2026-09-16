@@ -1,54 +1,60 @@
 // Interaction catalog and trigger playback.
 //
-// Each interaction is an original, self-contained SVG+CSS sequence staged as a
-// three-part scene: the current viewer's buddy (sender) on the left, the
-// effect in the middle, and the target's buddy on the right. The sender avatar
-// is resolved from the viewer's server-side profile on first render (cached per
-// page), falling back to a saved snapshot, then the guest avatar. The header
-// avatar stays static; the target reaction plays inside the stage. Last-played
-// animations can be replayed locally without a POST. Identity is resolved
+// Each interaction is staged as a three-part scene: the current viewer's buddy
+// (sender) on the left, the effect in the middle, and the target's buddy on the
+// right. The sender avatar is resolved from the viewer's server-side profile on
+// first render (cached per page), falling back to a saved snapshot, then the
+// guest avatar. Sender entrances (fly-in etc.) stay procedural whole-object
+// motion (`sender`); once it lands, both avatars play their mapped skeletal
+// animations from the vendored subset (`senderAnim`/`targetAnim`). Last-played
+// interactions can be replayed locally without a POST. Identity is resolved
 // server-side from the session cookie, not from anything the browser sends.
 
-import { renderAvatar } from "./avatar.js";
+import { mountAvatar } from "./buddy-3d.js";
 
 const CATALOG = {
   poke: {
     label: "Poke",
-    target: "react-bounce",
+    senderAnim: "poke1",
+    targetAnim: "poke2",
     sender: "sender-fly-tap",
     effect: "fx-poke"
   },
   hug: {
     label: "Hug",
-    target: "react-squeeze",
+    senderAnim: "hug1",
+    targetAnim: "hug2",
     sender: "sender-glide",
     effect: "fx-hug"
   },
   highfive: {
     label: "High-five",
-    target: "react-pop",
+    senderAnim: "gimmeFive1",
+    targetAnim: "highTen1",
     sender: "sender-rise",
     effect: "fx-highfive"
   },
   kiss: {
     label: "Kiss",
-    target: "react-blush",
+    senderAnim: "kiss1",
+    targetAnim: "kiss2",
     sender: "sender-drift",
     effect: "fx-kiss"
   },
   dance: {
     label: "Dance",
-    target: "react-dance",
+    senderAnim: "jamA1",
+    targetAnim: "jamB1",
     sender: "sender-boogie",
     effect: "fx-dance"
   }
 };
 
 const GUEST_AVATAR = {
-  head: "squircle",
-  eyes: "happy",
-  mouth: "tongue",
-  accessory: "beanie",
+  head: "Hair_Simple_Twiggy",
+  eyes: "Eyes_Lake",
+  mouth: "smile",
+  accessory: "beard",
   colors: {
     skin: "#f6b98b",
     shirt: "#8fd3ff",
@@ -57,7 +63,6 @@ const GUEST_AVATAR = {
   }
 };
 
-const DURATION = 1600;
 const PAUSE_BEFORE = 220;
 
 const EFFECTS = {
@@ -123,7 +128,9 @@ async function loadSenderAvatar() {
 }
 
 // Render the three-part scene into #interaction-stage: sender | effect | target.
-function buildStage(targetProfile, sender, type) {
+// The avatars are mounted through the 3D renderer; the returned controllers
+// drive the sender entrance and the target reaction.
+async function buildStage(targetProfile, sender, type) {
   const stage = document.getElementById("interaction-stage");
   stage.classList.add("interaction-stage", "animated");
   stage.innerHTML = "";
@@ -132,7 +139,12 @@ function buildStage(targetProfile, sender, type) {
 
   const senderCol = document.createElement("div");
   senderCol.className = "stage-sender";
-  senderCol.innerHTML = renderAvatar(sender.avatarDef, sender.mood);
+
+  const senderCtl = await mountAvatar(senderCol, {
+    composition: sender.avatarDef,
+    mood: sender.mood,
+    label: `you`
+  });
 
   const fx = document.createElement("div");
   fx.className = `stage-fx ${entry.effect}`;
@@ -140,20 +152,21 @@ function buildStage(targetProfile, sender, type) {
 
   const targetCol = document.createElement("div");
   targetCol.className = "stage-target";
-  targetCol.innerHTML = renderAvatar(targetProfile.avatarDef, targetProfile.mood);
+
+  const targetCtl = await mountAvatar(targetCol, {
+    composition: targetProfile.avatarDef,
+    mood: targetProfile.mood,
+    label: targetProfile.username
+  });
 
   stage.append(senderCol, fx, targetCol);
-  return stage;
+  requestAnimationFrame(() => fx.classList.add("go"));
+  return { stage, senderCtl, targetCtl };
 }
 
-function clearTargetReaction(stage) {
-  const target = stage && stage.querySelector(".stage-target");
-  if (!target) return;
-  for (const name of Array.from(target.classList)) {
-    if (name === "reacting" || name.startsWith("react-")) target.classList.remove(name);
-  }
-  target.classList.remove("react-holder");
-}
+// Tracks the controllers currently living inside the stage so teardown can
+// stop their render loops before wiping the DOM.
+let stageControllers = [];
 
 // The interaction (type / effect) played most recently; set only after a
 // successful POST. Replay plays it again locally without sending anything.
@@ -164,29 +177,40 @@ async function play(type) {
   const entry = CATALOG[type];
   if (!entry) return;
 
-  // Restart cleanly if something is still playing: tear down and re-run.
+  // Restart cleanly if something is still playing: tear down and re-run so
+  // rapid replay never leaves a stuck stage or a leaked render loop.
   stage.classList.remove("interaction-stage", "animated");
   stage.innerHTML = "";
-  clearTargetReaction(stage);
-
-  void stage.offsetWidth; // reflow so repeat triggers restart
+  for (const ctl of stageControllers) {
+    if (ctl && ctl.destroy) ctl.destroy();
+  }
+  stageControllers = [];
 
   const sender = await loadSenderAvatar();
-  const frame = buildStage(window.BuddyProfile.profile, sender, type);
+  const { senderCtl, targetCtl } = await buildStage(window.BuddyProfile.profile, sender, type);
+  const local = [senderCtl, targetCtl];
+  stageControllers = local;
 
-  // Play entrance + effect, then make the target react a beat later.
-  requestAnimationFrame(() => {
-    frame.querySelector(".stage-sender").classList.add(entry.sender);
-    frame.querySelector(".stage-fx").classList.add("go");
-    const target = frame.querySelector(".stage-target");
-    target.classList.add("react-holder", "reacting", entry.target);
+  // Sender entrance stays procedural; once it lands, the sender plays its
+  // skeletal animation. The target plays its skeletal animation a beat later.
+  const senderDone = senderCtl && senderCtl.play
+    ? senderCtl.play(entry.sender).then(() => (senderCtl.play ? senderCtl.play(entry.senderAnim) : Promise.resolve()))
+    : Promise.resolve();
+  const targetDone = new Promise((resolve) => {
+    window.setTimeout(() => resolve(targetCtl && targetCtl.play ? targetCtl.play(entry.targetAnim) : Promise.resolve()), PAUSE_BEFORE);
+  }).then((p) => p || Promise.resolve());
+
+  // Tear the stage down once both animations have run their course. Replay
+  // reassigns `stageControllers`, so a stale completion never clears a fresh stage.
+  Promise.all([senderDone, targetDone]).then(() => {
+    if (stageControllers !== local) return;
+    for (const ctl of local) {
+      if (ctl && ctl.destroy) ctl.destroy();
+    }
+    stageControllers = [];
+    stage.classList.remove("interaction-stage", "animated");
+    stage.innerHTML = "";
   });
-
-  window.clearTimeout(play._timer);
-  play._timer = window.setTimeout(() => {
-    frame.classList.remove("interaction-stage", "animated");
-    frame.innerHTML = "";
-  }, PAUSE_BEFORE + DURATION);
 
   // Keep a trace for tests: no page reload happened.
   window.played = type;

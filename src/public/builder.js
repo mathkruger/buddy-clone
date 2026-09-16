@@ -1,10 +1,6 @@
-import {
-  renderAvatar,
-  renderPartSnippet,
-  AVATAR_PARTS,
-  PALETTES,
-  defaultComposition
-} from "./avatar.js";
+import { AVATAR_PARTS, PALETTES, defaultComposition } from "./avatar.js";
+import { renderPartThumb } from "./buddy-thumbs.js";
+import { mountAvatar } from "./buddy-3d.js";
 import { MOODS } from "./moods.js";
 
 const USERNAME_RE = /^[a-zA-Z0-9_-]{1,24}$/;
@@ -26,9 +22,27 @@ const successEl = document.getElementById("save-success");
 const profileLink = document.getElementById("profile-link");
 const moodNameEl = document.getElementById("builder-mood-name");
 
+let previewController = null;
+let previewToken = 0;
+
 function renderPreview() {
   const moodM = MOODS[state.mood] || {};
-  preview.innerHTML = renderAvatar(state.composition, state.mood);
+  const token = ++previewToken;
+  if (previewController) {
+    previewController.destroy();
+    previewController = null;
+  }
+  mountAvatar(preview, {
+    composition: state.composition,
+    mood: state.mood,
+    label: "Live avatar preview"
+  }).then((ctl) => {
+    if (token !== previewToken) {
+      if (ctl && ctl.destroy) ctl.destroy();
+      return;
+    }
+    previewController = ctl;
+  });
   const moodLabel = moodM.label ? moodM.label.toLowerCase() : state.mood;
   moodNameEl.textContent = `feeling ${moodLabel}`;
 }
@@ -64,7 +78,7 @@ function buildPickers() {
       btn.dataset.option = option;
       btn.title = option;
       btn.setAttribute("aria-pressed", "false");
-      btn.innerHTML = renderPartSnippet(category, option);
+      renderPartThumb(btn, category, option);
       btn.addEventListener("click", () => setSelection(category, option));
       row.appendChild(btn);
     }

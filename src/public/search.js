@@ -1,9 +1,11 @@
-import { renderAvatar } from "./avatar.js";
+import { mountWhenVisible } from "./buddy-3d.js";
 
 const form = document.getElementById("search-form");
 const input = document.getElementById("search-query");
 const statusEl = document.getElementById("search-status");
 const resultsEl = document.getElementById("search-results");
+
+const watchers = [];
 
 form.addEventListener("submit", onSearch);
 
@@ -35,7 +37,13 @@ async function onSearch(event) {
   renderResults(data.results || [], query);
 }
 
+function disposeWatchers() {
+  for (const watcher of watchers) watcher.dispose();
+  watchers.length = 0;
+}
+
 function renderResults(results, query) {
+  disposeWatchers();
   resultsEl.textContent = "";
   if (results.length === 0) {
     const empty = document.createElement("p");
@@ -53,7 +61,13 @@ function renderResults(results, query) {
     const avatar = document.createElement("div");
     avatar.className = "avatar-frame search-avatar";
     avatar.setAttribute("aria-hidden", "true");
-    avatar.innerHTML = renderAvatar(result.avatarDef, result.mood);
+    watchers.push(
+      mountWhenVisible(avatar, {
+        composition: result.avatarDef,
+        mood: result.mood,
+        label: `${result.username}'s avatar`
+      })
+    );
 
     const name = document.createElement("span");
     name.className = "search-name";

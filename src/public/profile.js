@@ -1,4 +1,6 @@
-import { renderAvatar, renderPartSnippet, AVATAR_PARTS, PALETTES, defaultComposition } from "./avatar.js";
+import { AVATAR_PARTS, PALETTES, defaultComposition } from "./avatar.js";
+import { renderPartThumb } from "./buddy-thumbs.js";
+import { mountAvatar } from "./buddy-3d.js";
 import { MOODS, MOOD_ORDER, DEFAULT_MOOD } from "./moods.js";
 import { BuddySession } from "./session.js";
 
@@ -50,9 +52,35 @@ export const BuddyProfile = {
   }
 };
 
+let avatarController = null;
+let avatarToken = 0;
+
+function mountProfileAvatar(p) {
+  const token = ++avatarToken;
+  if (avatarController) {
+    avatarController.destroy();
+    avatarController = null;
+  }
+  mountAvatar(els.avatar, {
+    composition: p.avatarDef,
+    mood: p.mood,
+    label: `${p.username}'s avatar`
+  }).then((ctl) => {
+    if (token !== avatarToken) {
+      if (ctl && ctl.destroy) ctl.destroy();
+      return;
+    }
+    avatarController = ctl;
+  });
+}
+
 function render() {
   const p = BuddyProfile.profile;
   if (!p) {
+    if (avatarController) {
+      avatarController.destroy();
+      avatarController = null;
+    }
     root.hidden = true;
     notFoundEl.hidden = false;
     return;
@@ -60,7 +88,7 @@ function render() {
   root.hidden = false;
   notFoundEl.hidden = true;
 
-  els.avatar.innerHTML = renderAvatar(p.avatarDef, p.mood);
+  mountProfileAvatar(p);
   els.username.textContent = p.username;
   els.mood.textContent = (MOODS[p.mood] && MOODS[p.mood].label) || p.mood;
   els.created.textContent = `buddy since ${new Date(p.createdAt).toLocaleDateString()}`;
@@ -373,7 +401,7 @@ function buildProfilePickers(state, container) {
       btn.dataset.picker = category;
       btn.dataset.option = option;
       btn.title = option;
-      btn.innerHTML = renderPartSnippet(category, option);
+      renderPartThumb(btn, category, option);
       if (option === state.composition[category]) btn.classList.add("selected");
       btn.addEventListener("click", () => {
         state.composition[category] = option;

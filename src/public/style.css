@@ -254,7 +254,8 @@ a { color: var(--candy-dark); }
   border: 2px solid var(--candy);
 }
 
-.search-avatar svg { width: 100%; height: 100%; display: block; }
+.search-avatar svg,
+.search-avatar canvas { width: 100%; height: 100%; display: block; }
 
 .search-name { font-weight: 800; font-size: 14px; }
 
@@ -307,7 +308,8 @@ a { color: var(--candy-dark); }
   overflow: hidden;
 }
 
-.favorite-avatar svg { width: 100%; height: 100%; display: block; }
+.favorite-avatar svg,
+.favorite-avatar canvas { width: 100%; height: 100%; display: block; }
 
 /* ---------- profile favorite toggle ---------- */
 
@@ -365,10 +367,29 @@ a { color: var(--candy-dark); }
   justify-content: center;
 }
 
-.avatar-frame svg {
+.avatar-frame svg,
+.avatar-frame canvas {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+/* fallback message shown when WebGL is unavailable or the model fails */
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  padding: 14px;
+  box-sizing: border-box;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.4;
+  background: var(--cream);
 }
 
 .mood-name {
@@ -430,6 +451,14 @@ a { color: var(--candy-dark); }
 }
 
 .part-btn svg { width: 100%; height: 100%; display: block; }
+
+.part-btn img,
+.part-btn canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+}
 
 .part-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 
@@ -612,9 +641,11 @@ button.primary:disabled { opacity: 0.6; cursor: wait; }
 .profile-avatar {
   width: 170px;
   flex: 0 0 170px;
+  aspect-ratio: 200 / 220;
 }
 
-.profile-avatar svg { width: 100%; height: auto; display: block; }
+.profile-avatar svg,
+.profile-avatar canvas { width: 100%; height: auto; display: block; }
 
 .profile-title { flex: 1 1 220px; }
 
@@ -875,7 +906,9 @@ button.primary:disabled { opacity: 0.6; cursor: wait; }
 }
 
 .stage-sender svg,
-.stage-target svg {
+.stage-sender canvas,
+.stage-target svg,
+.stage-target canvas {
   width: 100%;
   height: auto;
   display: block;
@@ -906,88 +939,8 @@ button.primary:disabled { opacity: 0.6; cursor: wait; }
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* sender entrance: lunges toward the centre, then settles back into its column */
-.sender-fly-tap { animation: kfsenderTap 1.3s ease-in-out both; }
-.sender-glide { animation: kfsenderGlide 1.3s ease-in-out both; }
-.sender-rise { animation: kfsenderRise 1.3s ease-in-out both; }
-.sender-drift { animation: kfsenderDrift 1.3s ease-in-out both; }
-.sender-boogie { animation: kfsenderBoogie 1.3s ease-in-out both; }
-
-@keyframes kfsenderTap {
-  0% { transform: translate(0, 6px) scale(0.9); opacity: 0; }
-  35% { transform: translate(52px, -16px) scale(1.08); opacity: 1; }
-  55% { transform: translate(44px, -4px) scale(1); }
-  75% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(0, 0) scale(1); opacity: 1; }
-}
-
-@keyframes kfsenderGlide {
-  0% { transform: translate(-14px, 0) scale(0.92); opacity: 0; }
-  45% { transform: translate(50px, -8px) scale(1.05); opacity: 1; }
-  100% { transform: translate(0, 0) scale(1); opacity: 1; }
-}
-
-@keyframes kfsenderRise {
-  0% { transform: translate(4px, 26px) scale(0.9); opacity: 0; }
-  40% { transform: translate(40px, -10px) scale(1.08); opacity: 1; }
-  100% { transform: translate(0, 0) scale(1); opacity: 1; }
-}
-
-@keyframes kfsenderDrift {
-  0% { transform: translate(6px, 14px) scale(0.92) rotate(-4deg); opacity: 0; }
-  50% { transform: translate(56px, -6px) scale(1.06) rotate(3deg); opacity: 1; }
-  100% { transform: translate(0, 0) scale(1) rotate(0); opacity: 1; }
-}
-
-@keyframes kfsenderBoogie {
-  0% { transform: translate(0, 4px) scale(0.92); opacity: 0; }
-  20% { transform: translate(46px, -8px) scale(1.06) rotate(-4deg); opacity: 1; }
-  45% { transform: translate(54px, 0) scale(1.02) rotate(5deg); }
-  70% { transform: translate(0, 0) scale(1) rotate(0); }
-  100% { transform: translate(0, 0) scale(1); opacity: 1; }
-}
-
-/* target reaction plays inside the stage target column */
-.stage-target.react-holder.reacting { animation-duration: 0.9s; animation-timing-function: ease-in-out; }
-
-.stage-target.react-holder.react-bounce { animation-name: kfbounce; transform-origin: bottom center; }
-.stage-target.react-holder.react-squeeze { animation-name: kfsqueeze; transform-origin: bottom center; }
-.stage-target.react-holder.react-pop { animation-name: kfpop; transform-origin: bottom center; }
-.stage-target.react-holder.react-blush { animation-name: kfblush; transform-origin: center; }
-.stage-target.react-holder.react-dance { animation-name: kfdance; transform-origin: bottom center; }
-
-@keyframes kfbounce {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  30% { transform: translateY(-18px) rotate(-4deg); }
-  55% { transform: translateY(0) rotate(3deg); }
-  75% { transform: translateY(-9px) rotate(-2deg); }
-}
-
-@keyframes kfsqueeze {
-  0%, 100% { transform: scale(1, 1); }
-  40% { transform: scale(1.08, 0.86); }
-  65% { transform: scale(0.92, 1.1); }
-}
-
-@keyframes kfpop {
-  0%, 100% { transform: translateY(0) scale(1); }
-  35% { transform: translateY(-14px) scale(1.08); }
-  55% { transform: translateY(2px) scale(0.96); }
-}
-
-@keyframes kfblush {
-  0%, 100% { transform: rotate(0); }
-  40% { transform: rotate(-6deg); }
-  70% { transform: rotate(4deg); }
-}
-
-@keyframes kfdance {
-  0%, 100% { transform: rotate(0) translateY(0); }
-  20% { transform: rotate(-9deg) translateY(-8px); }
-  40% { transform: rotate(8deg) translateY(-6px); }
-  60% { transform: rotate(-7deg) translateY(-10px); }
-  80% { transform: rotate(7deg) translateY(-4px); }
-}
+/* sender entrance and target reaction are driven by the 3D renderer's motion
+   controller (buddy-3d.js), keyed to the same class names used below */
 
 /* self-poke note (owners) */
 .self-poke-note {
@@ -1048,15 +1001,7 @@ button.primary:active,
 .page-profile .profile-card { animation: kfpopIn 0.5s ease-out both; }
 
 /* gentle idle sway on rendered avatars (recipient reactions live on
-   the wrapper div, so this never fights the interaction keyframes) */
-.page-profile .profile-avatar svg,
-.page-embed .avatar-frame svg { animation: kfidle 5s ease-in-out infinite; }
-
-@keyframes kfidle {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-4px) rotate(0.6deg); }
-}
-
+   the 3D renderer's motion controller, so this never fights it) */
 /* crisp, visible focus rings */
 :focus-visible { outline: 3px solid var(--candy-dark); outline-offset: 2px; border-radius: 4px; }
 
@@ -1073,7 +1018,8 @@ button.primary:active,
 
 .site-foot .foot-heart { color: var(--candy-dark); }
 
-/* calm motion down for folks who prefer that */
+/* calm motion down for folks who prefer that (the 3D renderer reads
+   prefers-reduced-motion itself and pauses its idle loop) */
 @media (prefers-reduced-motion: reduce) {
   .cloud,
   .page-home .landing .hero,
@@ -1082,7 +1028,9 @@ button.primary:active,
   .page-create .save-form,
   .page-profile .profile-card,
   .page-profile .profile-avatar svg,
+  .profile-avatar canvas,
   .page-embed .avatar-frame svg,
+  .avatar-frame canvas,
   .stage-sender, .stage-target, .stage-fx { animation: none !important; }
   * { transition: none !important; }
 }

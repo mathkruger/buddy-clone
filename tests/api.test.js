@@ -616,3 +616,40 @@ describe("pages", () => {
     }
   });
 });
+
+describe("3D renderer assets", () => {
+  const ASSETS = [
+    ["/buddy-3d.js", "js"],
+    ["/vendor/three/three.module.js", "js"],
+  ];
+
+  for (const [url, kind] of ASSETS) {
+    test(`serves ${url} with HTTP 200`, async () => {
+      const res = await fetch(`${baseUrl}${url}`);
+      assert.equal(res.status, 200);
+      const body = await res.arrayBuffer();
+      assert.ok(body.byteLength > 0, `${url} should not be empty`);
+    });
+  }
+
+  test("every page body includes the three import map", async () => {
+    for (const page of ["/", "/create", "/login"]) {
+      const res = await fetch(`${baseUrl}${page}`);
+      assert.equal(res.status, 200);
+      const html = await res.text();
+      assert.match(
+        html,
+        /<script type="importmap">[\s\S]*"three"\s*:\s*"\/vendor\/three\/three\.module\.js"/,
+        `${page} should include the import map`
+      );
+    }
+  });
+
+  test("buddy-3d.js is an ES module importing three", async () => {
+    const res = await fetch(`${baseUrl}/buddy-3d.js`);
+    const code = await res.text();
+    assert.match(code, /from "three"/);
+    assert.match(code, /export async function mountAvatar/);
+    assert.match(code, /export function mountWhenVisible|export async function mountWhenVisible/);
+  });
+});
