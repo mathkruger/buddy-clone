@@ -397,30 +397,34 @@ function isShaveMesh(mesh) {
 // Ported material selector (site `LS`). Atlas textures are provided by the
 // renderer-facing helpers; when absent we fall back to the debug color so the
 // object still renders correctly-sized for bind-pose verification.
+// NOTE: reference site renders every surface `DoubleSide` (bundle enum `_t=2`).
+// The source meshes are open shells wound toward the front, so a single-sided
+// material would cull the head's back faces, making it see-through and showing
+// the mirrored interior. DoubleSide matches the reference exactly.
 function buildMaterial(mesh, opts) {
   if (opts.materialMode === "skinWeights" && mesh.modifier) {
     return new THREE.MeshStandardMaterial({
       vertexColors: true,
       roughness: 0.72,
       metalness: 0,
-      side: THREE.FrontSide,
+      side: THREE.DoubleSide,
     });
   }
   if (opts.materialMode === "final" && mesh.material?.url) {
     const base = mesh.material.url.split("/").pop() ?? mesh.material.url;
     if (isBodyMesh(mesh) && opts.bodyAtlasTexture) {
-      return new THREE.MeshStandardMaterial({ map: opts.bodyAtlasTexture, roughness: 0.86, metalness: 0, side: THREE.FrontSide });
+      return new THREE.MeshStandardMaterial({ map: opts.bodyAtlasTexture, roughness: 0.86, metalness: 0, side: THREE.DoubleSide });
     }
     if (isFaceMesh(mesh) && opts.faceAtlasTexture) {
-      return new THREE.MeshStandardMaterial({ map: opts.faceAtlasTexture, roughness: 0.86, metalness: 0, side: THREE.FrontSide });
+      return new THREE.MeshStandardMaterial({ map: opts.faceAtlasTexture, roughness: 0.86, metalness: 0, side: THREE.DoubleSide });
     }
     if (isHairMesh(mesh)) {
       if (isShaveMesh(mesh)) {
         const tex = loadTexture("Hair.jpg");
-        if (tex) return new THREE.MeshStandardMaterial({ color: opts.hairBaseColor ?? opts.hairColor ?? "#15191d", map: tex, roughness: 0.86, metalness: 0, side: THREE.FrontSide });
+        if (tex) return new THREE.MeshStandardMaterial({ color: opts.hairBaseColor ?? opts.hairColor ?? "#15191d", map: tex, roughness: 0.86, metalness: 0, side: THREE.DoubleSide });
       }
       if (opts.hairAtlasTexture) {
-        return new THREE.MeshStandardMaterial({ map: opts.hairAtlasTexture, roughness: 0.86, metalness: 0, side: THREE.FrontSide });
+        return new THREE.MeshStandardMaterial({ map: opts.hairAtlasTexture, roughness: 0.86, metalness: 0, side: THREE.DoubleSide });
       }
     }
     const tex = loadTexture(base);
@@ -435,7 +439,7 @@ function buildMaterial(mesh, opts) {
         transparent: shadow,
         opacity: shadow ? 0.55 : 1,
         depthWrite: !shadow,
-        side: THREE.FrontSide,
+        side: THREE.DoubleSide,
       });
     }
   }
@@ -443,7 +447,7 @@ function buildMaterial(mesh, opts) {
     color: opts.color ?? "#ffffff",
     roughness: opts.materialMode === "final" ? 0.86 : 0.7,
     metalness: 0,
-    side: THREE.FrontSide,
+    side: THREE.DoubleSide,
   });
 }
 
@@ -1049,7 +1053,7 @@ function adjustHexColor(hex, factor) {
 
 // Body atlas (site `ud` + `Oy`). Draws the kept layers (body via full manifest).
 const BODY_SUPERSAMPLE = 2; // Vi (300 x 200 base units -> 600 x 400 canvas)
-export async function buildBodyAtlasTexture(bodyMaterial) {
+export async function buildBodyAtlasTexture(bodyMaterial, overrides = {}) {
   const canvas = document.createElement("canvas");
   canvas.width = 600;
   canvas.height = 400;
@@ -1068,7 +1072,7 @@ export async function buildBodyAtlasTexture(bodyMaterial) {
 
   const layers = [...manifest.layers].sort((a, b) => a.order - b.order);
   const selections = bodyMaterial?.selections ?? {};
-  const colors = bodyMaterial?.colors ?? {};
+  const colors = { ...(bodyMaterial?.colors ?? {}), ...(overrides.colors ?? {}) };
 
   const selIndex = {};
   for (const layer of layers) {
@@ -1168,11 +1172,12 @@ async function resolveBodyColor(layer, textureSpec, colors) {
     const clamped = Math.min(Math.max(index, 0), palette.length - 1);
     if (palette[clamped]) return palette[clamped];
   }
-  return DEFAULT_LAYER_COLORS[colorName] ?? "#ffffff";
+  return DEFAULT_LAYER_COLORS[layerColorKey(colorName)] ?? "#ffffff";
 }
 
 function layerColorKey(name) {
   if (name.startsWith("Shrt")) return "ShrtSpectrum";
+  if (name.startsWith("Pant")) return "PantSpectrum";
   if (name === "Skin") return "Skin";
   return name;
 }
@@ -1180,6 +1185,7 @@ function layerColorKey(name) {
 const DEFAULT_LAYER_COLORS = {
   Skin: "#f0c49e",
   ShrtSpectrum: "#6d7bd8",
+  PantSpectrum: "#4d5f7a",
 };
 
 async function loadSVGImage(urlOrSpec) {

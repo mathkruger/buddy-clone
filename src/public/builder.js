@@ -35,7 +35,8 @@ function renderPreview() {
   mountAvatar(preview, {
     composition: state.composition,
     mood: state.mood,
-    label: "Live avatar preview"
+    label: "Live avatar preview",
+    orbit: true
   }).then((ctl) => {
     if (token !== previewToken) {
       if (ctl && ctl.destroy) ctl.destroy();

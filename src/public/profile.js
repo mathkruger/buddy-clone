@@ -64,7 +64,8 @@ function mountProfileAvatar(p) {
   mountAvatar(els.avatar, {
     composition: p.avatarDef,
     mood: p.mood,
-    label: `${p.username}'s avatar`
+    label: `${p.username}'s avatar`,
+    orbit: true
   }).then((ctl) => {
     if (token !== avatarToken) {
       if (ctl && ctl.destroy) ctl.destroy();

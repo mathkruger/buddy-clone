@@ -158,12 +158,22 @@ const ANIM_SUBSET = [
   'standBreathe',
 ];
 
+// Binary raster assets must be downloaded as raw bytes; `res.text()` would
+// UTF-8-decode them and silently corrupt every byte >127 into U+FFFD (`ef bf bd`).
+const BINARY = new Set([...PALETTES, ...TEXTURES, ...PROPS]);
+
 const MANIFESTS = [DATA, PALETTES, TEXTURES, PROPS, faceSymbols(), BODY_SYMBOLS, HAIR_SYMBOLS].flat();
 
 async function fetchText(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`);
   return res.text();
+}
+
+async function fetchBinary(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`);
+  return Buffer.from(await res.arrayBuffer());
 }
 
 async function main() {
@@ -173,7 +183,7 @@ async function main() {
     const dest = join(OUT, rel);
     await mkdir(dirname(dest), { recursive: true });
     try {
-      const body = await fetchText(`${BASE}/${rel}`);
+      const body = BINARY.has(rel) ? await fetchBinary(`${BASE}/${rel}`) : await fetchText(`${BASE}/${rel}`);
       await writeFile(dest, body);
       ok++;
       console.log(`ok   ${rel}`);

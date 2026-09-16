@@ -11,6 +11,9 @@
 //     in sync with the animation player
 //   - returns a controller: { canvas, destroy(), setComposition(), play(motion) }
 //
+// Passing `orbit: true` in the mount options wires OrbitControls onto the
+// stage canvas so the viewer can drag to rotate the camera around the buddy.
+//
 // The avatar scale (.018) and position (-1.35, .08, 0) are the authentic
 // constants baked into `buddylabs.js` (`BUDDY_SCALE`/`BUDDY_POSITION`).
 //
@@ -23,6 +26,7 @@
 // `prefers-reduced-motion`.
 
 import * as THREE from "three";
+import { OrbitControls } from "/vendor/three-examples/controls/OrbitControls.js";
 import {
   BUDDY_SCALE,
   BUDDY_POSITION,
@@ -41,6 +45,10 @@ import { resolvePart, MOUTH_TO_FRAME, DEFAULT_MOUTH_FRAME } from "./avatar.js";
 const FOV = 35;
 const FACE_ATLAS_W = 500;
 const FACE_ATLAS_H = 250;
+
+// Framing margin: how much empty stage surrounds the buddy. Larger values pull
+// the camera back, so the avatar renders smaller inside the stage frame.
+const FRAME_MARGIN = 2.0;
 
 // ---- authentic vocabulary -> buddylabs part options ----
 //
@@ -223,6 +231,7 @@ export async function mountAvatar(container, options = {}) {
   let composition = options.composition || {};
   let mood = options.mood;
   const label = options.label || "Avatar";
+  const enableOrbit = options.orbit === true;
 
   container.replaceChildren();
   container.classList.remove("buddy-3d-fallback");
@@ -260,6 +269,24 @@ export async function mountAvatar(container, options = {}) {
 
   const group = new THREE.Group();
   scene.add(group);
+
+  // Optional drag-to-rotate stage controls (profile, builder, interaction).
+  // Rotate-only: pan/zoom stay off so scroll gestures over the stage never
+  // fight the page.
+  let controls = null;
+  if (enableOrbit) {
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.08;
+    controls.enablePan = false;
+    controls.enableZoom = false;
+    controls.rotateSpeed = 0.8;
+    controls.minPolarAngle = 0.15 * Math.PI;
+    controls.maxPolarAngle = 0.45 * Math.PI;
+    controls.cursorStyle = "grab";
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
 
   let labs = labsComposition(composition, mood);
   scene.background = new THREE.Color(labs.colors.bg || "#ffe9f3");
@@ -322,7 +349,7 @@ export async function mountAvatar(container, options = {}) {
     lastAppliedFrame = null;
 
     const [bodyAtlasTexture, facePainted] = await Promise.all([
-      buildBodyAtlasTexture(shared.bodyMaterial),
+      buildBodyAtlasTexture(shared.bodyMaterial, { colors: opts.colors?.shirt ? { ShrtColor: opts.colors.shirt } : {} }),
       paintFaceTexture(face.image, face, opts.face),
     ]);
     const hairAtlasTexture = buildHairTexture(opts.hairMaterial);
@@ -360,11 +387,24 @@ export async function mountAvatar(container, options = {}) {
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
     const ext = Math.max(size.x, size.y, size.z);
-    const dist = ext > 0 ? (ext / 2 / Math.tan((FOV / 2) * Math.PI)) * 1.25 : CAM_DISTANCE * BUDDY_SCALE;
+    const dist = ext > 0
+      ? (ext / 2 / Math.tan(((FOV / 2) * Math.PI) / 180)) * FRAME_MARGIN
+      : CAM_DISTANCE * BUDDY_SCALE;
     camera.fov = FOV;
-    camera.position.set(0, 0, dist);
-    camera.lookAt(center.x, center.y, center.z);
     camera.updateProjectionMatrix();
+
+    if (controls) {
+      // Re-frame around the new center but keep the viewer's current rotation.
+      const offset = camera.position.clone().sub(controls.target);
+      if (offset.lengthSq() < 1e-9) offset.set(0, 0, 1);
+      controls.target.copy(center);
+      camera.position.copy(center).addScaledVector(offset.normalize(), dist);
+      camera.lookAt(center.x, center.y, center.z);
+      controls.update();
+    } else {
+      camera.position.set(0, 0, dist);
+      camera.lookAt(center.x, center.y, center.z);
+    }
 
     player = new AvatarAnimationPlayer(built.object, built.bones, shared.animations);
     if (mood || !player.play(opts.animation)) {
@@ -455,6 +495,7 @@ export async function mountAvatar(container, options = {}) {
     }
 
     animateGroup(now);
+    if (controls) controls.update();
     renderer.render(scene, camera);
     raf = requestAnimationFrame(loop);
   }
@@ -478,6 +519,10 @@ export async function mountAvatar(container, options = {}) {
     resizeObserver.disconnect();
     settleMotion();
     removeAvatar();
+    if (controls) {
+      controls.dispose();
+      controls = null;
+    }
     scene.background = null;
     renderer.dispose();
     renderer.forceContextLoss();

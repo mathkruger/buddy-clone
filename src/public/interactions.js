@@ -143,7 +143,8 @@ async function buildStage(targetProfile, sender, type) {
   const senderCtl = await mountAvatar(senderCol, {
     composition: sender.avatarDef,
     mood: sender.mood,
-    label: `you`
+    label: `you`,
+    orbit: true
   });
 
   const fx = document.createElement("div");
@@ -156,7 +157,8 @@ async function buildStage(targetProfile, sender, type) {
   const targetCtl = await mountAvatar(targetCol, {
     composition: targetProfile.avatarDef,
     mood: targetProfile.mood,
-    label: targetProfile.username
+    label: targetProfile.username,
+    orbit: true
   });
 
   stage.append(senderCol, fx, targetCol);

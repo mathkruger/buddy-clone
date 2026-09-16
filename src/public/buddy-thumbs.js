@@ -142,7 +142,7 @@ async function renderVariant(category, name) {
   const s = await ensureSupplies();
   const face = emptyFaceTexture();
   const [bodyAtlasTexture] = await Promise.all([
-    buildBodyAtlasTexture(s.bodyMaterial),
+    buildBodyAtlasTexture(s.bodyMaterial, { colors: labs.colors?.shirt ? { ShrtColor: labs.colors.shirt } : {} }),
     paintFaceTexture(face.canvas, face.texture, labs.face),
   ]);
   const hairAtlasTexture = buildHairTexture(labs.hairMaterial);
