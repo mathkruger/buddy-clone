@@ -105,7 +105,7 @@ function hasSkinWeights(mesh) {
   return !!(mesh.modifier && mesh.modifier.boneIndex.length === mesh.positions.length);
 }
 function uvFlip(url) {
-  return url ? !(url === "boy_body.jpg" || url === "33.png" || url === "Shadow.jpg") : true;
+  return url ? !(url === "boy_body.jpg" || url === "Shadow.jpg") : true;
 }
 function validIndices(indices, count) {
   for (const t of indices) if (!Number.isInteger(t) || t < 0 || t >= count) return false;
