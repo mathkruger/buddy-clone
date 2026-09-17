@@ -12,6 +12,7 @@
 // Usage: node scripts/fetch-minepoke-assets.mjs
 
 import { mkdir, writeFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -33,8 +34,10 @@ const PALETTES = ['skin.png', 'shrt-spectrum.png', 'eye.png'].map((f) => `palett
 // bitmaps; 33.png/boy_body.png are the deleted-projection fill colors).
 const TEXTURES = ['Hair.jpg', 'Shadow.png', '33.png', 'boy_body.png'].map((f) => `textures/${f}`);
 
-// Prop textures for the authentic extras (rose/mic/sword), same map as the site.
-const PROPS = ['rose.jpg', 'mic.png', 'sword.png'].map((f) => `textures/${f}`);
+// Prop textures for the authentic extras (rose/mic/sword + the missing mallet,
+// strat and Vespa set), same map as the site. `TEXTURE_ALIASES` in buddylabs.js
+// points `mallet.jpg`/`strat.jpg`/`vespa.psd`/`vespaTire.psd` at these paths.
+const PROPS = ['rose.jpg', 'mic.png', 'sword.png', 'mallet.png', 'strat-misc.png', 'vespa-base.png', 'vespaTire.png'].map((f) => `textures/${f}`);
 
 // Face symbol sprites — the 7 curated eye families (all frame variants) plus the
 // mouth sprite frames and one sprite from each enabled-by-accessory extra layer.
@@ -87,6 +90,10 @@ const FACE_EXTRAS = [
   'DefineSprite_104_Spot_Freckles_1',
 ].map((n) => `${n}/1.svg`);
 
+// Base head sprite kept for fidelity even though the ported `Head` face layer
+// currently fills skin color procedurally (design D7).
+const FACE_HEAD = ['DefineSprite_214_Head/1.svg'];
+
 function faceSymbols() {
   const urls = [];
   for (const dir of EYE_DIRS) {
@@ -94,18 +101,46 @@ function faceSymbols() {
   }
   for (let i = 1; i <= MOUTH_FRAMES; i++) urls.push(`face-symbols/DefineSprite_44_Mouth/${i}.svg`);
   urls.push(...FACE_EXTRAS.map((n) => `face-symbols/${n}`));
+  urls.push(...FACE_HEAD.map((n) => `face-symbols/${n}`));
   return urls;
 }
 
-// Body symbol sprites for the kept atlas layers (Skin fill, ShrtLength/Color,
-// Belt) per design decision D2, including the shirt shadow + reg buckle masks.
-const BODY_SYMBOLS = [
+// Body symbol sprites for every non-`Blank` `body-material.json` texture that
+// carries a `publicPath` (design D7). The manifest is itself fetched in `DATA`;
+// this reads the vendored copy so the exact set the renderer can reference is
+// captured. ~196 sprites under `body-symbols/`.
+function bodySymbols() {
+  const manifestPath = join(OUT, 'body-material.json');
+  try {
+    const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+    const rels = new Set();
+    for (const layer of manifest.layers) {
+      for (const texture of layer.textures) {
+        if (!texture.symbol || /Blank/.test(texture.symbol)) continue;
+        if (!texture.publicPath) continue;
+        const rel = texture.publicPath.replace(/^\/assets\/buddylabs\//, '');
+        if (rel) rels.add(rel);
+      }
+    }
+    return [...rels].sort();
+  } catch (err) {
+    console.warn(`warning: ${manifestPath} not readable (${err.message}); falling back to the static body-symbol set`);
+    return BODY_SYMBOLS_STATIC;
+  }
+}
+
+// Static fallback set used when the vendored manifest cannot be read (or a
+// curated set is wanted). The dynamic list from `body-material.json` supersedes
+// it during a normal run.
+const BODY_SYMBOLS_STATIC = [
   'DefineSprite_554_Body/1.svg',
   'DefineSprite_553_Shrt_Tee/1.svg',
   'DefineSprite_551_Shrt_Tee_Shadow/1.svg',
   'DefineSprite_446_Belt_Reg/1.svg',
   'DefineSprite_429_Belt_Reg_Buckle_Reg/1.svg',
 ].map((n) => `body-symbols/${n}`);
+
+const BODY_SYMBOLS = bodySymbols();
 
 // Hair material sprites (base + pattern/streak overlays) used by the procedural
 // hair material builder.
@@ -228,8 +263,8 @@ Major directories mirror the site's own layout so the ported builders resolve th
 same paths they do on the source site:
 
 - \`geometry-preview.json\` — 58 meshes, 29-bone bind skeleton, skin weights.
-- \`materials/body-material.json\` — 42-layer body-atlas manifest (kept: Skin fill,
-  ShrtLength/Color, Belt per design D2).
+- \`materials/body-material.json\` — 42-layer body-atlas manifest (all layers
+  with a non-\`Blank\` texture composite, per design D3).
 - \`materials/head-material.json\` — 17-layer face-atlas manifest.
 - \`animations-subset.json\` — \`animations.json\` sliced to the mapped mood/
   interaction anims (design D5): mood_happy/mood_sad/mood_inLove/mood_angry/
@@ -237,11 +272,14 @@ same paths they do on the source site:
   kiss1-2, jamA1-2, jamB1-2, standBreathe.
 - \`palettes/\` — \`skin.png\`, \`shrt-spectrum.png\`, \`eye.png\` swatch strips.
 - \`textures/\` — \`Hair.jpg\`, \`Shadow.png\`, \`33.png\`, \`boy_body.png\`
-  (mesh fallbacks) plus prop textures \`rose.jpg\`, \`mic.png\`, \`sword.png\`.
+  (mesh fallbacks) plus the prop textures \`rose.jpg\`, \`mic.png\`, \`sword.png\`,
+  \`mallet.png\`, \`strat-misc.png\`, \`vespa-base.png\`, \`vespaTire.png\`.
 - \`face-symbols/\` — 7 curated eye families (6 frames each), the mouth sprite
-  (33 frames), and the full face-extra catalogs (Brows/5OClock/Mustache/Beard/
-  Glas/Spot/EyeShadow/Mask).
-- \`body-symbols/\` — body crate, shirt (+ shadow), belt (+ buckle) sprites.
+  (33 frames), the base \`DefineSprite_214_Head\` sprite, and the full
+  face-extra catalogs (Brows/5OClock/Mustache/Beard/Glas/Spot/EyeShadow/Mask).
+- \`body-symbols/\` — every non-\`Blank\` symbol sprite referenced by
+  \`body-material.json\` (\`<DefineSprite_...>/1.svg\`, ~196 files), so every
+  catalog-backed body option has a vendored asset.
 - \`hair-material/\` — hair base + pattern/streak overlay sprites.
 
 ## Vendored files

@@ -81,7 +81,8 @@ export function loadHeadMaterial() {
 const textureCache = new Map();
 export function loadTexture(url) {
   const key = (url.split("/").pop() ?? url);
-  const mapped = TEXTURE_ALIASES[key] ?? url;
+  const mapped = TEXTURE_ALIASES[key];
+  if (!mapped) return null;
   if (textureCache.has(mapped)) return textureCache.get(mapped);
   const loader = new THREE.TextureLoader();
   const tex = loader.load(mapped);
@@ -691,7 +692,7 @@ export function buildAvatar(geometry, opts = {}) {
     };
     for (const mesh of skinnedMeshes) {
       try {
-        const group = buildMesh(mesh, skinnedOpts);
+        const group = buildMesh(mesh, { ...skinnedOpts, color: meshDebugColor(mesh, opts) });
         if (!group) continue;
         group.traverse((obj) => {
           if (obj.isSkinnedMesh) {
@@ -734,7 +735,7 @@ export function buildAvatar(geometry, opts = {}) {
         hairAtlasTexture: opts.hairAtlasTexture,
         hairBaseColor: opts.hairMaterial?.baseColor ?? opts.hairColor,
       };
-      const rebuilt = buildMesh(mesh, optsForMesh);
+      const rebuilt = buildMesh(mesh, { ...optsForMesh, color: meshDebugColor(mesh, opts) });
       if (!rebuilt) continue;
       rebuilt.name = leaf;
       if (mesh.nodePos) rebuilt.position.set(mesh.nodePos[0], mesh.nodePos[1], mesh.nodePos[2]);
@@ -1071,14 +1072,22 @@ export async function buildBodyAtlasTexture(bodyMaterial, overrides = {}) {
   if (!manifest || !ctx) return texture;
 
   const layers = [...manifest.layers].sort((a, b) => a.order - b.order);
-  const selections = bodyMaterial?.selections ?? {};
+  // Selections are per-layer texture symbols (overrides.clothing), falling back
+  // to any manifest-provided numeric indices, then the layer default.
+  const selections = { ...(bodyMaterial?.selections ?? {}), ...(overrides.clothing ?? {}) };
   const colors = { ...(bodyMaterial?.colors ?? {}), ...(overrides.colors ?? {}) };
 
   const selIndex = {};
   for (const layer of layers) {
     const raw = selections[layer.name];
     const base = layer.selectedTextureIndex;
-    const chosen = Number.isFinite(raw) ? Math.round(raw) : base;
+    let chosen = base;
+    if (typeof raw === "string") {
+      const idx = (layer.textures ?? []).findIndex((t) => t.symbol === raw);
+      if (idx >= 0) chosen = idx;
+    } else if (Number.isFinite(raw)) {
+      chosen = Math.round(raw);
+    }
     selIndex[layer.name] = Math.min(Math.max(chosen, 0), Math.max(layer.textures.length - 1, 0));
   }
   // Shadow layers follow their owner length layer.
@@ -1090,9 +1099,6 @@ export async function buildBodyAtlasTexture(bodyMaterial, overrides = {}) {
   for (const layer of layers) {
     const textureSpec = layer.textures[selIndex[layer.name] ?? layer.selectedTextureIndex];
     if (!textureSpec?.publicPath || !textureSpec.symbol || /Blank/.test(textureSpec.symbol)) continue;
-    // Kept layers only (design D2): Skin, ShrtLength(+Color), Belt.
-    const kept = layer.name === "Skin" || layer.name === "ShrtLength" || layer.name === "ShrtColor" || layer.name === "Belt" || layer.name === "BeltColor";
-    if (!kept) continue;
 
     const bitmap = await loadSVGImage(textureSpec.publicPath);
     if (!bitmap) continue;
@@ -1148,12 +1154,14 @@ async function resolveBodyMask(layer, layers, selIndex, cache) {
     const owner = layers.find((l) => l.name === grab);
     if (!owner) return null;
     const spec = owner.textures[selIndex[grab] ?? owner.selectedTextureIndex];
+    if (!spec?.publicPath || /Blank/.test(spec.symbol)) return null;
     const mask = await loadSVGImage(spec);
     cache.set(grab, mask);
     return mask;
   }
   const spec = layer.textures[selIndex[layer.name] ?? layer.selectedTextureIndex];
   if (spec?.masks?.length) {
+    if (/Blank/.test(spec.symbol)) return null;
     const mask = await loadSVGImage(spec);
     cache.set(layer.name, mask);
     return mask;
@@ -1163,7 +1171,7 @@ async function resolveBodyMask(layer, layers, selIndex, cache) {
 
 async function resolveBodyColor(layer, textureSpec, colors) {
   if (layer.name.endsWith("Shadow")) return "#000000";
-  const colorName = layer.name === "Skin" ? "Skin" : (layer.attributes?.lockColor ?? layerColorKey(layer.name));
+  const colorName = layerColorKey(layer.name);
   const explicit = colors[colorName];
   if (explicit) return explicit;
   const palette = textureSpec.color ? await loadPalette(textureSpec.color) : null;
@@ -1172,20 +1180,32 @@ async function resolveBodyColor(layer, textureSpec, colors) {
     const clamped = Math.min(Math.max(index, 0), palette.length - 1);
     if (palette[clamped]) return palette[clamped];
   }
-  return DEFAULT_LAYER_COLORS[layerColorKey(colorName)] ?? "#ffffff";
+  return DEFAULT_LAYER_COLORS[colorName] ?? "#ffffff";
 }
 
+// Bodymaterial layer -> canonical `colors` key (design D3): each lockColor
+// family maps to one avatar color category. `Skin`/`SkinColor` -> skin and the
+// per-item-family keys (Sock/Pant/Shrt/Shoe/Glve/Belt -> socks/pants/shirt/
+// shoes/glove/belt); pattern/`{X}Color` layers reuse their category's color.
 function layerColorKey(name) {
-  if (name.startsWith("Shrt")) return "ShrtSpectrum";
-  if (name.startsWith("Pant")) return "PantSpectrum";
-  if (name === "Skin") return "Skin";
+  if (name === "Skin" || name === "SkinColor") return "skin";
+  if (name.startsWith("Sock")) return "socks";
+  if (name.startsWith("Pant")) return "pants";
+  if (name.startsWith("Shrt")) return "shirt";
+  if (name.startsWith("Shoe")) return "shoes";
+  if (name.startsWith("Glve")) return "glove";
+  if (name.startsWith("Belt")) return "belt";
   return name;
 }
 
 const DEFAULT_LAYER_COLORS = {
-  Skin: "#f0c49e",
-  ShrtSpectrum: "#6d7bd8",
-  PantSpectrum: "#4d5f7a",
+  skin: "#f0c49e",
+  socks: "#ffffff",
+  pants: "#4d5f7a",
+  shirt: "#6d7bd8",
+  shoes: "#2d3a4a",
+  glove: "#ffffff",
+  belt: "#1e2838",
 };
 
 async function loadSVGImage(urlOrSpec) {
@@ -1244,8 +1264,8 @@ const FACE_LAYERS = [
   { name: "Brows", role: "solid", resolvePath: (o) => spriteFramePath(o.browStyle), resolveColor: (o) => o.beardColor ?? "#1b1714" },
   { name: "5OClock", role: "multiply", resolvePath: (o) => o.beardStyle === "DefineSprite_1012_Berd_5OClock" ? spriteFramePath(o.beardStyle) : null, resolveColor: (o) => o.beardColor ?? "#1b1714", blendMode: "multiply", opacity: 0.54 },
   { name: "Glas", role: "solid", resolvePath: (o) => spriteFramePath(o.glassesStyle), resolveColor: (o) => o.glassesColor ?? "#1b1f24" },
-  { name: "Mustache", role: "solid", resolvePath: (o) => o.beardStyle && /_Must_/.test(o.beardStyle) ? spriteFramePath(o.beardStyle) : null, resolveColor: (o) => o.beardColor ?? "#1b1714" },
-  { name: "Beard", role: "solid", resolvePath: (o) => o.beardStyle && !/_Must_|5OClock/.test(o.beardStyle) ? spriteFramePath(o.beardStyle) : null, resolveColor: (o) => o.beardColor ?? "#1b1714" },
+  { name: "Mustache", role: "solid", resolvePath: (o) => spriteFramePath(o.mustacheStyle), resolveColor: (o) => o.beardColor ?? "#1b1714" },
+  { name: "Beard", role: "solid", resolvePath: (o) => o.beardStyle && o.beardStyle !== "DefineSprite_1012_Berd_5OClock" ? spriteFramePath(o.beardStyle) : null, resolveColor: (o) => o.beardColor ?? "#1b1714" },
 ];
 
 // `<sprite>/<frame>.svg` path builder (site `Un`).
@@ -1516,7 +1536,7 @@ export function buildFaceAtlasTexture(options = {}) {
     o.eyeStyle, o.mouthStyle, o.eyeColor, o.eyeSecondaryColor ?? "", o.skinColor ?? "",
     o.spotStyle ?? "", o.spotColor ?? "", o.eyeShadowStyle ?? "", o.eyeShadowColor ?? "",
     o.maskStyle ?? "", o.maskColor ?? "", o.browStyle ?? "", o.beardStyle ?? "",
-    o.beardColor ?? "", o.glassesStyle ?? "", o.glassesColor ?? "",
+    o.beardColor ?? "", o.mustacheStyle ?? "", o.glassesStyle ?? "", o.glassesColor ?? "",
   ].join(":");
   if (faceTextureCache.has(key)) return faceTextureCache.get(key);
 

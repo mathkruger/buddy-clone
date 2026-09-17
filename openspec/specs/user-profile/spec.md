@@ -25,11 +25,11 @@ The profile SHALL render from the persisted avatar composition and mood. When th
 - **THEN** the profile renders the avatar showing the new mood
 
 ### Requirement: Edit controls only for the owner
-The profile SHALL display edit controls (change avatar / change mood) only when the visitor's browser holds the profile's claim token. Otherwise the profile SHALL be read-only.
+The profile SHALL display edit controls only when the visitor's browser holds the profile's claim token. Edit controls SHALL now consist of "Change mood" and a link to `/create` to edit the avatar. The inline avatar editor is removed entirely.
 
 #### Scenario: Owner sees edit controls
 - **WHEN** the browser holding the profile's claim token loads the profile
-- **THEN** the page shows controls to edit the avatar and change the mood
+- **THEN** the page shows controls to change the mood and a link to `/create` to edit the avatar
 
 #### Scenario: Visitor sees a read-only profile
 - **WHEN** a browser without the claim token loads the profile

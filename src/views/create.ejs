@@ -3,7 +3,7 @@
   <%- include('partials/site-header') %>
 
   <main class="builder">
-    <% if (viewer) { %>
+    <% if (viewer && !buddyData) { %>
       <section class="logged-in-only">
         <div class="favorite-guest">
           <p>You're already logged in as
@@ -23,16 +23,23 @@
         <div id="builder-colors" class="color-groups"></div>
 
         <form id="save-form" class="save-form" novalidate>
+          <% if (buddyData) { %>
+            <h2>Edit your buddy</h2>
+          <% } else { %>
+            <h2>Create your buddy</h2>
+          <% } %>
+          <% if (!buddyData) { %>
           <label for="username">Pick a username</label>
           <div class="save-row">
-            <input id="username" name="username" type="text" maxlength="24" placeholder="e.g. bunny" autocomplete="off" spellcheck="false">
+            <input id="username" name="username" type="text" maxlength="24" placeholder="e.g. bunny" autocomplete="off" spellcheck="false" value="<%= viewer || '' %>">
           </div>
           <label for="password">Pick a password</label>
           <div class="save-row">
             <input id="password" name="password" type="password" maxlength="200" placeholder="at least 8 characters" autocomplete="new-password">
-            <button type="submit" class="primary">Claim my buddy</button>
           </div>
-          <p class="save-hint">Your password is what you'll use to log back in — the browser keeps no token.</p>
+          <% } %>
+            <button type="submit" class="primary"><%= buddyData ? 'Save Changes' : 'Claim my buddy' %></button>
+          <p class="save-hint"><%= buddyData ? 'Your changes are saved to your profile.' : 'Your password is what you\'ll use to log back in — the browser keeps no token.' %></p>
           <p id="save-error" class="form-error" role="alert"></p>
           <div id="save-success" class="save-success" hidden>
             <p>Your buddy is live!</p>
@@ -44,6 +51,8 @@
   </main>
 
   <%- include('partials/clouds') %>
-  <%- include('partials/footer') %>
+  <% if (buddyData) { %>
+  <script type="application/json" id="buddy-data"><%- buddyData %></script>
+  <% } %>
   <script type="module" src="/builder.js"></script>
   <%- include('partials/foot') %>

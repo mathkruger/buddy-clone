@@ -429,6 +429,8 @@ a { color: var(--candy-dark); }
   border-radius: var(--radius);
   padding: 14px 14px 16px;
   box-shadow: var(--shadow);
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .picker-group h3,

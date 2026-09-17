@@ -14,8 +14,8 @@ Major directories mirror the site's own layout so the ported builders resolve th
 same paths they do on the source site:
 
 - `geometry-preview.json` — 58 meshes, 29-bone bind skeleton, skin weights.
-- `materials/body-material.json` — 42-layer body-atlas manifest (kept: Skin fill,
-  ShrtLength/Color, Belt per design D2).
+- `materials/body-material.json` — 42-layer body-atlas manifest (all layers
+  with a non-`Blank` texture composite, per design D3).
 - `materials/head-material.json` — 17-layer face-atlas manifest.
 - `animations-subset.json` — `animations.json` sliced to the mapped mood/
   interaction anims (design D5): mood_happy/mood_sad/mood_inLove/mood_angry/
@@ -23,11 +23,14 @@ same paths they do on the source site:
   kiss1-2, jamA1-2, jamB1-2, standBreathe.
 - `palettes/` — `skin.png`, `shrt-spectrum.png`, `eye.png` swatch strips.
 - `textures/` — `Hair.jpg`, `Shadow.png`, `33.png`, `boy_body.png`
-  (mesh fallbacks) plus prop textures `rose.jpg`, `mic.png`, `sword.png`.
+  (mesh fallbacks) plus the prop textures `rose.jpg`, `mic.png`, `sword.png`,
+  `mallet.png`, `strat-misc.png`, `vespa-base.png`, `vespaTire.png`.
 - `face-symbols/` — 7 curated eye families (6 frames each), the mouth sprite
-  (33 frames), and the full face-extra catalogs (Brows/5OClock/Mustache/Beard/
-  Glas/Spot/EyeShadow/Mask).
-- `body-symbols/` — body crate, shirt (+ shadow), belt (+ buckle) sprites.
+  (33 frames), the base `DefineSprite_214_Head` sprite, and the full
+  face-extra catalogs (Brows/5OClock/Mustache/Beard/Glas/Spot/EyeShadow/Mask).
+- `body-symbols/` — every non-`Blank` symbol sprite referenced by
+  `body-material.json` (`<DefineSprite_...>/1.svg`, ~196 files), so every
+  catalog-backed body option has a vendored asset.
 - `hair-material/` — hair base + pattern/streak overlay sprites.
 
 ## Vendored files
@@ -35,8 +38,199 @@ same paths they do on the source site:
 ```
 - `animations-subset.json`
 - `body-material.json`
+- `body-symbols/DefineSprite_1018_Shrt_Logo_Skeleton/1.svg`
+- `body-symbols/DefineSprite_2000_Shrt_Logo_SaoPaulo/1.svg`
+- `body-symbols/DefineSprite_2001_Shrt_Logo_Flamengo/1.svg`
+- `body-symbols/DefineSprite_2002_Shrt_Logo_Timão/1.svg`
+- `body-symbols/DefineSprite_2003_Shrt_Logo_Verdão/1.svg`
+- `body-symbols/DefineSprite_2004_Shrt_Logo_Nike/1.svg`
+- `body-symbols/DefineSprite_2005_Shrt_Logo_Jordan/1.svg`
+- `body-symbols/DefineSprite_2006_Shrt_Logo_Roblox/1.svg`
+- `body-symbols/DefineSprite_2007_Shrt_Logo_Vasco/1.svg`
+- `body-symbols/DefineSprite_2008_Shrt_Logo_Steam/1.svg`
+- `body-symbols/DefineSprite_2009_Shrt_Logo_Twitter/1.svg`
+- `body-symbols/DefineSprite_2010_Shrt_Logo_GPT/1.svg`
+- `body-symbols/DefineSprite_2011_Shrt_Logo_Counter-Strike/1.svg`
+- `body-symbols/DefineSprite_2012_Shrt_Logo_LOL/1.svg`
+- `body-symbols/DefineSprite_2013_Shrt_Logo_Barcelona/1.svg`
+- `body-symbols/DefineSprite_2014_Shrt_Logo_Batman/1.svg`
+- `body-symbols/DefineSprite_2015_Shrt_Logo_Nasa/1.svg`
+- `body-symbols/DefineSprite_2017_Shrt_Logo_Supercell/1.svg`
+- `body-symbols/DefineSprite_2018_Shrt_Logo_Barbie/1.svg`
+- `body-symbols/DefineSprite_2019_Shrt_Logo_BTS/1.svg`
+- `body-symbols/DefineSprite_2020_Shrt_Logo_supreme/1.svg`
+- `body-symbols/DefineSprite_2021_Shrt_Logo_TheNorthFace/1.svg`
+- `body-symbols/DefineSprite_2022_Shrt_Logo_RollingStone/1.svg`
+- `body-symbols/DefineSprite_2023_Shrt_Logo_VOGUE/1.svg`
+- `body-symbols/DefineSprite_2025_Shrt_Logo_DIESEL/1.svg`
+- `body-symbols/DefineSprite_2026_Shrt_Logo_CALVIN/1.svg`
+- `body-symbols/DefineSprite_2027_Shrt_Logo_OBEY/1.svg`
+- `body-symbols/DefineSprite_2028_Shrt_Logo_GAP/1.svg`
+- `body-symbols/DefineSprite_2029_Shrt_Logo_NewYork/1.svg`
+- `body-symbols/DefineSprite_2031_Shrt_Logo_Brasail/1.svg`
+- `body-symbols/DefineSprite_2032_Shrt_Logo_CANADA/1.svg`
+- `body-symbols/DefineSprite_2033_Shrt_Logo_France/1.svg`
+- `body-symbols/DefineSprite_2034_Shrt_Logo_China/1.svg`
+- `body-symbols/DefineSprite_2035_Shrt_Logo_USA/1.svg`
+- `body-symbols/DefineSprite_2036_Shrt_Logo_Playboy/1.svg`
+- `body-symbols/DefineSprite_2037_Shrt_Logo_ViVi/1.svg`
+- `body-symbols/DefineSprite_2038_Shrt_Logo_MG/1.svg`
+- `body-symbols/DefineSprite_2039_Shrt_Logo_Friends/1.svg`
+- `body-symbols/DefineSprite_216_Sock_Short_Shadow/1.svg`
+- `body-symbols/DefineSprite_218_Sock_Short/1.svg`
+- `body-symbols/DefineSprite_220_Sock_Med_Shadow/1.svg`
+- `body-symbols/DefineSprite_222_Sock_Med/1.svg`
+- `body-symbols/DefineSprite_227_Sock_Jester/1.svg`
+- `body-symbols/DefineSprite_228_Sock_Stripe_3/1.svg`
+- `body-symbols/DefineSprite_230_Sock_Sport_2/1.svg`
+- `body-symbols/DefineSprite_232_Sock_Sport_1/1.svg`
+- `body-symbols/DefineSprite_234_Sock_Stripe_2/1.svg`
+- `body-symbols/DefineSprite_236_Sock_Stripe_1/1.svg`
+- `body-symbols/DefineSprite_239_Sock_Long_Shadow/1.svg`
+- `body-symbols/DefineSprite_241_Sock_Long/1.svg`
+- `body-symbols/DefineSprite_243_Shrt_Tank_Shadow/1.svg`
+- `body-symbols/DefineSprite_245_Shrt_Tank/1.svg`
+- `body-symbols/DefineSprite_249_Shoe_Sling_2/1.svg`
+- `body-symbols/DefineSprite_252_Shoe_Sole/1.svg`
+- `body-symbols/DefineSprite_254_Shoe_FlipFlop/1.svg`
+- `body-symbols/DefineSprite_258_Shoe_Sling_1/1.svg`
+- `body-symbols/DefineSprite_262_Shoe_Boot/1.svg`
+- `body-symbols/DefineSprite_271_Shoe_Reg_Laces_Thick/1.svg`
+- `body-symbols/DefineSprite_276_Pant_Buckle_2/1.svg`
+- `body-symbols/DefineSprite_278_Pant_Buckle_1/1.svg`
+- `body-symbols/DefineSprite_280_Shoe_Boot_Laces_Side/1.svg`
+- `body-symbols/DefineSprite_281_Shoe_Boot_Buckle_2/1.svg`
+- `body-symbols/DefineSprite_282_Shoe_Boot_Buckle_1/1.svg`
+- `body-symbols/DefineSprite_284_Shoe_Reg_Laces_Thin/1.svg`
+- `body-symbols/DefineSprite_286_Shoe_Reg_Jester_2/1.svg`
+- `body-symbols/DefineSprite_288_Shoe_Reg_Jester_1/1.svg`
+- `body-symbols/DefineSprite_290_Shoe_Boot_Sport_2/1.svg`
+- `body-symbols/DefineSprite_292_Shoe_Boot_Flop/1.svg`
+- `body-symbols/DefineSprite_294_Shoe_Boot_Sport_1/1.svg`
+- `body-symbols/DefineSprite_296_Shoe_Reg_Sport_4/1.svg`
+- `body-symbols/DefineSprite_300_Shoe_Reg_Sport_5/1.svg`
+- `body-symbols/DefineSprite_302_Shoe_Reg_Sport_3/1.svg`
+- `body-symbols/DefineSprite_304_Shoe_Reg_Sport_1/1.svg`
+- `body-symbols/DefineSprite_307_Shoe_Reg_Sport_2/1.svg`
+- `body-symbols/DefineSprite_309_Shoe_Reg_Laces_Velcro/1.svg`
+- `body-symbols/DefineSprite_310_Shoe_Reg/1.svg`
+- `body-symbols/DefineSprite_315_Shrt_Diamond_2/1.svg`
+- `body-symbols/DefineSprite_317_Shrt_ChainMail_2/1.svg`
+- `body-symbols/DefineSprite_319_Shrt_Diamond_1/1.svg`
+- `body-symbols/DefineSprite_321_Shrt_ChainMail_1/1.svg`
+- `body-symbols/DefineSprite_323_Shrt_ScaleMail_2/1.svg`
+- `body-symbols/DefineSprite_325_Shrt_ScaleMail_1/1.svg`
+- `body-symbols/DefineSprite_329_Shrt_Logo_FleurDeLis/1.svg`
+- `body-symbols/DefineSprite_331_Shrt_Logo_Cancel/1.svg`
+- `body-symbols/DefineSprite_333_Shrt_Logo_Peace/1.svg`
+- `body-symbols/DefineSprite_336_Shrt_Logo_Butterfly/1.svg`
+- `body-symbols/DefineSprite_339_Shrt_Logo_Nuclear2/1.svg`
+- `body-symbols/DefineSprite_345_Shrt_Logo_Alien/1.svg`
+- `body-symbols/DefineSprite_348_Shrt_Logo_Anarchy/1.svg`
+- `body-symbols/DefineSprite_351_Shrt_Logo_Nuclear/1.svg`
+- `body-symbols/DefineSprite_353_Shrt_Logo_Skull/1.svg`
+- `body-symbols/DefineSprite_355_Shrt_Logo_Sad/1.svg`
+- `body-symbols/DefineSprite_357_Shrt_Logo_Question/1.svg`
+- `body-symbols/DefineSprite_359_Shrt_Logo_Happy/1.svg`
+- `body-symbols/DefineSprite_361_Shrt_Logo_Star/1.svg`
+- `body-symbols/DefineSprite_363_Shrt_Logo_Flower_2/1.svg`
+- `body-symbols/DefineSprite_365_Shrt_Logo_Flower_1/1.svg`
+- `body-symbols/DefineSprite_367_Shrt_Logo_Heart/1.svg`
+- `body-symbols/DefineSprite_369_Shrt_Jester/1.svg`
+- `body-symbols/DefineSprite_371_Shrt_Gradient_1/1.svg`
+- `body-symbols/DefineSprite_373_Pant_Lace_1/1.svg`
+- `body-symbols/DefineSprite_374_Shrt_Buckle_2/1.svg`
+- `body-symbols/DefineSprite_375_Shrt_Buckle_1/1.svg`
+- `body-symbols/DefineSprite_377_Shrt_Lace_1/1.svg`
+- `body-symbols/DefineSprite_379_Shrt_Sport_1/1.svg`
+- `body-symbols/DefineSprite_381_Shrt_Sport_5/1.svg`
+- `body-symbols/DefineSprite_383_Shrt_Sport_4/1.svg`
+- `body-symbols/DefineSprite_385_Shrt_Sport_3/1.svg`
+- `body-symbols/DefineSprite_386_Shrt_Argyle_2/1.svg`
+- `body-symbols/DefineSprite_387_Shrt_Argyle_1/1.svg`
+- `body-symbols/DefineSprite_388_Shrt_Plaid/1.svg`
+- `body-symbols/DefineSprite_390_Shrt_Sport_2/1.svg`
+- `body-symbols/DefineSprite_392_Shrt_TankLayered/1.svg`
+- `body-symbols/DefineSprite_394_Shrt_CoatOpen/1.svg`
+- `body-symbols/DefineSprite_396_Shrt_Camouflage/1.svg`
+- `body-symbols/DefineSprite_398_Shrt_Vest/1.svg`
+- `body-symbols/DefineSprite_400_Shrt_CardiganTight/1.svg`
+- `body-symbols/DefineSprite_402_Shrt_SportsCoat/1.svg`
+- `body-symbols/DefineSprite_404_Shrt_V/1.svg`
+- `body-symbols/DefineSprite_406_Shrt_Tie_1/1.svg`
+- `body-symbols/DefineSprite_407_Shrt_Stripe_3/1.svg`
+- `body-symbols/DefineSprite_411_Shrt_Sport_8/1.svg`
+- `body-symbols/DefineSprite_413_Shrt_Sport_7/1.svg`
+- `body-symbols/DefineSprite_415_Shrt_Sport_6/1.svg`
+- `body-symbols/DefineSprite_417_Shrt_Stripe_2/1.svg`
+- `body-symbols/DefineSprite_420_Belt_Low/1.svg`
+- `body-symbols/DefineSprite_421_Belt_Low_X/1.svg`
+- `body-symbols/DefineSprite_423_Belt_X/1.svg`
+- `body-symbols/DefineSprite_425_Belt_Low_Para/1.svg`
+- `body-symbols/DefineSprite_427_Belt_Para/1.svg`
 - `body-symbols/DefineSprite_429_Belt_Reg_Buckle_Reg/1.svg`
+- `body-symbols/DefineSprite_431_Belt_Reg_Buckle_Stud_2/1.svg`
+- `body-symbols/DefineSprite_433_Belt_Reg_Buckle_Stud_1/1.svg`
+- `body-symbols/DefineSprite_435_Belt_Low_Buckle_Stud_2/1.svg`
+- `body-symbols/DefineSprite_437_Belt_Low_Buckle_Stud_1/1.svg`
+- `body-symbols/DefineSprite_438_Belt_Low_Buckle_Reg/1.svg`
+- `body-symbols/DefineSprite_440_Belt_Reg_Buckle_Oval/1.svg`
+- `body-symbols/DefineSprite_441_Belt_Low_Buckle_Oval/1.svg`
+- `body-symbols/DefineSprite_443_Belt_Reg_Buckle_Military/1.svg`
+- `body-symbols/DefineSprite_444_Belt_Low_Buckle_Military/1.svg`
 - `body-symbols/DefineSprite_446_Belt_Reg/1.svg`
+- `body-symbols/DefineSprite_448_Glve_Long_Shadow/1.svg`
+- `body-symbols/DefineSprite_449_Glve_Lace/1.svg`
+- `body-symbols/DefineSprite_451_Glve_Long/1.svg`
+- `body-symbols/DefineSprite_455_Glve_Med_Shadow/1.svg`
+- `body-symbols/DefineSprite_459_Glve_Med/1.svg`
+- `body-symbols/DefineSprite_461_Glve_Short_Shadow/1.svg`
+- `body-symbols/DefineSprite_463_Glve_Fngr/1.svg`
+- `body-symbols/DefineSprite_465_Glve_Short/1.svg`
+- `body-symbols/DefineSprite_467_Shrt_Stripe_1/1.svg`
+- `body-symbols/DefineSprite_469_Shrt_DrShoulderShort_Shadow/1.svg`
+- `body-symbols/DefineSprite_471_Shrt_DrShoulderLong_Shadow/1.svg`
+- `body-symbols/DefineSprite_473_Shrt_TeeLong_Shadow/1.svg`
+- `body-symbols/DefineSprite_475_Shrt_TeeLongCrop/1.svg`
+- `body-symbols/DefineSprite_477_Shrt_DrShoulderShort/1.svg`
+- `body-symbols/DefineSprite_479_Shrt_DrShoulderLong/1.svg`
+- `body-symbols/DefineSprite_480_Shrt_TeeLong/1.svg`
+- `body-symbols/DefineSprite_482_Pant_High_Panties_Shadow/1.svg`
+- `body-symbols/DefineSprite_484_Pant_High_Panties/1.svg`
+- `body-symbols/DefineSprite_486_Pant_Low_Panties_Shadow/1.svg`
+- `body-symbols/DefineSprite_488_Pant_Low_Panties/1.svg`
+- `body-symbols/DefineSprite_490_Pant_High_Shorts_Shadow/1.svg`
+- `body-symbols/DefineSprite_492_Pant_High_Shorts/1.svg`
+- `body-symbols/DefineSprite_494_Pant_Low_Shorts_Shadow/1.svg`
+- `body-symbols/DefineSprite_495_Pant_Low_Shorts/1.svg`
+- `body-symbols/DefineSprite_497_Pant_High_Knickers_Shadow/1.svg`
+- `body-symbols/DefineSprite_499_Pant_High_Knickers/1.svg`
+- `body-symbols/DefineSprite_501_Pant_Low_Knickers_Shadow/1.svg`
+- `body-symbols/DefineSprite_502_Pant_Low_Knickers/1.svg`
+- `body-symbols/DefineSprite_506_Pant_ScaleMail/1.svg`
+- `body-symbols/DefineSprite_508_Pant_Diamond/1.svg`
+- `body-symbols/DefineSprite_510_Pant_ChainMail/1.svg`
+- `body-symbols/DefineSprite_512_Pant_Gradient_1/1.svg`
+- `body-symbols/DefineSprite_514_Pant_Fade_2/1.svg`
+- `body-symbols/DefineSprite_516_Pant_Fade_1/1.svg`
+- `body-symbols/DefineSprite_517_Pant_Camouflage/1.svg`
+- `body-symbols/DefineSprite_519_Pant_Stripe_2/1.svg`
+- `body-symbols/DefineSprite_521_Pant_Stripe_1/1.svg`
+- `body-symbols/DefineSprite_523_Pant_Sport_2/1.svg`
+- `body-symbols/DefineSprite_525_Pant_Jester/1.svg`
+- `body-symbols/DefineSprite_527_Pant_Sport_1/1.svg`
+- `body-symbols/DefineSprite_529_Pant_Hero/1.svg`
+- `body-symbols/DefineSprite_531_Pant_High_Long_Shadow/1.svg`
+- `body-symbols/DefineSprite_533_Pant_High_Long/1.svg`
+- `body-symbols/DefineSprite_535_Pant_Low_Long_Shadow/1.svg`
+- `body-symbols/DefineSprite_536_Pant_Low_Long/1.svg`
+- `body-symbols/DefineSprite_538_Shrt_Tube_Shadow/1.svg`
+- `body-symbols/DefineSprite_539_Shrt_Tube/1.svg`
+- `body-symbols/DefineSprite_541_Shrt_TankCrop_Shadow/1.svg`
+- `body-symbols/DefineSprite_543_Shrt_TankCrop/1.svg`
+- `body-symbols/DefineSprite_545_Shrt_TeeLongCrop_Shadow/1.svg`
+- `body-symbols/DefineSprite_547_Shrt_TeeCrop_Shadow/1.svg`
+- `body-symbols/DefineSprite_549_Shrt_TeeCrop/1.svg`
 - `body-symbols/DefineSprite_551_Shrt_Tee_Shadow/1.svg`
 - `body-symbols/DefineSprite_553_Shrt_Tee/1.svg`
 - `body-symbols/DefineSprite_554_Body/1.svg`
@@ -72,6 +266,7 @@ same paths they do on the source site:
 - `face-symbols/DefineSprite_146_Eyes_Fem/4.svg`
 - `face-symbols/DefineSprite_146_Eyes_Fem/5.svg`
 - `face-symbols/DefineSprite_146_Eyes_Fem/6.svg`
+- `face-symbols/DefineSprite_214_Head/1.svg`
 - `face-symbols/DefineSprite_26_EyeShadow_3/1.svg`
 - `face-symbols/DefineSprite_28_EyeShadow_2/1.svg`
 - `face-symbols/DefineSprite_30_EyeShadow_1/1.svg`
@@ -165,7 +360,11 @@ same paths they do on the source site:
 - `textures/Hair.jpg`
 - `textures/Shadow.png`
 - `textures/boy_body.png`
+- `textures/mallet.png`
 - `textures/mic.png`
 - `textures/rose.jpg`
+- `textures/strat-misc.png`
 - `textures/sword.png`
+- `textures/vespa-base.png`
+- `textures/vespaTire.png`
 ```

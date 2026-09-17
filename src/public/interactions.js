@@ -51,15 +51,16 @@ const CATALOG = {
 };
 
 const GUEST_AVATAR = {
-  head: "Hair_Simple_Twiggy",
+  hair: "Hair_Simple_Twiggy",
   eyes: "Eyes_Lake",
   mouth: "smile",
-  accessory: "beard",
+  face: { beard: "Berd_Goat" },
   colors: {
     skin: "#f6b98b",
+    hair: "#15191d",
     shirt: "#8fd3ff",
-    bg: "#eaf7ff",
-    accent: "#7bc8f6"
+    eye: "#3a2a68",
+    bg: "#eaf7ff"
   }
 };
 

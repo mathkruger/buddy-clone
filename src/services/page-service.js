@@ -49,6 +49,14 @@ export function pageService(store) {
     return { notFound: false, profile };
   }
 
+  function getBuddyData(username) {
+    const result = lookup(username);
+    if (result.notFound) return null;
+    const profile = result.profile;
+    if (!profile || !profile.avatarDef) return null;
+    return inlineJson(profile);
+  }
+
   return {
     pageData(route) {
       return PAGES[route];
@@ -76,6 +84,10 @@ export function pageService(store) {
         pageTitle: "Buddy widget",
         bodyClass: "page-embed embed-shell"
       };
+    },
+
+    getBuddyData(username) {
+      return getBuddyData(username);
     }
   };
 }

@@ -40,7 +40,7 @@ import {
   AvatarAnimationPlayer,
 } from "./buddylabs.js";
 import { MOODS, DEFAULT_IDLE_ANIMATION } from "./moods.js";
-import { resolvePart, MOUTH_TO_FRAME, DEFAULT_MOUTH_FRAME } from "./avatar.js";
+import { resolvePart, resolveProps, MOUTH_TO_FRAME, DEFAULT_MOUTH_FRAME, faceSymbolPath } from "./avatar.js";
 
 const FOV = 35;
 const FACE_ATLAS_W = 500;
@@ -50,74 +50,87 @@ const FACE_ATLAS_H = 250;
 // the camera back, so the avatar renders smaller inside the stage frame.
 const FRAME_MARGIN = 2.0;
 
+// Default face colors for the lens when the composition doesn't set them.
+const FACE_DEFAULTS = {
+  skin: "#f0c49e",
+  eye: "#3a2a68",
+  eyeSecondary: "#3a2a68",
+  glasses: "#1b1f24",
+  beard: "#1b1714",
+  eyeShadow: "#5b3540",
+  mask: "#1b1f24",
+};
+
 // ---- authentic vocabulary -> buddylabs part options ----
 //
-// The `avatarDef` part keys are the authentic asset ids defined in `avatar.js`
-// (`AVATAR_PARTS`): head = hair-mesh catalog name, eyes = eye sprite family,
-// mouth = mouth-frame name, accessory = authentic extra. `resolvePart`
-// validates each value against that set and resets anything outside it (legacy
-// hand-drawn values, typos) to the category default, so every stored
-// composition keeps rendering.
+// `labsComposition` maps the canonical `avatarDef` (see `avatar.js`) onto the
+// buddylabs build options. `resolvePart`/`resolveProps`/`faceSymbolPath`
+// validate every value against the catalog so any stored composition keeps
+// rendering: hair = Hair-catalog mesh name, eyes = eye sprite family, mouth =
+// mouth-frame name, props = Props-catalog item (or none), skirt = Skrt item,
+// clothing = per-body-material-layer symbol selections, face = per-face-layer
+// symbol names (via `faceSymbolPath` -> sprite directory).
 
-// Accessory value -> extra options applied to the labs build: caps swap the
-// hair mesh (cull regions hide the base hair), glasses/facial hair are face
-// atlas layers, Rose/Mic/Sword are Props-catalog meshes.
-const ACCESSORY_PRESETS = {
-  none: {},
-  glasses: { glassesStyle: "DefineSprite_686_Glas_6", glassesColor: "#1b1f24" },
-  "BCap_Hair": { hairItemName: "BCap_Hair" },
-  "SCap_Hair": { hairItemName: "SCap_Hair" },
-  mustache: { beardStyle: "DefineSprite_654_Must_Thick" },
-  beard: { beardStyle: "DefineSprite_683_Berd_Full" },
-  Rose: { accessoryItemName: "Rose" },
-  Mic: { accessoryItemName: "Mic" },
-  Sword: { accessoryItemName: "Sword" },
-};
+export function labsComposition(composition, mood) {
+  const comp = composition && typeof composition === "object" ? composition : {};
+  const colors = comp.colors && typeof comp.colors === "object" ? comp.colors : {};
+  const faceOpt = comp.face && typeof comp.face === "object" ? comp.face : {};
+
+  const hair = resolvePart("hair", comp.hair);
+  const eyes = resolvePart("eyes", comp.eyes);
+  const props = resolveProps(comp.props);
+  const skirt = resolvePart("skirt", comp.skirt);
+  const frame = MOUTH_TO_FRAME[comp.mouth] ?? DEFAULT_MOUTH_FRAME;
+
+  const skinColor = colors.skin || FACE_DEFAULTS.skin;
+  const beardColor = colors.beard || FACE_DEFAULTS.beard;
+  const lens = {
+    skinColor,
+    eyeStyle: eyes,
+    eyeColor: colors.eye || FACE_DEFAULTS.eye,
+    eyeSecondaryColor: FACE_DEFAULTS.eyeSecondary,
+    mouthStyle: `frame-${frame}`,
+    spotStyle: faceSymbolPath(faceOpt.spot),
+    spotColor: adjustHex(skinColor, -0.22),
+    eyeShadowStyle: faceSymbolPath(faceOpt.eyeShadow),
+    eyeShadowColor: FACE_DEFAULTS.eyeShadow,
+    maskStyle: faceSymbolPath(faceOpt.mask),
+    maskColor: FACE_DEFAULTS.mask,
+    browStyle: faceSymbolPath(faceOpt.brows),
+    beardStyle: faceSymbolPath(faceOpt.beard),
+    beardColor,
+    mustacheStyle: faceSymbolPath(faceOpt.mustache),
+    glassesStyle: faceSymbolPath(faceOpt.glasses),
+    glassesColor: FACE_DEFAULTS.glasses,
+  };
+
+  const hairMaterial = comp.hairMaterial && typeof comp.hairMaterial === "object" ? comp.hairMaterial : {};
+  return {
+    face: lens,
+    hairItemName: hair,
+    accessoryItemName: props === "none" ? null : props,
+    clothingItemName: skirt === "SkrtNone" ? null : skirt,
+    clothing: isPlainObject(comp.clothing) ? comp.clothing : {},
+    hairMaterial: {
+      baseColor: colors.hair || "#15191d",
+      patternIndex: hairMaterial.patternIndex ?? 0,
+      patternColor: hairMaterial.patternColor || "#747a7d",
+      streakIndex: hairMaterial.streakIndex ?? 0,
+      streakColor: hairMaterial.streakColor || "#f0d06a",
+    },
+    animation: moodAnimation(mood),
+    colors,
+  };
+}
+
+function isPlainObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
 
 // ---- mood -> idle skeleton animation (subset in animations-subset.json) ----
 
 function moodAnimation(mood) {
   return (MOODS[mood] && MOODS[mood].animation) || DEFAULT_IDLE_ANIMATION;
-}
-
-export function labsComposition(composition, mood) {
-  const comp = composition && typeof composition === "object" ? composition : {};
-  const colors = comp.colors && typeof comp.colors === "object" ? comp.colors : {};
-  const head = resolvePart("head", comp.head !== undefined ? comp.head : comp.hair);
-  const eyes = resolvePart("eyes", comp.eyes);
-  const frame = MOUTH_TO_FRAME[comp.mouth] ?? DEFAULT_MOUTH_FRAME;
-  const accessory = ACCESSORY_PRESETS[resolvePart("accessory", comp.accessory)] ?? ACCESSORY_PRESETS.none;
-
-  const skinColor = colors.skin || "#f0c49e";
-  const lens = {
-    skinColor,
-    eyeStyle: eyes,
-    eyeColor: colors.accent || colors.skin || "#6d7bd8",
-    eyeSecondaryColor: "#3a2a68",
-    mouthStyle: `frame-${frame}`,
-    ...(accessory.glassesStyle ? { glassesStyle: accessory.glassesStyle, glassesColor: accessory.glassesColor || "#1b1f24" } : {}),
-    beardStyle: accessory.beardStyle || (comp.beard ? "DefineSprite_683_Berd_Full" : null),
-    beardColor: colors.accent || "#1b1714",
-    spotStyle: comp.spot ? "DefineSprite_102_Spot_Beauty_1" : null,
-    spotColor: adjustHex(skinColor, -0.22),
-    browStyle: comp.brows ? "DefineSprite_98_Brows_Thick" : null,
-  };
-
-  return {
-    face: lens,
-    hairItemName: accessory.hairItemName || head,
-    accessoryItemName: accessory.accessoryItemName || null,
-    clothingItemName: "SkrtNone",
-    hairMaterial: {
-      baseColor: colors.accent || comp.hairColor || colors.skin || "#15191d",
-      patternIndex: 0,
-      patternColor: "#747a7d",
-      streakIndex: 0,
-      streakColor: "#f0d06a",
-    },
-    animation: moodAnimation(mood),
-    colors,
-  };
 }
 
 function adjustHex(hex, factor) {
@@ -349,7 +362,7 @@ export async function mountAvatar(container, options = {}) {
     lastAppliedFrame = null;
 
     const [bodyAtlasTexture, facePainted] = await Promise.all([
-      buildBodyAtlasTexture(shared.bodyMaterial, { colors: opts.colors?.shirt ? { ShrtColor: opts.colors.shirt } : {} }),
+      buildBodyAtlasTexture(shared.bodyMaterial, { clothing: opts.clothing, colors: opts.colors }),
       paintFaceTexture(face.image, face, opts.face),
     ]);
     const hairAtlasTexture = buildHairTexture(opts.hairMaterial);

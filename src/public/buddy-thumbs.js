@@ -31,9 +31,6 @@ const FOV = 35;
 const FACE_ATLAS_WIDTH = 500;
 const FACE_ATLAS_HEIGHT = 250;
 
-// Accessory parts that only change the face (crop the thumbnail to the head).
-const FACE_ACCESSORIES = new Set(["glasses", "mustache", "beard"]);
-
 let supplies = null;
 let drain = Promise.resolve();
 const snapshotCache = new Map();
@@ -77,25 +74,30 @@ function emptyFaceTexture() {
   return { canvas, texture };
 }
 
+// The one varying field for a picker option, starting from the default
+// composition (design D6). `category` is a builder picker id: a plain part
+// ("hair" | "eyes" | "mouth" | "props" | "skirt"), "clothing:<layer>", or
+// "face:<layer>".
 function variantComposition(category, name) {
-  const base = defaultComposition();
-  const comp = {
-    head: base.head,
-    eyes: base.eyes,
-    mouth: base.mouth,
-    accessory: "none",
-    colors: { ...base.colors },
-  };
-  if (category === "head") comp.head = name;
-  else if (category === "eyes") comp.eyes = name;
-  else if (category === "mouth") comp.mouth = name;
-  else comp.accessory = name;
+  const comp = defaultComposition();
+  if (category === "clothing") category = `clothing:${name}`;
+  if (category.startsWith("clothing:")) {
+    comp.clothing[category.slice("clothing:".length)] = name;
+    return comp;
+  }
+  if (category.startsWith("face:")) {
+    comp.face[category.slice("face:".length)] = name;
+    return comp;
+  }
+  comp[category] = name;
   return comp;
 }
 
+// Face-crop the thumbnail when the picker only changes the face atlas
+// (eyes/mouth frames and face layers); whole-body otherwise.
 function thumbZoom(category, name) {
   if (category === "eyes" || category === "mouth") return "face";
-  if (category === "accessory") return FACE_ACCESSORIES.has(name) ? "face" : "body";
+  if (category.startsWith("face:") || category === "face") return "face";
   return "body";
 }
 
@@ -142,7 +144,7 @@ async function renderVariant(category, name) {
   const s = await ensureSupplies();
   const face = emptyFaceTexture();
   const [bodyAtlasTexture] = await Promise.all([
-    buildBodyAtlasTexture(s.bodyMaterial, { colors: labs.colors?.shirt ? { ShrtColor: labs.colors.shirt } : {} }),
+    buildBodyAtlasTexture(s.bodyMaterial, { clothing: labs.clothing, colors: labs.colors }),
     paintFaceTexture(face.canvas, face.texture, labs.face),
   ]);
   const hairAtlasTexture = buildHairTexture(labs.hairMaterial);

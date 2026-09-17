@@ -16,9 +16,12 @@ export function pagesRouter(store, services) {
   });
 
   router.get("/create", (req, res) => {
+    const viewer = req.auth ? req.auth.username : null;
+    const buddyData = viewer ? services.pages.getBuddyData(viewer) : null;
     res.render("create", {
       ...services.pages.pageData("/create"),
-      viewer: req.auth ? req.auth.username : null
+      viewer,
+      buddyData
     });
   });
 

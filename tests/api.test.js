@@ -155,7 +155,8 @@ describe("POST /api/profiles", () => {
     assert.equal(body.username, "mario");
     assert.equal("token" in body, false);
     assert.equal(body.profile.mood, "happy");
-    assert.equal(body.profile.avatarDef.head, "cat");
+    assert.equal(body.profile.avatarDef.head, undefined);
+    assert.equal(body.profile.avatarDef.eyes, "Eyes_Male");
     assert.match(res.headers.get("set-cookie"), /buddy_token=/i);
   });
 
@@ -259,7 +260,8 @@ describe("PUT /api/profile/:username", () => {
     assert.equal(res.status, 200);
     const body = await res.json();
     assert.equal(body.mood, "excited");
-    assert.equal(body.avatarDef.head, "star");
+    assert.equal(body.avatarDef.head, undefined);
+    assert.equal(body.avatarDef.eyes, "Eyes_Male");
   });
 
   test("401 without a session", async () => {
@@ -390,7 +392,7 @@ describe("GET /api/search", () => {
     assert.equal(res.status, 200);
     const body = await res.json();
     assert.deepEqual(body.results.map((r) => r.username), ["bubble"]);
-    assert.equal(body.results[0].avatarDef.head, "star");
+    assert.equal(body.results[0].avatarDef.head, undefined);
     assert.equal(typeof body.results[0].mood, "string");
   });
 

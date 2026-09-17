@@ -1,7 +1,5 @@
-import { AVATAR_PARTS, PALETTES, defaultComposition } from "./avatar.js";
-import { renderPartThumb } from "./buddy-thumbs.js";
-import { mountAvatar } from "./buddy-3d.js";
 import { MOODS, MOOD_ORDER, DEFAULT_MOOD } from "./moods.js";
+import { mountAvatar } from "./buddy-3d.js";
 import { BuddySession } from "./session.js";
 
 const root = document.getElementById("profile-root");
@@ -143,7 +141,7 @@ function renderHistory(p) {
     const sender = hit.sender || "guest";
 
     const typeNode = document.createElement("span");
-    typeNode.textContent = `${hit.type} · `;
+    typeNode.textContent = `${hit.type} \u00d7 `;
 
     const senderNode = sender === "guest"
       ? (() => {
@@ -161,7 +159,7 @@ function renderHistory(p) {
         })();
 
     const timeNode = document.createElement("span");
-    timeNode.textContent = ` · ${when}`;
+    timeNode.textContent = ` \u00d7 ${when}`;
 
     li.append(typeNode, senderNode, timeNode);
     ul.appendChild(li);
@@ -253,12 +251,11 @@ function buildOwnerActions() {
   moodBtn.addEventListener("click", () => toggleEditor("mood"));
   els.actions.appendChild(moodBtn);
 
-  const avatarBtn = document.createElement("button");
-  avatarBtn.type = "button";
-  avatarBtn.className = "btn owner";
-  avatarBtn.textContent = "Change avatar";
-  avatarBtn.addEventListener("click", () => toggleEditor("avatar"));
-  els.actions.appendChild(avatarBtn);
+  const editLink = document.createElement("a");
+  editLink.className = "btn owner";
+  editLink.href = "/create";
+  editLink.textContent = "Edit buddy";
+  els.actions.appendChild(editLink);
 
   const favLink = document.createElement("a");
   favLink.className = "btn owner";
@@ -267,16 +264,10 @@ function buildOwnerActions() {
   els.actions.appendChild(favLink);
 }
 
-let activeEditor = null;
-
 function toggleEditor(kind) {
-  activeEditor = activeEditor === kind ? null : kind;
-  if (activeEditor === "mood") {
+  if (kind === "mood") {
     els.editors.innerHTML = "";
     els.editors.appendChild(buildMoodEditor());
-  } else if (activeEditor === "avatar") {
-    els.editors.innerHTML = "";
-    els.editors.appendChild(buildAvatarEditor());
   } else {
     els.editors.innerHTML = "";
   }
@@ -318,155 +309,6 @@ async function changeMood(mood) {
   render();
   els.editors.innerHTML = "";
   els.editors.appendChild(buildMoodEditor());
-  activeEditor = "mood";
-}
-
-function buildAvatarEditor() {
-  const panel = document.createElement("div");
-  panel.className = "editor-panel";
-  const title = document.createElement("h3");
-  title.textContent = "Edit your avatar";
-  panel.appendChild(title);
-
-  const state = composeEditorState();
-  const pickers = document.createElement("div");
-  pickers.id = "profile-avatar-pickers";
-  pickers.style.display = "grid";
-  pickers.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
-  pickers.style.gap = "10px";
-  panel.appendChild(pickers);
-
-  const colors = document.createElement("div");
-  colors.id = "profile-avatar-colors";
-  colors.style.display = "grid";
-  colors.style.gridTemplateColumns = "repeat(auto-fit, minmax(140px, 1fr))";
-  colors.style.gap = "10px";
-  colors.style.marginTop = "10px";
-  panel.appendChild(colors);
-
-  const actions = document.createElement("div");
-  actions.className = "editor-actions";
-  const saveBtn = document.createElement("button");
-  saveBtn.type = "button";
-  saveBtn.className = "btn primary";
-  saveBtn.textContent = "Save avatar";
-  saveBtn.style.background = "linear-gradient(180deg, var(--candy), var(--candy-dark))";
-  saveBtn.style.color = "#fff";
-  saveBtn.style.border = "none";
-  saveBtn.addEventListener("click", () => saveAvatar(state));
-  actions.appendChild(saveBtn);
-
-  const cancelBtn = document.createElement("button");
-  cancelBtn.type = "button";
-  cancelBtn.className = "btn";
-  cancelBtn.textContent = "Cancel";
-  cancelBtn.addEventListener("click", () => {
-    activeEditor = null;
-    els.editors.innerHTML = "";
-  });
-  actions.appendChild(cancelBtn);
-  panel.appendChild(actions);
-
-  buildProfilePickers(state, pickers);
-  buildProfileColors(state, colors);
-  return panel;
-}
-
-function composeEditorState() {
-  const base = BuddyProfile.profile.avatarDef || {};
-  const merged = { ...defaultComposition(), ...base };
-  merged.colors = { ...defaultComposition().colors, ...(base.colors || {}) };
-  return { composition: merged };
-}
-
-function buildProfilePickers(state, container) {
-  container.innerHTML = "";
-  for (const [category, meta] of Object.entries(AVATAR_PARTS)) {
-    const group = document.createElement("div");
-    const h = document.createElement("h4");
-    h.textContent = meta.label;
-    h.style.margin = "0 0 6px";
-    group.appendChild(h);
-
-    const row = document.createElement("div");
-    row.style.display = "flex";
-    row.style.flexWrap = "wrap";
-    row.style.gap = "6px";
-
-    for (const option of meta.options) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "part-btn";
-      btn.style.width = "44px";
-      btn.style.height = "44px";
-      btn.dataset.picker = category;
-      btn.dataset.option = option;
-      btn.title = option;
-      renderPartThumb(btn, category, option);
-      if (option === state.composition[category]) btn.classList.add("selected");
-      btn.addEventListener("click", () => {
-        state.composition[category] = option;
-        row.querySelectorAll("[data-picker]").forEach((b) => {
-          const sel = b.dataset.option === option;
-          b.classList.toggle("selected", sel);
-        });
-      });
-      row.appendChild(btn);
-    }
-    group.appendChild(row);
-    container.appendChild(group);
-  }
-}
-
-function buildProfileColors(state, container) {
-  container.innerHTML = "";
-  for (const key of ["skin", "shirt", "bg", "accent"]) {
-    const group = document.createElement("div");
-    const h = document.createElement("h4");
-    h.textContent = key;
-    h.style.margin = "0 0 6px";
-    group.appendChild(h);
-
-    const row = document.createElement("div");
-    row.style.display = "flex";
-    row.style.flexWrap = "wrap";
-    row.style.gap = "6px";
-
-    for (const hex of PALETTES[key]) {
-      const swatch = document.createElement("button");
-      swatch.type = "button";
-      swatch.className = "swatch";
-      swatch.style.width = "24px";
-      swatch.style.height = "24px";
-      swatch.style.background = hex;
-      swatch.dataset.colorKey = key;
-      swatch.dataset.hex = hex;
-      if (hex === state.composition.colors[key]) swatch.classList.add("selected");
-      swatch.addEventListener("click", () => {
-        state.composition.colors[key] = hex;
-        row.querySelectorAll("[data-color-key]").forEach((s) => {
-          s.classList.toggle("selected", s.dataset.hex === hex);
-        });
-      });
-      row.appendChild(swatch);
-    }
-    group.appendChild(row);
-    container.appendChild(group);
-  }
-}
-
-async function saveAvatar(state) {
-  const p = BuddyProfile.profile;
-  const res = await fetch(`/api/profile/${p.username}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ avatarDef: state.composition })
-  });
-  if (!res.ok) return;
-  BuddyProfile.profile = await res.json();
-  render();
-  activeEditor = null;
-  els.editors.innerHTML = "";
 }
 
 // --- embed snippet (owner only) ---
