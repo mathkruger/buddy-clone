@@ -17,7 +17,6 @@ function unknownProvider(provider) {
 //   getFavorites(username)       - raw target usernames
 //   addFavorite(username, target)
 //   removeFavorite(username, target)
-//   searchProfiles(query)        - [{ username, avatarDef, mood }] capped at 20
 //   snapshot()                   - full { users: {...} } shape
 export class StorageBackend {
   constructor(config) {

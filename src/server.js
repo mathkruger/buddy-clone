@@ -8,12 +8,10 @@ import { authService } from "./services/auth-service.js";
 import { profileService } from "./services/profile-service.js";
 import { interactionService } from "./services/interaction-service.js";
 import { favoritesService } from "./services/favorites-service.js";
-import { searchService } from "./services/search-service.js";
 import { pageService } from "./services/page-service.js";
 import { authRouter } from "./routes/auth.js";
 import { profilesRouter } from "./routes/profiles.js";
 import { favoritesRouter } from "./routes/favorites.js";
-import { searchRouter } from "./routes/search.js";
 import { pagesRouter } from "./routes/pages.js";
 
 const SRC_DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -22,6 +20,7 @@ const DB_PATH = process.env.DB_PATH || path.join(SRC_DIR, "..", "data.db");
 const DATA_FILE = process.env.DATA_FILE || path.join(SRC_DIR, "..", "data.json");
 const STORAGE_PROVIDER = process.env.STORAGE_PROVIDER || "sqlite";
 const PUBLIC_DIR = path.join(SRC_DIR, "public");
+const NODE_MODULES_DIR = path.join(SRC_DIR, "..", "node_modules");
 
 const DEV_JWT_SECRET = "buddy-clone-development-secret-change-before-deploying";
 const DEFAULT_JWT_EXPIRES = "7d";
@@ -50,7 +49,6 @@ export function createApp(store) {
     profile: profileService(store, auth),
     interaction: interactionService(store),
     favorites: favoritesService(store),
-    search: searchService(store),
     pages: pageService(store)
   };
 
@@ -64,9 +62,20 @@ export function createApp(store) {
   app.use(authRouter(store, services, config));
   app.use(profilesRouter(store, services, config));
   app.use(favoritesRouter(store, services));
-  app.use(searchRouter(store, services));
+
+  // Whitelisted vendored WebGL library assets — served from the app's own
+  // static paths so rendering never depends on an external CDN, and the
+  // FBXLoader's relative imports (`../libs/`, `../curves/`) resolve from the
+  // same origin.
+  app.use("/vendor/three", express.static(path.join(NODE_MODULES_DIR, "three", "build")));
+  app.use("/vendor/three-examples", express.static(path.join(NODE_MODULES_DIR, "three", "examples", "jsm")));
 
   app.use(express.static(PUBLIC_DIR));
+
+  // The vendored buddylabs manifests encode absolute `/assets/buddylabs/...`
+  // paths (the source site's layout); alias the same files there so the
+  // ported builders resolve them without rewriting the manifest JSON.
+  app.use("/assets/buddylabs", express.static(path.join(PUBLIC_DIR, "buddylabs")));
 
   app.use(pagesRouter(store, services));
 

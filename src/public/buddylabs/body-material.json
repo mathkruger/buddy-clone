@@ -1,0 +1,4762 @@
+{
+  "material": {
+    "option": "Body",
+    "name": "Material",
+    "attributes": {
+      "name": "Material",
+      "clipRect": "Body Clip Rect"
+    }
+  },
+  "categories": {
+    "skin": [
+      "Skin"
+    ],
+    "socks": [
+      "SockLength",
+      "SockColor",
+      "SockPattern",
+      "SockPatternColor",
+      "SockShadow"
+    ],
+    "pants": [
+      "PantLength",
+      "PantColor",
+      "PantPattern",
+      "PantPatternColor",
+      "PantPattern2",
+      "PantPatternColor2",
+      "PantShadow"
+    ],
+    "shirt": [
+      "ShrtLength",
+      "ShrtColor",
+      "ShrtLayer1",
+      "ShrtLayer1Color",
+      "ShrtLayer2",
+      "ShrtLayer2Color",
+      "ShrtShadow"
+    ],
+    "shoes": [
+      "Shoe",
+      "ShoeColor",
+      "ShoeSlingDesign",
+      "ShoeSlingDesignColor",
+      "ShoeRegDesign",
+      "ShoeRegDesignColor",
+      "ShoeBootDesign",
+      "ShoeBootDesignColor",
+      "ShoeRegLaces",
+      "ShoeRegLacesColor",
+      "ShoeBootLaces",
+      "ShoeBootLacesColor",
+      "ShoeSole",
+      "ShoeSoleColor"
+    ],
+    "gloves": [
+      "Glve",
+      "GlveColor",
+      "GlveShadow"
+    ],
+    "belt": [
+      "Belt",
+      "BeltColor",
+      "BeltRegPattern",
+      "BeltLowPattern",
+      "BeltPatternColor"
+    ]
+  },
+  "layers": [
+    {
+      "order": 0,
+      "name": "Skin",
+      "attributes": {
+        "name": "Skin",
+        "textureIndex": "0",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Body",
+          "color": "Skin",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 554,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_554_Body/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 300,
+            "height": 199.95,
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "category": "skin"
+    },
+    {
+      "order": 1,
+      "name": "SockLength",
+      "attributes": {
+        "name": "SockLength",
+        "textureIndex": "0",
+        "colorIndex": "35",
+        "lockColor": "SockColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Sock_Blank",
+          "colorSelection": "35",
+          "masks": [
+            {
+              "mask": "Mask_Blank",
+              "maskSelection": "Sock_Blank",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 225,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_225_Sock_Blank/1.svg"
+            }
+          ],
+          "symbolId": 225,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_225_Sock_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 181.9,
+            "x": 129,
+            "y": 32
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Sock_Short",
+          "color": "ShrtSpectrum",
+          "colorSelection": "35",
+          "masks": [
+            {
+              "mask": "Mask_SockShort",
+              "maskSelection": "Sock_Short",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 218,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_218_Sock_Short/1.svg"
+            }
+          ],
+          "symbolId": 218,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_218_Sock_Short/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171,
+            "height": 140,
+            "x": 129,
+            "y": 58
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Sock_Med",
+          "color": "ShrtSpectrum",
+          "colorSelection": "35",
+          "masks": [
+            {
+              "mask": "Mask_SockMed",
+              "maskSelection": "Sock_Med",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 222,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_222_Sock_Med/1.svg"
+            }
+          ],
+          "symbolId": 222,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_222_Sock_Med/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171,
+            "height": 150.5,
+            "x": 129,
+            "y": 47.5
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Sock_Long",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [
+            {
+              "mask": "Mask_SockLong",
+              "maskSelection": "Sock_Long",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 241,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_241_Sock_Long/1.svg"
+            }
+          ],
+          "symbolId": 241,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_241_Sock_Long/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171,
+            "height": 166,
+            "x": 129,
+            "y": 32
+          }
+        }
+      ],
+      "category": "socks"
+    },
+    {
+      "order": 2,
+      "name": "SockColor",
+      "attributes": {
+        "name": "SockColor",
+        "textureIndex": "0",
+        "colorIndex": "35"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "35",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "socks"
+    },
+    {
+      "order": 3,
+      "name": "SockPattern",
+      "attributes": {
+        "name": "SockPattern",
+        "textureIndex": "4",
+        "colorIndex": "11",
+        "lockColor": "SockPatternColor",
+        "grabMask": "SockLength"
+      },
+      "selectedTextureIndex": 4,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Sock_Blank",
+          "colorSelection": "11",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 225,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_225_Sock_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 181.9,
+            "x": 129,
+            "y": 32
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Sock_Jester",
+          "color": "ShrtSpectrum",
+          "colorSelection": "4",
+          "masks": [],
+          "symbolId": 227,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_227_Sock_Jester/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 189.2,
+            "x": 129,
+            "y": 24.7
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Sock_Stripe_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "11",
+          "masks": [],
+          "symbolId": 236,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_236_Sock_Stripe_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 182.9,
+            "x": 129,
+            "y": 31
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Sock_Stripe_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "11",
+          "masks": [],
+          "symbolId": 234,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_234_Sock_Stripe_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 208.5,
+            "x": 129,
+            "y": 5.4
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Sock_Stripe_3",
+          "color": "ShrtSpectrum",
+          "colorSelection": "11",
+          "masks": [],
+          "symbolId": 228,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_228_Sock_Stripe_3/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 205,
+            "x": 129,
+            "y": 8.9
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Sock_Sport_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 232,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_232_Sock_Sport_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 208.45,
+            "x": 129,
+            "y": 5.45
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Sock_Sport_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 230,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_230_Sock_Sport_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172.5,
+            "height": 208.85,
+            "x": 129,
+            "y": 5.05
+          }
+        }
+      ],
+      "category": "socks"
+    },
+    {
+      "order": 4,
+      "name": "SockPatternColor",
+      "attributes": {
+        "name": "SockPatternColor",
+        "textureIndex": "0",
+        "colorIndex": "11"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "11",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "socks"
+    },
+    {
+      "order": 5,
+      "name": "SockShadow",
+      "attributes": {
+        "name": "SockShadow",
+        "textureIndex": "0",
+        "lockTexture": "SockLength",
+        "colorIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        },
+        {
+          "index": 1,
+          "symbol": "Sock_Short_Shadow",
+          "masks": [],
+          "symbolId": 216,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_216_Sock_Short_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172,
+            "height": 8,
+            "x": 128,
+            "y": 50.2
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Sock_Med_Shadow",
+          "masks": [],
+          "symbolId": 220,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_220_Sock_Med_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172,
+            "height": 8,
+            "x": 128,
+            "y": 40
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Sock_Long_Shadow",
+          "masks": [],
+          "symbolId": 239,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_239_Sock_Long_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 172,
+            "height": 8,
+            "x": 128,
+            "y": 24.4
+          }
+        }
+      ],
+      "category": "socks"
+    },
+    {
+      "order": 6,
+      "name": "PantLength",
+      "attributes": {
+        "name": "PantLength",
+        "textureIndex": "6",
+        "colorIndex": "23",
+        "lockColor": "PantColor"
+      },
+      "selectedTextureIndex": 6,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Pant_Low_Panties",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantLowPanties",
+              "maskSelection": "Pant_Low_Panties",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 488,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_488_Pant_Low_Panties/1.svg"
+            }
+          ],
+          "symbolId": 488,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_488_Pant_Low_Panties/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 167.55,
+            "height": 23.1,
+            "x": 131.8,
+            "y": 1
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Pant_Low_Shorts",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantLowShorts",
+              "maskSelection": "Pant_Low_Shorts",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 495,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_495_Pant_Low_Shorts/1.svg"
+            }
+          ],
+          "symbolId": 495,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_495_Pant_Low_Shorts/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 170.95,
+            "height": 25,
+            "x": 128,
+            "y": 0.95
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Pant_Low_Knickers",
+          "colorSelection": "22",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantLowKnickers",
+              "maskSelection": "Pant_Low_Knickers",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 502,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_502_Pant_Low_Knickers/1.svg"
+            }
+          ],
+          "symbolId": 502,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_502_Pant_Low_Knickers/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 170.95,
+            "height": 53.95,
+            "x": 128,
+            "y": 1
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Pant_Low_Long",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantLowLong",
+              "maskSelection": "Pant_Low_Long",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 536,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_536_Pant_Low_Long/1.svg"
+            }
+          ],
+          "symbolId": 536,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_536_Pant_Low_Long/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 170.95,
+            "height": 78.95,
+            "x": 128,
+            "y": 1
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Pant_High_Panties",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantHighPanties",
+              "maskSelection": "Pant_High_Panties",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 484,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_484_Pant_High_Panties/1.svg"
+            }
+          ],
+          "symbolId": 484,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_484_Pant_High_Panties/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 298.85,
+            "height": 86.75,
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Pant_High_Shorts",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantHighShorts",
+              "maskSelection": "Pant_High_Shorts",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 492,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_492_Pant_High_Shorts/1.svg"
+            }
+          ],
+          "symbolId": 492,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_492_Pant_High_Shorts/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 298.5,
+            "height": 86.8,
+            "x": 0.5,
+            "y": 0.95
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Pant_High_Knickers",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantHighKnickers",
+              "maskSelection": "Pant_High_Knickers",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 499,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_499_Pant_High_Knickers/1.svg"
+            }
+          ],
+          "symbolId": 499,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_499_Pant_High_Knickers/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299.5,
+            "height": 86.75,
+            "x": 0.5,
+            "y": 1
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Pant_High_Long",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [
+            {
+              "mask": "Mask_PantHighLong",
+              "maskSelection": "Pant_High_Long",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 533,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_533_Pant_High_Long/1.svg"
+            }
+          ],
+          "symbolId": 533,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_533_Pant_High_Long/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 298.5,
+            "height": 86.75,
+            "x": 0.5,
+            "y": 1
+          }
+        }
+      ],
+      "category": "pants"
+    },
+    {
+      "order": 7,
+      "name": "PantColor",
+      "attributes": {
+        "name": "PantColor",
+        "textureIndex": "0",
+        "colorIndex": "23"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "23",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "pants"
+    },
+    {
+      "order": 8,
+      "name": "PantPattern",
+      "attributes": {
+        "name": "PantPattern",
+        "textureIndex": "0",
+        "colorIndex": "5",
+        "lockColor": "PantPatternColor",
+        "grabMask": "PantLength"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Pant_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 274,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_274_Pant_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Pant_Hero",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 529,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_529_Pant_Hero/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Pant_Sport_1",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 527,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_527_Pant_Sport_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Pant_Sport_2",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 523,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_523_Pant_Sport_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Pant_Stripe_1",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 521,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_521_Pant_Stripe_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Pant_Stripe_2",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 519,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_519_Pant_Stripe_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Pant_Jester",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 525,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_525_Pant_Jester/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Pant_Fade_1",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 516,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_516_Pant_Fade_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 8,
+          "symbol": "Pant_Fade_2",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 514,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_514_Pant_Fade_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 9,
+          "symbol": "Pant_Gradient_1",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 512,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_512_Pant_Gradient_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 10,
+          "symbol": "Pant_Camouflage",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 517,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_517_Pant_Camouflage/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 106.4,
+            "x": 1,
+            "y": -7.4
+          }
+        },
+        {
+          "index": 11,
+          "symbol": "Pant_ChainMail",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 510,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_510_Pant_ChainMail/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 12,
+          "symbol": "Pant_ScaleMail",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 506,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_506_Pant_ScaleMail/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 13,
+          "symbol": "Pant_Diamond",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 508,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_508_Pant_Diamond/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        }
+      ],
+      "category": "pants"
+    },
+    {
+      "order": 9,
+      "name": "PantPatternColor",
+      "attributes": {
+        "name": "PantPatternColor",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "pants"
+    },
+    {
+      "order": 10,
+      "name": "PantPattern2",
+      "attributes": {
+        "name": "PantPattern2",
+        "textureIndex": "0",
+        "colorIndex": "5",
+        "lockColor": "PantPatternColor2",
+        "grabMask": "PantLength"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Pant_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 274,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_274_Pant_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Pant_Lace_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 373,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_373_Pant_Lace_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 166,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Pant_Buckle_1",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 278,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_278_Pant_Buckle_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Pant_Buckle_2",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 276,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_276_Pant_Buckle_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 304.8,
+            "height": 98,
+            "x": 1,
+            "y": 1
+          }
+        }
+      ],
+      "category": "pants"
+    },
+    {
+      "order": 11,
+      "name": "PantPatternColor2",
+      "attributes": {
+        "name": "PantPatternColor2",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "pants"
+    },
+    {
+      "order": 12,
+      "name": "PantShadow",
+      "attributes": {
+        "name": "PantShadow",
+        "textureIndex": "6",
+        "lockTexture": "PantLength",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 6,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Pant_Low_Panties_Shadow",
+          "masks": [],
+          "symbolId": 486,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_486_Pant_Low_Panties_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 298.35,
+            "height": 73.6,
+            "x": 1,
+            "y": 14.4
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Pant_Low_Shorts_Shadow",
+          "masks": [],
+          "symbolId": 494,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_494_Pant_Low_Shorts_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299,
+            "height": 63,
+            "x": 1,
+            "y": 25
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Pant_Low_Knickers_Shadow",
+          "masks": [],
+          "symbolId": 501,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_501_Pant_Low_Knickers_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299,
+            "height": 34,
+            "x": 1,
+            "y": 54
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Pant_Low_Long_Shadow",
+          "masks": [],
+          "symbolId": 535,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_535_Pant_Low_Long_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 274,
+            "height": 118.95,
+            "x": 1,
+            "y": 76
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Pant_High_Panties_Shadow",
+          "masks": [],
+          "symbolId": 482,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_482_Pant_High_Panties_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 298.35,
+            "height": 58.35,
+            "x": 1,
+            "y": 14.4
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Pant_High_Shorts_Shadow",
+          "masks": [],
+          "symbolId": 490,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_490_Pant_High_Shorts_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299,
+            "height": 47.75,
+            "x": 1,
+            "y": 25
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Pant_High_Knickers_Shadow",
+          "masks": [],
+          "symbolId": 497,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_497_Pant_High_Knickers_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299,
+            "height": 18.75,
+            "x": 1,
+            "y": 54
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Pant_High_Long_Shadow",
+          "masks": [],
+          "symbolId": 531,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_531_Pant_High_Long_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 274,
+            "height": 134.2,
+            "x": 1,
+            "y": 60.75
+          }
+        }
+      ],
+      "category": "pants"
+    },
+    {
+      "order": 13,
+      "name": "ShrtLength",
+      "attributes": {
+        "name": "ShrtLength",
+        "textureIndex": "0",
+        "colorIndex": "0",
+        "lockColor": "ShrtColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shrt_Tee",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [
+            {
+              "mask": "Mask_Tee",
+              "maskSelection": "Shrt_Tee",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 553,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_553_Shrt_Tee/1.svg"
+            }
+          ],
+          "symbolId": 553,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_553_Shrt_Tee/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 143,
+            "height": 118.75,
+            "x": 1,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shrt_TeeCrop",
+          "color": "ShrtSpectrum",
+          "colorSelection": "21",
+          "masks": [
+            {
+              "mask": "Mask_TeeCrop",
+              "maskSelection": "Shrt_TeeCrop",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 549,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_549_Shrt_TeeCrop/1.svg"
+            }
+          ],
+          "symbolId": 549,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_549_Shrt_TeeCrop/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 143.4,
+            "height": 118.75,
+            "x": 0.6,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shrt_TeeLong",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [
+            {
+              "mask": "Mask_TeeLong",
+              "maskSelection": "Shrt_TeeLong",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 480,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_480_Shrt_TeeLong/1.svg"
+            }
+          ],
+          "symbolId": 480,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_480_Shrt_TeeLong/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 143,
+            "height": 160.75,
+            "x": 1,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shrt_Tank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "6",
+          "masks": [
+            {
+              "mask": "Mask_Tank",
+              "maskSelection": "Shrt_Tank",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 245,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_245_Shrt_Tank/1.svg"
+            }
+          ],
+          "symbolId": 245,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_245_Shrt_Tank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 126,
+            "height": 81.75,
+            "x": 1,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shrt_TankCrop",
+          "color": "ShrtSpectrum",
+          "colorSelection": "25",
+          "masks": [
+            {
+              "mask": "Mask_TankCrop",
+              "maskSelection": "Shrt_TankCrop",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 543,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_543_Shrt_TankCrop/1.svg"
+            }
+          ],
+          "symbolId": 543,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_543_Shrt_TankCrop/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 126.15,
+            "height": 66.05,
+            "x": 0.6,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shrt_Tube",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [
+            {
+              "mask": "Mask_Tube",
+              "maskSelection": "Shrt_Tube",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 539,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_539_Shrt_Tube/1.svg"
+            }
+          ],
+          "symbolId": 539,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_539_Shrt_Tube/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 125.9,
+            "height": 17.6,
+            "x": 0.6,
+            "y": 44.7
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Shrt_TeeLongCrop",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [
+            {
+              "mask": "Mask_TeeLongCrop",
+              "maskSelection": "Shrt_TeeLongCrop",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 475,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_475_Shrt_TeeLongCrop/1.svg"
+            }
+          ],
+          "symbolId": 475,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_475_Shrt_TeeLongCrop/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 143.5,
+            "height": 160.75,
+            "x": 0.5,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Shrt_DrShoulderShort",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [
+            {
+              "mask": "Mask_DrShoulderShort",
+              "maskSelection": "Shrt_DrShoulderShort",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 477,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_477_Shrt_DrShoulderShort/1.svg"
+            }
+          ],
+          "symbolId": 477,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_477_Shrt_DrShoulderShort/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 143,
+            "height": 88.4,
+            "x": 1,
+            "y": 36.65
+          }
+        },
+        {
+          "index": 8,
+          "symbol": "Shrt_DrShoulderLong",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [
+            {
+              "mask": "Mask_DrShoulderLong",
+              "maskSelection": "Shrt_DrShoulderLong",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 479,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_479_Shrt_DrShoulderLong/1.svg"
+            }
+          ],
+          "symbolId": 479,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_479_Shrt_DrShoulderLong/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 143,
+            "height": 112.95,
+            "x": 1,
+            "y": 36.65
+          }
+        }
+      ],
+      "category": "shirt"
+    },
+    {
+      "order": 14,
+      "name": "ShrtColor",
+      "attributes": {
+        "name": "ShrtColor",
+        "textureIndex": "0",
+        "colorIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shirt"
+    },
+    {
+      "order": 15,
+      "name": "ShrtLayer1",
+      "attributes": {
+        "name": "ShrtLayer1",
+        "textureIndex": "9",
+        "colorIndex": "23",
+        "grabMask": "ShrtLength",
+        "lockColor": "ShrtLayer1Color"
+      },
+      "selectedTextureIndex": 9,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shrt_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "27",
+          "masks": [],
+          "symbolId": 313,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_313_Shrt_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shrt_Plaid",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 388,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_388_Shrt_Plaid/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171.6,
+            "height": 191.95,
+            "x": -11.65,
+            "y": -11.95
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shrt_Sport_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 379,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_379_Shrt_Sport_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 156.3,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shrt_Sport_2",
+          "colorSelection": "9",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 390,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_390_Shrt_Sport_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shrt_Sport_3",
+          "color": "ShrtSpectrum",
+          "colorSelection": "6",
+          "masks": [],
+          "symbolId": 385,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_385_Shrt_Sport_3/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 157.65,
+            "height": 162.5,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shrt_Sport_4",
+          "color": "ShrtSpectrum",
+          "colorSelection": "27",
+          "masks": [],
+          "symbolId": 383,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_383_Shrt_Sport_4/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 157.05,
+            "height": 160.9,
+            "x": -11.65,
+            "y": 6.15
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Shrt_Sport_5",
+          "colorSelection": "23",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 381,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_381_Shrt_Sport_5/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 157.05,
+            "height": 160.9,
+            "x": -11.65,
+            "y": 6.15
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Shrt_Sport_6",
+          "color": "ShrtSpectrum",
+          "colorSelection": "23",
+          "masks": [],
+          "symbolId": 415,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_415_Shrt_Sport_6/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 8,
+          "symbol": "Shrt_Sport_7",
+          "color": "ShrtSpectrum",
+          "colorSelection": "22",
+          "masks": [],
+          "symbolId": 413,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_413_Shrt_Sport_7/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 184.6,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 9,
+          "symbol": "Shrt_Sport_8",
+          "color": "ShrtSpectrum",
+          "colorSelection": "23",
+          "masks": [],
+          "symbolId": 411,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_411_Shrt_Sport_8/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 184.7,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 10,
+          "symbol": "Shrt_Stripe_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "1",
+          "masks": [],
+          "symbolId": 467,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_467_Shrt_Stripe_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 156.15,
+            "height": 161.5,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 11,
+          "symbol": "Shrt_Stripe_2",
+          "colorSelection": "3",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 417,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_417_Shrt_Stripe_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 162.9,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 12,
+          "symbol": "Shrt_Stripe_3",
+          "colorSelection": "10",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 407,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_407_Shrt_Stripe_3/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 13,
+          "symbol": "Shrt_Jester",
+          "colorSelection": "5",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 369,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_369_Shrt_Jester/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 191.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 14,
+          "symbol": "Shrt_Tie_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 406,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_406_Shrt_Tie_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 15,
+          "symbol": "Shrt_Gradient_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 371,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_371_Shrt_Gradient_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 16,
+          "symbol": "Shrt_TankLayered",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 392,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_392_Shrt_TankLayered/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 17,
+          "symbol": "Shrt_Vest",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 398,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_398_Shrt_Vest/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 18,
+          "symbol": "Shrt_Camouflage",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 396,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_396_Shrt_Camouflage/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 185.65,
+            "height": 173.45,
+            "x": -41.65,
+            "y": 1.9
+          }
+        },
+        {
+          "index": 19,
+          "symbol": "Shrt_Argyle_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 387,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_387_Shrt_Argyle_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 156.8,
+            "height": 183.55,
+            "x": -11.65,
+            "y": 3.3
+          }
+        },
+        {
+          "index": 20,
+          "symbol": "Shrt_Argyle_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 386,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_386_Shrt_Argyle_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 175,
+            "x": -11.65,
+            "y": 5.4
+          }
+        },
+        {
+          "index": 21,
+          "symbol": "Shrt_ChainMail_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 321,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_321_Shrt_ChainMail_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 22,
+          "symbol": "Shrt_ChainMail_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 317,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_317_Shrt_ChainMail_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 23,
+          "symbol": "Shrt_ScaleMail_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 325,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_325_Shrt_ScaleMail_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 24,
+          "symbol": "Shrt_ScaleMail_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 323,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_323_Shrt_ScaleMail_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 25,
+          "symbol": "Shrt_Diamond_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 319,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_319_Shrt_Diamond_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 26,
+          "symbol": "Shrt_Diamond_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 315,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_315_Shrt_Diamond_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        }
+      ],
+      "category": "shirt"
+    },
+    {
+      "order": 16,
+      "name": "ShrtLayer1Color",
+      "attributes": {
+        "name": "ShrtLayer1Color",
+        "textureIndex": "0",
+        "colorIndex": "23"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "23",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shirt"
+    },
+    {
+      "order": 17,
+      "name": "ShrtLayer2",
+      "attributes": {
+        "name": "ShrtLayer2",
+        "textureIndex": "8",
+        "colorIndex": "5",
+        "lockColor": "ShrtLayer2Color",
+        "grabMask": "ShrtLength"
+      },
+      "selectedTextureIndex": 8,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shrt_Blank",
+          "colorSelection": "23",
+          "masks": [],
+          "symbolId": 313,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_313_Shrt_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shrt_Logo_Anarchy",
+          "color": "ShrtSpectrum",
+          "colorSelection": "23",
+          "masks": [],
+          "symbolId": 348,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_348_Shrt_Logo_Anarchy/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shrt_Logo_Cancel",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 331,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_331_Shrt_Logo_Cancel/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shrt_Logo_Flower_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 365,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_365_Shrt_Logo_Flower_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shrt_Logo_Flower_2",
+          "colorSelection": "9",
+          "color": "ShrtSpectrum",
+          "masks": [],
+          "symbolId": 363,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_363_Shrt_Logo_Flower_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shrt_Logo_Heart",
+          "color": "ShrtSpectrum",
+          "colorSelection": "10",
+          "masks": [],
+          "symbolId": 367,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_367_Shrt_Logo_Heart/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Shrt_Logo_Nuclear",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 351,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_351_Shrt_Logo_Nuclear/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Shrt_Logo_Peace",
+          "color": "ShrtSpectrum",
+          "colorSelection": "8",
+          "masks": [],
+          "symbolId": 333,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_333_Shrt_Logo_Peace/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 8,
+          "symbol": "Shrt_Logo_Question",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 357,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_357_Shrt_Logo_Question/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 9,
+          "symbol": "Shrt_Logo_Happy",
+          "color": "ShrtSpectrum",
+          "colorSelection": "10",
+          "masks": [],
+          "symbolId": 359,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_359_Shrt_Logo_Happy/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 10,
+          "symbol": "Shrt_Logo_Sad",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 355,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_355_Shrt_Logo_Sad/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 11,
+          "symbol": "Shrt_Logo_Skull",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 353,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_353_Shrt_Logo_Skull/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 12,
+          "symbol": "Shrt_V",
+          "color": "ShrtSpectrum",
+          "colorSelection": "9",
+          "masks": [],
+          "symbolId": 404,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_404_Shrt_V/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 13,
+          "symbol": "Shrt_SportsCoat",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 402,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_402_Shrt_SportsCoat/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 14,
+          "symbol": "Shrt_CoatOpen",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 394,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_394_Shrt_CoatOpen/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 15,
+          "symbol": "Shrt_CardiganTight",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 400,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_400_Shrt_CardiganTight/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.75,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 16,
+          "symbol": "Shrt_Logo_Alien",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 345,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_345_Shrt_Logo_Alien/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 17,
+          "symbol": "Shrt_Logo_FleurDeLis",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 329,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_329_Shrt_Logo_FleurDeLis/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 18,
+          "symbol": "Shrt_Logo_Nuclear2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 339,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_339_Shrt_Logo_Nuclear2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 19,
+          "symbol": "Shrt_Logo_Skeleton",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 1018,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_1018_Shrt_Logo_Skeleton/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 162.35,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 20,
+          "symbol": "Shrt_Logo_Butterfly",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 336,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_336_Shrt_Logo_Butterfly/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 21,
+          "symbol": "Shrt_Logo_Star",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 361,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_361_Shrt_Logo_Star/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 22,
+          "symbol": "Shrt_Lace_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 377,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_377_Shrt_Lace_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 169.15,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 23,
+          "symbol": "Shrt_Buckle_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 375,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_375_Shrt_Buckle_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 24,
+          "symbol": "Shrt_Buckle_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 374,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_374_Shrt_Buckle_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.65,
+            "height": 160.8,
+            "x": -11.65,
+            "y": 6.25
+          }
+        },
+        {
+          "index": 25,
+          "symbol": "Shrt_Logo_SaoPaulo",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2000,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2000_Shrt_Logo_SaoPaulo/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 26,
+          "symbol": "Shrt_Logo_Flamengo",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2001,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2001_Shrt_Logo_Flamengo/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 27,
+          "symbol": "Shrt_Logo_Timão",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2002,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2002_Shrt_Logo_Timão/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 28,
+          "symbol": "Shrt_Logo_Verdão",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2003,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2003_Shrt_Logo_Verdão/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 29,
+          "symbol": "Shrt_Logo_Nike",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2004,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2004_Shrt_Logo_Nike/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 30,
+          "symbol": "Shrt_Logo_Jordan",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2005,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2005_Shrt_Logo_Jordan/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 31,
+          "symbol": "Shrt_Logo_Roblox",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2006,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2006_Shrt_Logo_Roblox/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 32,
+          "symbol": "Shrt_Logo_Vasco",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2007,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2007_Shrt_Logo_Vasco/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 33,
+          "symbol": "Shrt_Logo_Steam",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2008,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2008_Shrt_Logo_Steam/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 34,
+          "symbol": "Shrt_Logo_Twitter",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2009,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2009_Shrt_Logo_Twitter/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 35,
+          "symbol": "Shrt_Logo_GPT",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2010,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2010_Shrt_Logo_GPT/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 36,
+          "symbol": "Shrt_Logo_Counter-Strike",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2011,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2011_Shrt_Logo_Counter-Strike/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 37,
+          "symbol": "Shrt_Logo_LOL",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2012,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2012_Shrt_Logo_LOL/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 38,
+          "symbol": "Shrt_Logo_Barcelona",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2013,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2013_Shrt_Logo_Barcelona/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 39,
+          "symbol": "Shrt_Logo_Batman",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2014,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2014_Shrt_Logo_Batman/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 40,
+          "symbol": "Shrt_Logo_Nasa",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2015,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2015_Shrt_Logo_Nasa/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 41,
+          "symbol": "Shrt_Logo_Supercell",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2017,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2017_Shrt_Logo_Supercell/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 42,
+          "symbol": "Shrt_Logo_Barbie",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2018,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2018_Shrt_Logo_Barbie/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 43,
+          "symbol": "Shrt_Logo_BTS",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2019,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2019_Shrt_Logo_BTS/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 44,
+          "symbol": "Shrt_Logo_supreme",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2020,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2020_Shrt_Logo_supreme/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 45,
+          "symbol": "Shrt_Logo_TheNorthFace",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2021,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2021_Shrt_Logo_TheNorthFace/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 46,
+          "symbol": "Shrt_Logo_RollingStone",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2022,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2022_Shrt_Logo_RollingStone/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 47,
+          "symbol": "Shrt_Logo_VOGUE",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2023,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2023_Shrt_Logo_VOGUE/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 48,
+          "symbol": "Shrt_Logo_DIESEL",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2025,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2025_Shrt_Logo_DIESEL/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 49,
+          "symbol": "Shrt_Logo_CALVIN",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2026,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2026_Shrt_Logo_CALVIN/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 50,
+          "symbol": "Shrt_Logo_OBEY",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2027,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2027_Shrt_Logo_OBEY/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 51,
+          "symbol": "Shrt_Logo_GAP",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2028,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2028_Shrt_Logo_GAP/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 52,
+          "symbol": "Shrt_Logo_NewYork",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2029,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2029_Shrt_Logo_NewYork/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 53,
+          "symbol": "Shrt_Logo_Brasail",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2031,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2031_Shrt_Logo_Brasail/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 54,
+          "symbol": "Shrt_Logo_CANADA",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2032,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2032_Shrt_Logo_CANADA/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 55,
+          "symbol": "Shrt_Logo_France",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2033,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2033_Shrt_Logo_France/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 56,
+          "symbol": "Shrt_Logo_China",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2034,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2034_Shrt_Logo_China/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 57,
+          "symbol": "Shrt_Logo_USA",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2035,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2035_Shrt_Logo_USA/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 58,
+          "symbol": "Shrt_Logo_Playboy",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2036,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2036_Shrt_Logo_Playboy/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 59,
+          "symbol": "Shrt_Logo_ViVi",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2037,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2037_Shrt_Logo_ViVi/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 60,
+          "symbol": "Shrt_Logo_MG",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2038,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2038_Shrt_Logo_MG/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        },
+        {
+          "index": 61,
+          "symbol": "Shrt_Logo_Friends",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 2039,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_2039_Shrt_Logo_Friends/1.svg",
+          "exported": true,
+          "placement": {
+            "x": 48.75,
+            "y": 30.4,
+            "width": 28.65,
+            "height": 28.4
+          },
+          "preserveColors": true,
+          "custom": true
+        }
+      ],
+      "category": "shirt"
+    },
+    {
+      "order": 18,
+      "name": "ShrtLayer2Color",
+      "attributes": {
+        "name": "ShrtLayer2Color",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shirt"
+    },
+    {
+      "order": 19,
+      "name": "ShrtShadow",
+      "attributes": {
+        "name": "ShrtShadow",
+        "textureIndex": "0",
+        "lockTexture": "ShrtLength",
+        "colorIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shrt_Tee_Shadow",
+          "masks": [],
+          "symbolId": 551,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_551_Shrt_Tee_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299.1,
+            "height": 127,
+            "x": -0.1,
+            "y": 4
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shrt_TeeCrop_Shadow",
+          "masks": [],
+          "symbolId": 547,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_547_Shrt_TeeCrop_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299.1,
+            "height": 127,
+            "x": -0.1,
+            "y": 4
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shrt_TeeLong_Shadow",
+          "masks": [],
+          "symbolId": 473,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_473_Shrt_TeeLong_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299,
+            "height": 169,
+            "x": 0,
+            "y": 4
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shrt_Tank_Shadow",
+          "masks": [],
+          "symbolId": 243,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_243_Shrt_Tank_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299,
+            "height": 103,
+            "x": 0,
+            "y": 4
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shrt_TankCrop_Shadow",
+          "masks": [],
+          "symbolId": 541,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_541_Shrt_TankCrop_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 145,
+            "height": 35.6,
+            "x": 0,
+            "y": 71.4
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shrt_Tube_Shadow",
+          "masks": [],
+          "symbolId": 538,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_538_Shrt_Tube_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 126.9,
+            "height": 32.35,
+            "x": 0.1,
+            "y": 37
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Shrt_TeeLongCrop_Shadow",
+          "masks": [],
+          "symbolId": 545,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_545_Shrt_TeeLongCrop_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 126.9,
+            "height": 7.55,
+            "x": 0.1,
+            "y": 71.4
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Shrt_DrShoulderShort_Shadow",
+          "masks": [],
+          "symbolId": 469,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_469_Shrt_DrShoulderShort_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299.35,
+            "height": 164.25,
+            "x": -0.35,
+            "y": 4
+          }
+        },
+        {
+          "index": 8,
+          "symbol": "Shrt_DrShoulderLong_Shadow",
+          "masks": [],
+          "symbolId": 471,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_471_Shrt_DrShoulderLong_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 299.35,
+            "height": 164.45,
+            "x": -0.35,
+            "y": 4
+          }
+        }
+      ],
+      "category": "shirt"
+    },
+    {
+      "order": 20,
+      "name": "Shoe",
+      "attributes": {
+        "name": "Shoe",
+        "textureIndex": "1",
+        "colorIndex": "3",
+        "lockColor": "ShoeColor"
+      },
+      "selectedTextureIndex": 1,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shoe_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "10",
+          "masks": [
+            {
+              "mask": "Mask_ShoeBlank",
+              "maskSelection": "Shoe_Blank",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 268,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_268_Shoe_Blank/1.svg"
+            }
+          ],
+          "symbolId": 268,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_268_Shoe_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shoe_FlipFlop",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [
+            {
+              "mask": "Mask_ShoeFlipFlop",
+              "maskSelection": "Shoe_FlipFlop",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 254,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_254_Shoe_FlipFlop/1.svg"
+            }
+          ],
+          "symbolId": 254,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_254_Shoe_FlipFlop/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 157,
+            "height": 90.85,
+            "x": 144,
+            "y": 107
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shoe_Sling_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [
+            {
+              "mask": "Mask_ShoeSling1",
+              "maskSelection": "Shoe_Sling_1",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 258,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_258_Shoe_Sling_1/1.svg"
+            }
+          ],
+          "symbolId": 258,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_258_Shoe_Sling_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.4,
+            "height": 91.55,
+            "x": 144.35,
+            "y": 108
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shoe_Sling_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "27",
+          "masks": [
+            {
+              "mask": "Mask_ShoeSling2",
+              "maskSelection": "Shoe_Sling_2",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 249,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_249_Shoe_Sling_2/1.svg"
+            }
+          ],
+          "symbolId": 249,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_249_Shoe_Sling_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 155.4,
+            "height": 91.55,
+            "x": 144.35,
+            "y": 108
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shoe_Reg",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [
+            {
+              "mask": "Mask_ShoeReg",
+              "maskSelection": "Shoe_Reg",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 310,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_310_Shoe_Reg/1.svg"
+            }
+          ],
+          "symbolId": 310,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_310_Shoe_Reg/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 156.25,
+            "height": 90.45,
+            "x": 144.25,
+            "y": 106.5
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shoe_Boot",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [
+            {
+              "mask": "Mask_ShoeBoot",
+              "maskSelection": "Shoe_Boot",
+              "maskSymbolId": null,
+              "maskPublicPath": null,
+              "maskSelectionSymbolId": 262,
+              "maskSelectionPublicPath": "/assets/buddylabs/body-symbols/DefineSprite_262_Shoe_Boot/1.svg"
+            }
+          ],
+          "symbolId": 262,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_262_Shoe_Boot/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171.6,
+            "height": 148.85,
+            "x": 128.9,
+            "y": 49
+          }
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 21,
+      "name": "ShoeColor",
+      "attributes": {
+        "name": "ShoeColor",
+        "textureIndex": "0",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 22,
+      "name": "ShoeSlingDesign",
+      "attributes": {
+        "name": "ShoeSlingDesign",
+        "textureIndex": "0",
+        "colorIndex": "5",
+        "grabMask": "Shoe",
+        "lockColor": "ShoeSlingDesignColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shoe_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 268,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_268_Shoe_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shoe_Reg_Sport_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 304,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_304_Shoe_Reg_Sport_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shoe_Reg_Sport_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 307,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_307_Shoe_Reg_Sport_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 170.3,
+            "height": 149.95,
+            "x": 130.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shoe_Reg_Sport_5",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 300,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_300_Shoe_Reg_Sport_5/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shoe_Reg_Jester_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 288,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_288_Shoe_Reg_Jester_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171,
+            "height": 149.95,
+            "x": 129.9,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shoe_Reg_Jester_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 286,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_286_Shoe_Reg_Jester_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 23,
+      "name": "ShoeSlingDesignColor",
+      "attributes": {
+        "name": "ShoeSlingDesignColor",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 24,
+      "name": "ShoeRegDesign",
+      "attributes": {
+        "name": "ShoeRegDesign",
+        "textureIndex": "0",
+        "colorIndex": "5",
+        "grabMask": "Shoe",
+        "lockColor": "ShoeRegDesignColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shoe_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 268,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_268_Shoe_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shoe_Reg_Sport_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 304,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_304_Shoe_Reg_Sport_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shoe_Reg_Sport_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 307,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_307_Shoe_Reg_Sport_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 170.3,
+            "height": 149.95,
+            "x": 130.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shoe_Reg_Sport_3",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 302,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_302_Shoe_Reg_Sport_3/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shoe_Reg_Sport_4",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 296,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_296_Shoe_Reg_Sport_4/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shoe_Reg_Sport_5",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 300,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_300_Shoe_Reg_Sport_5/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Shoe_Reg_Jester_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 288,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_288_Shoe_Reg_Jester_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171,
+            "height": 149.95,
+            "x": 129.9,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Shoe_Reg_Jester_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 286,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_286_Shoe_Reg_Jester_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 25,
+      "name": "ShoeRegDesignColor",
+      "attributes": {
+        "name": "ShoeRegDesignColor",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 26,
+      "name": "ShoeBootDesign",
+      "attributes": {
+        "name": "ShoeBootDesign",
+        "textureIndex": "0",
+        "colorIndex": "5",
+        "grabMask": "Shoe",
+        "lockColor": "ShoeBootDesignColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shoe_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 268,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_268_Shoe_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shoe_Reg_Sport_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 304,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_304_Shoe_Reg_Sport_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shoe_Reg_Sport_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 307,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_307_Shoe_Reg_Sport_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 170.3,
+            "height": 149.95,
+            "x": 130.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shoe_Reg_Sport_4",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 296,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_296_Shoe_Reg_Sport_4/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shoe_Reg_Sport_5",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 300,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_300_Shoe_Reg_Sport_5/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shoe_Boot_Sport_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 294,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_294_Shoe_Boot_Sport_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Shoe_Boot_Sport_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 290,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_290_Shoe_Boot_Sport_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 7,
+          "symbol": "Shoe_Reg_Jester_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 288,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_288_Shoe_Reg_Jester_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 171,
+            "height": 149.95,
+            "x": 129.9,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 8,
+          "symbol": "Shoe_Reg_Jester_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 286,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_286_Shoe_Reg_Jester_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 9,
+          "symbol": "Shoe_Boot_Flop",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 292,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_292_Shoe_Boot_Flop/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.9,
+            "height": 149.9,
+            "x": 131,
+            "y": 47
+          }
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 27,
+      "name": "ShoeBootDesignColor",
+      "attributes": {
+        "name": "ShoeBootDesignColor",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "5",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 28,
+      "name": "ShoeRegLaces",
+      "attributes": {
+        "name": "ShoeRegLaces",
+        "textureIndex": "0",
+        "colorIndex": "0",
+        "grabMask": "Shoe",
+        "lockColor": "ShoeRegLacesColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shoe_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 268,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_268_Shoe_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shoe_Reg_Laces_Thin",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 284,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_284_Shoe_Reg_Laces_Thin/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shoe_Reg_Laces_Thick",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 271,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_271_Shoe_Reg_Laces_Thick/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shoe_Reg_Laces_Velcro",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 309,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_309_Shoe_Reg_Laces_Velcro/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 29,
+      "name": "ShoeRegLacesColor",
+      "attributes": {
+        "name": "ShoeRegLacesColor",
+        "textureIndex": "0",
+        "colorIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 30,
+      "name": "ShoeBootLaces",
+      "attributes": {
+        "name": "ShoeBootLaces",
+        "textureIndex": "0",
+        "colorIndex": "0",
+        "lockColor": "ShoeBootLacesColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "Shoe_Blank",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 268,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_268_Shoe_Blank/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 1,
+          "symbol": "Shoe_Reg_Laces_Thin",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 284,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_284_Shoe_Reg_Laces_Thin/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Shoe_Reg_Laces_Thick",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 271,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_271_Shoe_Reg_Laces_Thick/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Shoe_Boot_Laces_Side",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 280,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_280_Shoe_Boot_Laces_Side/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Shoe_Reg_Laces_Velcro",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 309,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_309_Shoe_Reg_Laces_Velcro/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Shoe_Boot_Buckle_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 282,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_282_Shoe_Boot_Buckle_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Shoe_Boot_Buckle_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 281,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_281_Shoe_Boot_Buckle_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 169.3,
+            "height": 149.95,
+            "x": 131.6,
+            "y": 47.05
+          }
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 31,
+      "name": "ShoeBootLacesColor",
+      "attributes": {
+        "name": "ShoeBootLacesColor",
+        "textureIndex": "0",
+        "colorIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 32,
+      "name": "ShoeSole",
+      "attributes": {
+        "name": "ShoeSole",
+        "textureIndex": "0",
+        "colorIndex": "32",
+        "lockColor": "ShoeSoleColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "colorSelection": "32",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        },
+        {
+          "index": 1,
+          "symbol": "Shoe_Sole",
+          "color": "ShrtSpectrum",
+          "colorSelection": "32",
+          "masks": [],
+          "symbolId": 252,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_252_Shoe_Sole/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 157,
+            "height": 90.85,
+            "x": 144,
+            "y": 107
+          }
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 33,
+      "name": "ShoeSoleColor",
+      "attributes": {
+        "name": "ShoeSoleColor",
+        "textureIndex": "0",
+        "colorIndex": "32"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "32",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "shoes"
+    },
+    {
+      "order": 34,
+      "name": "Glve",
+      "attributes": {
+        "name": "Glve",
+        "textureIndex": "0",
+        "colorIndex": "3",
+        "lockColor": "GlveColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        },
+        {
+          "index": 1,
+          "symbol": "Glve_Short",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 465,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_465_Glve_Short/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 206.4,
+            "height": 121,
+            "x": -1,
+            "y": 76.5
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Glve_Med",
+          "color": "ShrtSpectrum",
+          "colorSelection": "22",
+          "masks": [],
+          "symbolId": 459,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_459_Glve_Med/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 206.4,
+            "height": 120.65,
+            "x": -1,
+            "y": 76.5
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Glve_Long",
+          "color": "ShrtSpectrum",
+          "colorSelection": "29",
+          "masks": [],
+          "symbolId": 451,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_451_Glve_Long/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 206.4,
+            "height": 120.2,
+            "x": -1,
+            "y": 76.5
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Glve_Fngr",
+          "color": "ShrtSpectrum",
+          "colorSelection": "29",
+          "masks": [],
+          "symbolId": 463,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_463_Glve_Fngr/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 206.4,
+            "height": 101.8,
+            "x": -1,
+            "y": 76.5
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Glve_Lace",
+          "color": "ShrtSpectrum",
+          "colorSelection": "29",
+          "masks": [],
+          "symbolId": 449,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_449_Glve_Lace/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 144.95,
+            "height": 35.15,
+            "x": -0.05,
+            "y": 125.75
+          }
+        }
+      ],
+      "category": "gloves"
+    },
+    {
+      "order": 35,
+      "name": "GlveColor",
+      "attributes": {
+        "name": "GlveColor",
+        "textureIndex": "0",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "gloves"
+    },
+    {
+      "order": 36,
+      "name": "GlveShadow",
+      "attributes": {
+        "name": "GlveShadow",
+        "textureIndex": "0",
+        "lockTexture": "Glve",
+        "colorIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        },
+        {
+          "index": 1,
+          "symbol": "Glve_Short_Shadow",
+          "masks": [],
+          "symbolId": 461,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_461_Glve_Short_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 146.6,
+            "height": 9.7,
+            "x": -0.95,
+            "y": 158.05
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Glve_Med_Shadow",
+          "masks": [],
+          "symbolId": 455,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_455_Glve_Med_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 146.6,
+            "height": 9.7,
+            "x": -0.95,
+            "y": 136.45
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Glve_Long_Shadow",
+          "masks": [],
+          "symbolId": 448,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_448_Glve_Long_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 146.6,
+            "height": 9.7,
+            "x": -0.95,
+            "y": 112.85
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Glve_Short_Shadow",
+          "masks": [],
+          "symbolId": 461,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_461_Glve_Short_Shadow/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 146.6,
+            "height": 9.7,
+            "x": -0.95,
+            "y": 158.05
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "BlankClip",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "gloves"
+    },
+    {
+      "order": 37,
+      "name": "Belt",
+      "attributes": {
+        "name": "Belt",
+        "textureIndex": "0",
+        "colorIndex": "3",
+        "lockColor": "BeltColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        },
+        {
+          "index": 1,
+          "symbol": "Belt_Reg",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 446,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_446_Belt_Reg/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 130.6,
+            "height": 14.45,
+            "x": -1.3,
+            "y": 64.9
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Belt_Para",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 427,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_427_Belt_Para/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 130.6,
+            "height": 73.95,
+            "x": -1.3,
+            "y": 5.4
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Belt_X",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 423,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_423_Belt_X/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 130.6,
+            "height": 73.95,
+            "x": -1.3,
+            "y": 5.4
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Belt_Low",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 420,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_420_Belt_Low/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 280.1,
+            "height": 83.65,
+            "x": 0.5,
+            "y": 3.65
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Belt_Low_Para",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 425,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_425_Belt_Low_Para/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 280.2,
+            "height": 83.65,
+            "x": 0.5,
+            "y": 3.65
+          }
+        },
+        {
+          "index": 6,
+          "symbol": "Belt_Low_X",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 421,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_421_Belt_Low_X/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 280.2,
+            "height": 87.95,
+            "x": 0.5,
+            "y": 3.65
+          }
+        }
+      ],
+      "category": "belt"
+    },
+    {
+      "order": 38,
+      "name": "BeltColor",
+      "attributes": {
+        "name": "BeltColor",
+        "textureIndex": "0",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "belt"
+    },
+    {
+      "order": 39,
+      "name": "BeltRegPattern",
+      "attributes": {
+        "name": "BeltRegPattern",
+        "textureIndex": "0",
+        "colorIndex": "0",
+        "lockColor": "BeltPatternColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        },
+        {
+          "index": 1,
+          "symbol": "Belt_Reg_Buckle_Military",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 443,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_443_Belt_Reg_Buckle_Military/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 16.75,
+            "height": 13.75,
+            "x": 55.05,
+            "y": 62.1
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Belt_Reg_Buckle_Oval",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 440,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_440_Belt_Reg_Buckle_Oval/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 16.75,
+            "height": 13.75,
+            "x": 55.05,
+            "y": 62.1
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Belt_Reg_Buckle_Reg",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 429,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_429_Belt_Reg_Buckle_Reg/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 19,
+            "height": 13,
+            "x": 52.6,
+            "y": 62.5
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Belt_Reg_Buckle_Stud_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 433,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_433_Belt_Reg_Buckle_Stud_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 124.3,
+            "height": 13,
+            "x": 0.7,
+            "y": 62.5
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Belt_Reg_Buckle_Stud_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 431,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_431_Belt_Reg_Buckle_Stud_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 122.8,
+            "height": 13,
+            "x": 3.5,
+            "y": 62.5
+          }
+        }
+      ],
+      "category": "belt"
+    },
+    {
+      "order": 40,
+      "name": "BeltLowPattern",
+      "attributes": {
+        "name": "BeltLowPattern",
+        "textureIndex": "0",
+        "colorIndex": "0",
+        "lockColor": "BeltPatternColor"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        },
+        {
+          "index": 1,
+          "symbol": "Belt_Low_Buckle_Military",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 444,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_444_Belt_Low_Buckle_Military/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 16.75,
+            "height": 13.1,
+            "x": 55,
+            "y": 74.25
+          }
+        },
+        {
+          "index": 2,
+          "symbol": "Belt_Low_Buckle_Oval",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 441,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_441_Belt_Low_Buckle_Oval/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 16.75,
+            "height": 13.1,
+            "x": 55,
+            "y": 74.25
+          }
+        },
+        {
+          "index": 3,
+          "symbol": "Belt_Low_Buckle_Reg",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 438,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_438_Belt_Low_Buckle_Reg/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 19,
+            "height": 12.45,
+            "x": 52.55,
+            "y": 74.6
+          }
+        },
+        {
+          "index": 4,
+          "symbol": "Belt_Low_Buckle_Stud_1",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 437,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_437_Belt_Low_Buckle_Stud_1/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 121.45,
+            "height": 13.45,
+            "x": 3.1,
+            "y": 73.6
+          }
+        },
+        {
+          "index": 5,
+          "symbol": "Belt_Low_Buckle_Stud_2",
+          "color": "ShrtSpectrum",
+          "colorSelection": "3",
+          "masks": [],
+          "symbolId": 435,
+          "publicPath": "/assets/buddylabs/body-symbols/DefineSprite_435_Belt_Low_Buckle_Stud_2/1.svg",
+          "exported": true,
+          "placement": {
+            "width": 116.6,
+            "height": 13.25,
+            "x": 4.85,
+            "y": 73.8
+          }
+        }
+      ],
+      "category": "belt"
+    },
+    {
+      "order": 41,
+      "name": "BeltPatternColor",
+      "attributes": {
+        "name": "BeltPatternColor",
+        "textureIndex": "0",
+        "colorIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "textures": [
+        {
+          "index": 0,
+          "symbol": "BlankClip",
+          "color": "ShrtSpectrum",
+          "colorSelection": "0",
+          "masks": [],
+          "symbolId": 33,
+          "publicPath": null,
+          "exported": true,
+          "placement": null
+        }
+      ],
+      "category": "belt"
+    }
+  ]
+}

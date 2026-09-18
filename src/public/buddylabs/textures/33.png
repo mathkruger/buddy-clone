@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=6e66d6bc-9714-4b5b-b3b8-4a04d2482021
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=6e66d6bc-9714-4b5b-b3b8-4a04d2482021">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MinePoke</title>
+    <script type="module" crossorigin src="/assets/index-Cwc3gGhX.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CYj4mnDY.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>

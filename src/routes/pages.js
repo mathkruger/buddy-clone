@@ -15,26 +15,22 @@ export function pagesRouter(store, services) {
     res.render("index", services.pages.pageData("/"));
   });
 
-  router.get("/create", (req, res) => {
-    res.render("create", {
-      ...services.pages.pageData("/create"),
-      viewer: req.auth ? req.auth.username : null
-    });
+  router.get("/register", (req, res) => {
+    if (req.auth) {
+      return res.redirect("/play");
+    }
+    res.render("register", services.pages.pageData("/register"));
   });
 
   router.get("/login", (req, res) => {
     if (req.auth) {
-      return res.redirect(`/${encodeURIComponent(req.auth.username)}`);
+      return res.redirect("/play");
     }
     res.render("login", services.pages.pageData("/login"));
   });
 
-  router.get("/search", requireAuth, (req, res) => {
-    res.render("search", services.pages.pageData("/search"));
-  });
-
-  router.get("/favorites", requireAuth, (req, res) => {
-    res.render("favorites", services.pages.pageData("/favorites"));
+  router.get("/play", requireAuth, (req, res) => {
+    res.render("play", services.pages.playView(req.auth.username));
   });
 
   router.get("/embed/:username", (req, res) => {
@@ -42,7 +38,11 @@ export function pagesRouter(store, services) {
     if (data.notFound) {
       res
         .status(404)
-        .render("404", { username: data.username, pageTitle: data.pageTitle, bodyClass: data.bodyClass });
+        .render("404", {
+          username: data.username,
+          pageTitle: "Not found | Buddy Clone",
+          bodyClass: "page-embed embed-shell"
+        });
       return;
     }
     res.render("embed", {
@@ -52,19 +52,16 @@ export function pagesRouter(store, services) {
     });
   });
 
-  router.get("/:username", requireAuth, (req, res) => {
-    const data = services.pages.profileView(req.params.username);
-    if (data.notFound) {
-      res
-        .status(404)
-        .render("404", { username: data.username, pageTitle: data.pageTitle, bodyClass: data.bodyClass });
-      return;
-    }
-    res.render("profile", {
-      profileJson: data.profileJson,
-      pageTitle: data.pageTitle,
-      bodyClass: data.bodyClass
-    });
+  router.get("/create", (req, res) => {
+    res.redirect(301, "/register");
+  });
+
+  router.get("/search", (req, res) => {
+    res.redirect(301, "/");
+  });
+
+  router.get("/:username", (req, res) => {
+    res.redirect(301, "/play");
   });
 
   return router;

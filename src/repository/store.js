@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import { isValidMood, DEFAULT_MOOD } from "../public/moods.js";
+import { isValidMood } from "../public/moods.js";
 import { openDatabase } from "./db/backend.js";
 import {
   DuplicateUsernameError,
@@ -73,6 +73,17 @@ export class Store {
     return this._backend.hasUser(username);
   }
 
+  // Minimal public view of another profile — exactly { username, avatarDef,
+  // mood }, with no interactions/favorites leakage. Returns null for unknown
+  // users so the route can 404.
+  getPublicProfile(username) {
+    this._assertReady();
+    const name = normalizeUsername(username);
+    const user = this._backend.getProfile(name);
+    if (!user) return null;
+    return this._profileSummary(name, user);
+  }
+
   // ---- writes ----
 
   // Create a profile for `username`. `passwordHash` is a bcrypt hash set by
@@ -86,7 +97,7 @@ export class Store {
       }
       const user = {
         avatarDef: avatarDef || {},
-        mood: DEFAULT_MOOD,
+        mood: null,
         tokenHash: "",
         passwordHash: passwordHash || null,
         createdAt: new Date().toISOString()
@@ -106,7 +117,7 @@ export class Store {
       const hasMood = Object.prototype.hasOwnProperty.call(patch, "mood");
       if (hasAvatar) update.avatarDef = patch.avatarDef || {};
       if (hasMood) {
-        if (!isValidMood(patch.mood)) {
+        if (patch.mood !== null && !isValidMood(patch.mood)) {
           throw new ValidationError(`Unsupported mood "${patch.mood}"`);
         }
         update.mood = patch.mood;
@@ -171,15 +182,6 @@ export class Store {
       const favorites = this._backend.removeFavorite(username, targetName);
       return this._resolveFavorites(favorites);
     })();
-  }
-
-  // ---- search ----
-
-  searchProfiles(query) {
-    this._assertReady();
-    const q = normalizeUsername(query);
-    if (!q) return [];
-    return this._backend.searchProfiles(q);
   }
 
   // ---- private helpers ----

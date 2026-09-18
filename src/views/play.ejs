@@ -1,0 +1,27 @@
+<%- include('partials/head') %>
+
+  <%- include('partials/site-header') %>
+
+  <main class="play-page">
+    <section class="play-stage-panel">
+      <div id="play-stage" class="avatar-frame" aria-label="Your buddy"></div>
+      <p id="play-mood-name" class="mood-name"></p>
+    </section>
+
+    <nav class="play-tabs" aria-label="Play screen tabs">
+      <button type="button" class="play-tab active" data-tab="clone">BuddyClone</button>
+      <button type="button" class="play-tab" data-tab="friends">Friends</button>
+      <button type="button" class="play-tab" data-tab="humor">Humor</button>
+      <button type="button" class="play-tab" data-tab="appearance">Appearance</button>
+    </nav>
+
+    <section id="tab-clone" class="play-tab-panel active"></section>
+    <section id="tab-friends" class="play-tab-panel"></section>
+    <section id="tab-humor" class="play-tab-panel"></section>
+    <section id="tab-appearance" class="play-tab-panel"></section>
+  </main>
+
+  <%- include('partials/clouds') %>
+  <script type="application/json" id="buddy-profile"><%- profileJson %></script>
+  <script type="module" src="/play.js"></script>
+  <%- include('partials/foot') %>

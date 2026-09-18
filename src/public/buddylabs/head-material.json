@@ -1,0 +1,476 @@
+{
+  "material": {
+    "option": "Head",
+    "name": "Material",
+    "attributes": {
+      "name": "Material",
+      "clipRect": "Head Clip Rect"
+    },
+    "atlas": {
+      "width": 250,
+      "height": 124.95,
+      "x": 0,
+      "y": 0
+    }
+  },
+  "layers": [
+    {
+      "order": 0,
+      "name": "Head",
+      "flashAttributes": {
+        "name": "Head",
+        "textureIndex": "0",
+        "colorIndex": "2"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "Head",
+        "color": "Skin",
+        "colorSelection": "2",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "Head",
+        "id": 214,
+        "publicPath": "/assets/buddylabs/face-symbols/DefineSprite_214_Head/1.svg",
+        "exported": true,
+        "svgPath": "research/ffdec/head-symbol-svg/DefineSprite_214_Head/1.svg",
+        "placement": {
+          "width": 250,
+          "height": 124.95,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 1,
+      "name": "Spot",
+      "flashAttributes": {
+        "name": "Spot",
+        "textureIndex": "0",
+        "colorIndex": "2",
+        "lockColor": "SpotColor",
+        "blendMode": "multiply"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "2",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 2,
+      "name": "SpotColor",
+      "flashAttributes": {
+        "name": "SpotColor",
+        "textureIndex": "0",
+        "colorIndex": "2"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "2",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": false,
+      "isControllerOnly": true
+    },
+    {
+      "order": 3,
+      "name": "Mouth",
+      "flashAttributes": {
+        "name": "Mouth",
+        "textureIndex": "0"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "Mouth",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "Mouth",
+        "id": 44,
+        "publicPath": "/assets/buddylabs/face-symbols/DefineSprite_44_Mouth/1.svg",
+        "exported": true,
+        "svgPath": "public/assets/buddylabs/face-symbols/DefineSprite_44_Mouth/1.svg",
+        "placement": {
+          "width": 79.65,
+          "height": 23.4,
+          "x": 85.5,
+          "y": 79.15
+        }
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 4,
+      "name": "EyeShadow",
+      "flashAttributes": {
+        "name": "EyeShadow",
+        "textureIndex": "0",
+        "colorIndex": "5",
+        "lockColor": "EyeShadowColor",
+        "blendMode": "multiply"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "colorSelection": "5",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 5,
+      "name": "EyeShadowColor",
+      "flashAttributes": {
+        "name": "EyeShadowColor",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "5",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": false,
+      "isControllerOnly": true
+    },
+    {
+      "order": 6,
+      "name": "Mask",
+      "flashAttributes": {
+        "name": "Mask",
+        "textureIndex": "0",
+        "colorIndex": "5",
+        "lockColor": "MaskColor"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "5",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 7,
+      "name": "MaskColor",
+      "flashAttributes": {
+        "name": "MaskColor",
+        "textureIndex": "0",
+        "colorIndex": "5"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "5",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": false,
+      "isControllerOnly": true
+    },
+    {
+      "order": 8,
+      "name": "Eyes",
+      "flashAttributes": {
+        "name": "Eyes",
+        "textureIndex": "5",
+        "colorIndex": "19",
+        "lockColor": "EyesColor"
+      },
+      "selectedTextureIndex": 5,
+      "selectedTexture": {
+        "symbol": "Eyes_Azn1",
+        "color": "Eye",
+        "colorSelection": "19",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "Eyes_Azn1",
+        "id": 123,
+        "publicPath": "/assets/buddylabs/face-symbols/DefineSprite_123_Eyes_Azn1/1.svg",
+        "exported": true,
+        "svgPath": "public/assets/buddylabs/face-symbols/DefineSprite_123_Eyes_Azn1/1.svg",
+        "placement": {
+          "width": 100.55,
+          "height": 47.25,
+          "x": 74.7,
+          "y": 43.05
+        }
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 9,
+      "name": "EyesColor",
+      "flashAttributes": {
+        "name": "EyesColor",
+        "textureIndex": "0",
+        "colorIndex": "19"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "Eye",
+        "colorSelection": "19",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": false,
+      "isControllerOnly": true
+    },
+    {
+      "order": 10,
+      "name": "Brows",
+      "flashAttributes": {
+        "name": "Brows",
+        "textureIndex": "2"
+      },
+      "selectedTextureIndex": 2,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 11,
+      "name": "5OClock",
+      "flashAttributes": {
+        "name": "5OClock",
+        "textureIndex": "0",
+        "blendMode": "normal",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 12,
+      "name": "Glas",
+      "flashAttributes": {
+        "name": "Glas",
+        "textureIndex": "0",
+        "colorIndex": "3",
+        "lockColor": "GlasColor"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "3",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 13,
+      "name": "GlasColor",
+      "flashAttributes": {
+        "name": "GlasColor",
+        "textureIndex": "0",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "Eye",
+        "colorSelection": "3",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": false,
+      "isControllerOnly": true
+    },
+    {
+      "order": 14,
+      "name": "Mustache",
+      "flashAttributes": {
+        "name": "Mustache",
+        "textureIndex": "0",
+        "lockColor": "BeardColor",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "colorSelection": "3",
+        "color": "ShrtSpectrum",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 15,
+      "name": "Beard",
+      "flashAttributes": {
+        "name": "Beard",
+        "textureIndex": "0",
+        "lockColor": "BeardColor",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "3",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": true,
+      "isControllerOnly": false
+    },
+    {
+      "order": 16,
+      "name": "BeardColor",
+      "flashAttributes": {
+        "name": "BeardColor",
+        "textureIndex": "0",
+        "colorIndex": "3"
+      },
+      "selectedTextureIndex": 0,
+      "selectedTexture": {
+        "symbol": "BlankClip",
+        "color": "ShrtSpectrum",
+        "colorSelection": "3",
+        "masks": []
+      },
+      "selectedSymbol": {
+        "name": "BlankClip",
+        "id": 33,
+        "publicPath": null,
+        "exported": false,
+        "svgPath": null,
+        "placement": null
+      },
+      "implementedInCurrentTs": false,
+      "isControllerOnly": true
+    }
+  ]
+}
