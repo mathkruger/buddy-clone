@@ -6,35 +6,58 @@ Provides a landing page that introduces the app and funnels visitors to buddy cr
 
 ## Requirements
 
-### Requirement: Home page
-The system SHALL serve a home page at the site root that introduces the app and provides prominent entry points to create a buddy, log in as a returning owner, and search for buddies.
+### Requirement: Four-screen navigation
+The system SHALL provide exactly four screens: a landing page, a register page, a login page, and the play screen. Anonymous users SHALL reach the play screen only by registering or logging in.
 
-#### Scenario: Home page shows entry points
+#### Scenario: Landing page shows register and login CTAs
 - **WHEN** a visitor opens the site root
-- **THEN** the page shows a landing layout with links to create a buddy, to log in as a returning owner, and to search buddies
+- **THEN** the landing page introduces the project and shows a CTA to register and a CTA to log in
 
-#### Scenario: Create link leads to the builder
-- **WHEN** a visitor follows the create-a-buddy link from the home page
-- **THEN** they are taken to the buddy creation page with the avatar builder
+#### Scenario: Register CTA leads to the register screen
+- **WHEN** a visitor follows the register CTA
+- **THEN** they are taken to the register screen where they provide only a username and a password
 
-### Requirement: Buddy creation page
-The avatar builder SHALL be available on its own page, separate from the home page, so the home page is not the builder.
+#### Scenario: Login CTA leads to the login screen
+- **WHEN** a visitor follows the login CTA
+- **THEN** they are taken to the login screen where they provide their username and password
 
-#### Scenario: Builder is reachable from home
-- **WHEN** a visitor navigates to the buddy creation page
-- **THEN** the avatar builder loads with the live preview, part pickers, and save form
+### Requirement: Register screen
+The system SHALL provide a register screen where a user creates an account by providing only a username and a password. Successful registration SHALL create the account and its buddy with the simple default appearance, log the user in, and take them to the play screen. A logged-in user requesting the register screen SHALL be redirected to the play screen.
 
-### Requirement: Login page
-The system SHALL provide a login page where a user enters a username. If the browser holds the claim token for that username, the system SHALL redirect the user to that profile. Otherwise the system SHALL show the user that the profile is not theirs and guide them toward creating a buddy.
+#### Scenario: Registering a new account
+- **WHEN** a visitor submits a new username and a password on the register screen
+- **THEN** the system creates the account and its buddy with the default appearance, starts an authenticated session, and redirects to the play screen
 
-#### Scenario: Returning owner logs in
-- **WHEN** a returning owner enters their username on the login page and the browser holds that profile's claim token
-- **THEN** the system redirects them to their own buddy's profile page
+#### Scenario: Registering a duplicate username
+- **WHEN** a visitor submits a username that already exists
+- **THEN** the system rejects the registration and the form shows an error
 
-#### Scenario: Username without a token
-- **WHEN** a visitor enters a username for which the browser holds no claim token
-- **THEN** the system shows a message that the profile is not theirs and a path to create a new buddy, and does not grant any edit access
+#### Scenario: Logged-in user opens the register screen
+- **WHEN** an already logged-in user requests the register screen
+- **THEN** the system redirects them to the play screen
 
-#### Scenario: Unknown username
-- **WHEN** a visitor enters a username that has no profile
-- **THEN** the system indicates the profile does not exist and shows a path to create that buddy
+### Requirement: Login screen
+The system SHALL provide a login screen where a user supplies a username and a password. A successful login SHALL start an authenticated session and take the user to the play screen. A logged-in user requesting the login screen SHALL be redirected to the play screen.
+
+#### Scenario: Logging in with valid credentials
+- **WHEN** a visitor submits an existing username and the correct password on the login screen
+- **THEN** the system starts an authenticated session and redirects to the play screen
+
+#### Scenario: Logging in with wrong credentials
+- **WHEN** a visitor submits an unknown username or a wrong password
+- **THEN** the system rejects the login with a generic error and does not start a session
+
+#### Scenario: Logged-in user opens the login screen
+- **WHEN** an already logged-in user requests the login screen
+- **THEN** the system redirects them to the play screen
+
+### Requirement: Play screen is the authenticated destination
+The play screen SHALL be the single destination for authenticated users of the app; from it the user manages pokes, friends, humor, and appearance. Logging out SHALL return the user to the landing page.
+
+#### Scenario: Logged-in users land on the play screen
+- **WHEN** an authenticated user logs in, registers, or otherwise needs the main surface of the app
+- **THEN** the system takes them to the play screen
+
+#### Scenario: Logging out returns to the landing page
+- **WHEN** a user logs out
+- **THEN** the session ends and the user is returned to the landing page

@@ -47,6 +47,18 @@ export function profilesRouter(store, services, config) {
     }
   });
 
+  router.get("/api/profile/:username/public", requireAuthApi, (req, res, next) => {
+    try {
+      const profile = store.getPublicProfile(req.params.username);
+      if (!profile) return res.status(404).json({ error: "Profile not found" });
+      res.json(profile);
+    } catch (err) {
+      const status = toStatus(err.code);
+      if (status) return res.status(status).json({ error: err.message });
+      next(err);
+    }
+  });
+
   router.put("/api/profile/:username", requireOwner, async (req, res, next) => {
     try {
       const { avatarDef, mood } = req.body || {};

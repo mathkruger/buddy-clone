@@ -14,15 +14,15 @@ The system SHALL provide a page (or section) where the owner of a profile can co
 - **THEN** the system shows an HTML snippet they can copy that renders their avatar and current mood
 
 ### Requirement: Embed widget rendering
-An embed widget SHALL render the target user's avatar with current mood inside an external page without requiring a visitor account, and SHALL include a link back to the user's public profile.
+An embed widget SHALL render the target user's avatar with current mood inside an external page without requiring a visitor account, and SHALL include a link back to the app. Since public profile pages are removed, the link SHALL point to the play screen URL (from which a logged-in owner reaches their buddy).
 
 #### Scenario: Widget renders on an external page
 - **WHEN** an external page includes the embed snippet and a visitor loads it
-- **THEN** the widget renders the user's avatar with the current mood and a link to the profile
+- **THEN** the widget renders the user's avatar with the current mood and a link to the app's play screen
 
 #### Scenario: Widget shows current mood
 - **WHEN** the embed widget renders
-- **THEN** it shows the same mood as the public profile at that moment
+- **THEN** it shows the same mood as the play screen stage at that moment
 
 ### Requirement: Mood stays up to date
 The embed widget SHALL fetch the avatar and mood data from the server so that a mood change made by the owner is reflected when the widget loads, without requiring a new snippet.

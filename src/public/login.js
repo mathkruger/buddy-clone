@@ -51,8 +51,7 @@ async function onLogin(event) {
       return;
     }
 
-    const data = await res.json();
-    location.href = `/${encodeURIComponent(data.user.username)}`;
+    location.href = "/play";
   } catch {
     setError("Could not reach the server — is it running?");
   } finally {

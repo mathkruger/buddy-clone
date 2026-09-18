@@ -3,7 +3,6 @@ import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { INTERACTION_LIMIT } from "../constants.js";
 import { DuplicateUsernameError, NotFoundError } from "../errors.js";
-import { DEFAULT_MOOD } from "../../public/moods.js";
 
 const USER_RE = /^[a-zA-Z0-9_-]{1,24}$/;
 
@@ -37,7 +36,7 @@ export class SqliteBackend {
       CREATE TABLE IF NOT EXISTS users(
         username TEXT PRIMARY KEY,
         avatarDef TEXT,
-        mood TEXT NOT NULL,
+        mood TEXT,
         tokenHash TEXT NOT NULL,
         createdAt TEXT NOT NULL
       );
@@ -57,12 +56,44 @@ export class SqliteBackend {
       );
     `);
     this._ensurePasswordHashColumn();
+    this._ensureMoodNullable();
   }
 
   _ensurePasswordHashColumn() {
     const cols = this.db.prepare("PRAGMA table_info(users)").all();
     if (!cols.some((col) => col.name === "passwordHash")) {
       this.db.exec("ALTER TABLE users ADD COLUMN passwordHash TEXT");
+    }
+  }
+
+  _ensureMoodNullable() {
+    const cols = this.db.prepare("PRAGMA table_info(users)").all();
+    const moodCol = cols.find((col) => col.name === "mood");
+    if (!moodCol || Number(moodCol.notnull) !== 1) return;
+
+    this.db.exec("PRAGMA foreign_keys = OFF");
+    try {
+      this.db.exec("BEGIN");
+      this.db.exec(`
+        CREATE TABLE users_new(
+          username TEXT PRIMARY KEY,
+          avatarDef TEXT,
+          mood TEXT,
+          tokenHash TEXT NOT NULL,
+          passwordHash TEXT,
+          createdAt TEXT NOT NULL
+        );
+        INSERT INTO users_new(username, avatarDef, mood, tokenHash, passwordHash, createdAt)
+          SELECT username, avatarDef, mood, tokenHash, passwordHash, createdAt FROM users;
+        DROP TABLE users;
+        ALTER TABLE users_new RENAME TO users;
+      `);
+      this.db.exec("COMMIT");
+    } catch (err) {
+      this.db.exec("ROLLBACK");
+      throw err;
+    } finally {
+      this.db.exec("PRAGMA foreign_keys = ON");
     }
   }
 
@@ -162,22 +193,6 @@ export class SqliteBackend {
     return this._getFavoriteTargets(username);
   }
 
-  // ---- search ----
-
-  searchProfiles(query) {
-    const like = `%${query}%`;
-    return this.db
-      .prepare(
-        "SELECT username, avatarDef, mood FROM users WHERE lower(username) LIKE ? ORDER BY lower(username), username LIMIT 20"
-      )
-      .all(like)
-      .map((row) => ({
-        username: row.username,
-        avatarDef: this._parseAvatarDef(row.avatarDef),
-        mood: row.mood
-      }));
-  }
-
   // ---- snapshot ----
 
   snapshot() {
@@ -258,7 +273,7 @@ export class SqliteBackend {
           .run(
             username,
             JSON.stringify(user.avatarDef || {}),
-            user.mood || DEFAULT_MOOD,
+            user.mood ?? null,
             String(user.tokenHash || ""),
             typeof user.passwordHash === "string" && user.passwordHash.length > 0 ? user.passwordHash : null,
             String(user.createdAt || new Date(0).toISOString())

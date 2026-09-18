@@ -57,7 +57,7 @@ describe("createProfile", () => {
   test("defaults mood and starts with empty history", async () => {
     await store.createProfile("bob", {});
     const profile = store.getProfile("bob");
-    assert.equal(profile.mood, "happy");
+    assert.equal(profile.mood, null);
     assert.deepEqual(profile.interactions, []);
     assert.equal(profile.interactionTotal, 0);
     assert.deepEqual(profile.interactionCounts, {});
@@ -112,6 +112,14 @@ describe("updateProfile", () => {
       () => store.updateProfile("finn", { mood: "turbo" }),
       ValidationError
     );
+  });
+
+  test("writes a null mood through (cleared humor)", async () => {
+    await store.createProfile("eve", {});
+    await store.updateProfile("eve", { mood: "sad" });
+    const cleared = await store.updateProfile("eve", { mood: null });
+    assert.equal(cleared.mood, null);
+    assert.equal(store.getProfile("eve").mood, null);
   });
 
   test("rejects an empty update", async () => {
@@ -217,40 +225,6 @@ describe("favorites", () => {
     const reloaded = new Store(dbPath);
     await reloaded.init();
     assert.deepEqual(await reloaded.getFavorites("fav-owner"), []);
-  });
-});
-
-describe("searchProfiles", () => {
-  test("matches case-insensitive substrings sorted by username", async () => {
-    await store.createProfile("Alice", {});
-    await store.createProfile("albert", {});
-    await store.createProfile("bob", {});
-    const results = store.searchProfiles("AL");
-    assert.deepEqual(
-      results.map((r) => r.username),
-      ["albert", "Alice"]
-    );
-    assert.ok("avatarDef" in results[0]);
-    assert.ok("mood" in results[0]);
-  });
-
-  test("returns [] for blank and whitespace queries", async () => {
-    await store.createProfile("bob", {});
-    assert.deepEqual(store.searchProfiles(""), []);
-    assert.deepEqual(store.searchProfiles("   "), []);
-  });
-
-  test("returns [] when nothing matches", async () => {
-    await store.createProfile("bob", {});
-    assert.deepEqual(store.searchProfiles("zzz"), []);
-  });
-
-  test("caps results at 20", async () => {
-    for (let i = 0; i < 25; i++) {
-      await store.createProfile(`user${i}`, {});
-    }
-    const results = store.searchProfiles("user");
-    assert.equal(results.length, 20);
   });
 });
 

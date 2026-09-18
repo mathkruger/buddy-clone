@@ -12,6 +12,9 @@ export function favoritesService(store) {
       if (typeof target !== "string" || target.length === 0) {
         throw new ValidationError("Missing target");
       }
+      if (normalizeUsername(target) === normalized) {
+        throw new ValidationError("You cannot add yourself");
+      }
       return store.addFavorite(normalized, target);
     },
 

@@ -2,17 +2,17 @@
 //
 // Each interaction is staged as a three-part scene: the current viewer's buddy
 // (sender) on the left, the effect in the middle, and the target's buddy on the
-// right. The sender avatar is resolved from the viewer's server-side profile on
-// first render (cached per page), falling back to a saved snapshot, then the
-// guest avatar. Sender entrances (fly-in etc.) stay procedural whole-object
-// motion (`sender`); once it lands, both avatars play their mapped skeletal
-// animations from the vendored subset (`senderAnim`/`targetAnim`). Last-played
-// interactions can be replayed locally without a POST. Identity is resolved
-// server-side from the session cookie, not from anything the browser sends.
+// right. `playScene` mounts the sender from the viewer's own saved profile
+// (resolved lazily and cached per page), the poke effect, and the target's
+// avatar, animates the sequence, then tears the stage back down and resolves.
+// The sender entrance stays procedural whole-object motion (`sender`); once it
+// lands, both avatars play their mapped skeletal animations from the vendored
+// subset (`senderAnim`/`targetAnim`). Identity is resolved server-side from the
+// session cookie, not from anything the browser sends.
 
 import { mountAvatar } from "./buddy-3d.js";
 
-const CATALOG = {
+export const CATALOG = {
   poke: {
     label: "Poke",
     senderAnim: "poke1",
@@ -91,27 +91,26 @@ function safeGet(key) {
   }
 }
 
-// The sender avatar shown during playback: the current user's server-side
-// avatar, then the legacy saved snapshot, then the guest avatar. Resolved once
-// per page and cached so play() and replay() have it ready.
+// The sender avatar shown during playback: the current user's own saved avatar.
+// Resolved once per page and cached; `resetSenderAvatar` clears it after
+// appearance edits so replays pick up the new look.
 let senderCache = null;
-async function loadSenderAvatar() {
+
+export async function loadSenderAvatar() {
   if (senderCache) return senderCache;
 
   const session = window.BuddySession;
   const me = session && session.currentUser;
   if (me) {
     try {
-      const res = await fetch(`/api/profile/${encodeURIComponent(me)}`, {
-        credentials: "same-origin"
-      });
+      const res = await fetch(`/api/profile/${encodeURIComponent(me)}`, { credentials: "same-origin" });
       if (res.ok) {
         const profile = await res.json();
         senderCache = { avatarDef: profile.avatarDef, mood: profile.mood };
         return senderCache;
       }
     } catch {
-      /* fall through to the saved snapshot */
+      /* fall through to the snapshot/guest fallbacks */
     }
     const snapshot = safeGet("buddy.avatar." + me);
     if (snapshot) {
@@ -128,13 +127,29 @@ async function loadSenderAvatar() {
   return senderCache;
 }
 
-// Render the three-part scene into #interaction-stage: sender | effect | target.
-// The avatars are mounted through the 3D renderer; the returned controllers
-// drive the sender entrance and the target reaction.
-async function buildStage(targetProfile, sender, type) {
-  const stage = document.getElementById("interaction-stage");
-  stage.classList.add("interaction-stage", "animated");
+export function resetSenderAvatar() {
+  senderCache = null;
+}
+
+// Tracks the controllers currently living inside the stage so teardown can
+// stop their render loops before wiping the DOM.
+let stageControllers = [];
+
+function clearStage(stage) {
+  if (!stage) return;
+  for (const ctl of stageControllers) {
+    if (ctl && ctl.destroy) ctl.destroy();
+  }
+  stageControllers = [];
+  stage.classList.remove("interaction-stage", "animated");
   stage.innerHTML = "";
+}
+
+// Render the three-part scene into `stage`: sender | effect | target. The
+// avatars are mounted through the 3D renderer; the returned controllers drive
+// the sender entrance and the target reaction.
+async function buildStage(stage, targetProfile, sender, type) {
+  stage.classList.add("interaction-stage", "animated");
 
   const entry = CATALOG[type];
 
@@ -144,7 +159,7 @@ async function buildStage(targetProfile, sender, type) {
   const senderCtl = await mountAvatar(senderCol, {
     composition: sender.avatarDef,
     mood: sender.mood,
-    label: `you`,
+    label: "you",
     orbit: true
   });
 
@@ -164,33 +179,25 @@ async function buildStage(targetProfile, sender, type) {
 
   stage.append(senderCol, fx, targetCol);
   requestAnimationFrame(() => fx.classList.add("go"));
-  return { stage, senderCtl, targetCtl };
+  return { senderCtl, targetCtl };
 }
 
-// Tracks the controllers currently living inside the stage so teardown can
-// stop their render loops before wiping the DOM.
-let stageControllers = [];
-
-// The interaction (type / effect) played most recently; set only after a
-// successful POST. Replay plays it again locally without sending anything.
-let lastType = null;
-
-async function play(type) {
-  const stage = document.getElementById("interaction-stage");
+// Play a poke scene into `stage` and resolve once the animations have run their
+// course. `type` is a CATALOG key; `target` is `{ username, avatarDef, mood }`.
+// Local playback only — nothing is recorded. Any pre-existing stage contents
+// (e.g. the viewer's own buddy) are torn down and the stage is left empty so
+// the caller can repopulate it. Rejects when the target profile is unusable.
+export async function playScene(stage, target, type) {
   const entry = CATALOG[type];
-  if (!entry) return;
-
-  // Restart cleanly if something is still playing: tear down and re-run so
-  // rapid replay never leaves a stuck stage or a leaked render loop.
-  stage.classList.remove("interaction-stage", "animated");
-  stage.innerHTML = "";
-  for (const ctl of stageControllers) {
-    if (ctl && ctl.destroy) ctl.destroy();
+  if (!entry || !stage) return;
+  if (!target || !target.avatarDef) {
+    throw new Error("playScene needs a target profile with an avatarDef");
   }
-  stageControllers = [];
+
+  clearStage(stage);
 
   const sender = await loadSenderAvatar();
-  const { senderCtl, targetCtl } = await buildStage(window.BuddyProfile.profile, sender, type);
+  const { senderCtl, targetCtl } = await buildStage(stage, target, sender, type);
   const local = [senderCtl, targetCtl];
   stageControllers = local;
 
@@ -203,132 +210,13 @@ async function play(type) {
     window.setTimeout(() => resolve(targetCtl && targetCtl.play ? targetCtl.play(entry.targetAnim) : Promise.resolve()), PAUSE_BEFORE);
   }).then((p) => p || Promise.resolve());
 
-  // Tear the stage down once both animations have run their course. Replay
-  // reassigns `stageControllers`, so a stale completion never clears a fresh stage.
-  Promise.all([senderDone, targetDone]).then(() => {
-    if (stageControllers !== local) return;
-    for (const ctl of local) {
-      if (ctl && ctl.destroy) ctl.destroy();
-    }
-    stageControllers = [];
-    stage.classList.remove("interaction-stage", "animated");
-    stage.innerHTML = "";
-  });
-
-  // Keep a trace for tests: no page reload happened.
-  window.played = type;
-}
-
-function replayLast() {
-  if (!lastType) return;
-  return play(lastType);
-}
-
-async function trigger(type) {
-  const profile = window.BuddyProfile && BuddyProfile.profile;
-  if (!profile) return;
-
-  const buttons = document.querySelectorAll(".interaction-btn");
-  buttons.forEach((b) => {
-    b.disabled = true;
-  });
   try {
-    const res = await fetch(`/api/profile/${profile.username}/interactions`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type })
-    });
-    if (res.status === 401) {
-      const stage = document.getElementById("interaction-stage");
-      stage.textContent = "Log in to poke.";
-      return;
-    }
-    if (res.status === 404) {
-      const stage = document.getElementById("interaction-stage");
-      stage.textContent = "This buddy seems to have wandered off.";
-      return;
-    }
-    if (!res.ok) return;
-    const data = await res.json();
-    window.BuddyProfile.profile = data.profile;
-    lastType = type;
-    if (replayButton) replayButton.hidden = false;
-    window.BuddyProfile.reRender();
-    await play(type);
+    await Promise.all([senderDone, targetDone]);
   } finally {
-    buttons.forEach((b) => {
-      b.disabled = false;
-    });
+    // A newer playScene reassigns `stageControllers`, so a stale completion
+    // never clears a fresh stage.
+    if (stageControllers === local) clearStage(stage);
   }
 }
 
-// Catalog buttons plus a hidden ▶ Replay control that replays the last
-// interaction locally (no POST, no record).
-let replayButton = null;
-
-function buildButtons(container) {
-  container.innerHTML = "";
-  for (const [type, meta] of Object.entries(CATALOG)) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "interaction-btn";
-    btn.dataset.interaction = type;
-    btn.textContent = meta.label;
-    btn.addEventListener("click", () => trigger(type));
-    container.appendChild(btn);
-  }
-  const replay = document.createElement("button");
-  replay.type = "button";
-  replay.className = "interaction-btn replay-btn";
-  replay.textContent = "\u25B6 Replay";
-  replay.hidden = true;
-  replay.addEventListener("click", () => {
-    void replayLast();
-  });
-  container.appendChild(replay);
-  replayButton = replay;
-  if (lastType) replayButton.hidden = false;
-}
-
-// Owner-aware interaction area. profile.js calls this from render() once the
-// session resolves: owners get no poke controls and a self-poke note (history
-// still renders), visitors get the catalog + replay and a pre-fetched sender.
-let selfPokeNote = null;
-
-function ensureSelfPokeNote() {
-  if (selfPokeNote) return selfPokeNote;
-  const section = document.querySelector(".interactions");
-  if (!section) return null;
-  const note = document.createElement("p");
-  note.className = "self-poke-note";
-  note.textContent = "This is your buddy \u2014 you can't poke yourself.";
-  note.hidden = true;
-  const heading = section.querySelector("h2");
-  section.insertBefore(note, heading ? heading.nextSibling : section.firstChild);
-  selfPokeNote = note;
-  return note;
-}
-
-function render(profile) {
-  const p = profile || (window.BuddyProfile && BuddyProfile.profile);
-  const me = window.BuddySession && BuddySession.currentUser;
-  const isOwner = Boolean(p && me && me === p.username);
-
-  const buttons = document.getElementById("interaction-buttons");
-  const note = ensureSelfPokeNote();
-
-  if (isOwner) {
-    if (buttons) buttons.innerHTML = "";
-    if (replayButton) replayButton.hidden = true;
-    if (note) note.hidden = false;
-    return;
-  }
-
-  if (note) note.hidden = true;
-  if (buttons) buildButtons(buttons);
-  // Eagerly resolve the sender avatar for the first non-owner render so the
-  // first play() has it ready; cached thereafter (one fetch per page).
-  void loadSenderAvatar();
-}
-
-window.BuddyInteractions = { CATALOG, play, render, replay: replayLast };
+window.BuddyInteractions = { CATALOG, playScene, loadSenderAvatar, resetSenderAvatar };

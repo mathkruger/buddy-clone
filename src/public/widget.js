@@ -38,8 +38,8 @@ async function build() {
 
   const link = document.createElement("a");
   link.className = "embed-footer";
-  link.href = `/${encodeURIComponent(profile.username)}`;
-  link.textContent = `${profile.username} is a buddy`;
+  link.href = "/play";
+  link.textContent = `${profile.username} lives on Buddy Clone`;
   link.target = "_top";
   root.appendChild(link);
 

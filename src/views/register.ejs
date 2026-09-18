@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+
+  <%- include('partials/site-header') %>
+
+  <main class="register-page">
+    <section class="register-card">
+      <h1>Make a buddy</h1>
+      <p class="register-sub">
+        Registration creates your buddy with the simple default look. You can
+        customize its appearance later in the play screen.
+      </p>
+      <form id="register-form" class="register-form" novalidate>
+        <label for="register-username">Choose a username</label>
+        <input id="register-username" name="username" type="text" maxlength="24"
+               placeholder="e.g. bunny" autocomplete="off" spellcheck="false">
+        <label for="register-password">Choose a password</label>
+        <input id="register-password" name="password" type="password" maxlength="200"
+               placeholder="at least 8 characters" autocomplete="new-password">
+        <button type="submit" class="primary">Make my buddy</button>
+      </form>
+      <p id="register-error" class="form-error" role="alert"></p>
+    </section>
+  </main>
+
+  <%- include('partials/clouds') %>
+  <%- include('partials/footer') %>
+  <script type="module" src="/register.js"></script>
+  <%- include('partials/foot') %>

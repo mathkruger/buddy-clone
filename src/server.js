@@ -8,12 +8,10 @@ import { authService } from "./services/auth-service.js";
 import { profileService } from "./services/profile-service.js";
 import { interactionService } from "./services/interaction-service.js";
 import { favoritesService } from "./services/favorites-service.js";
-import { searchService } from "./services/search-service.js";
 import { pageService } from "./services/page-service.js";
 import { authRouter } from "./routes/auth.js";
 import { profilesRouter } from "./routes/profiles.js";
 import { favoritesRouter } from "./routes/favorites.js";
-import { searchRouter } from "./routes/search.js";
 import { pagesRouter } from "./routes/pages.js";
 
 const SRC_DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -51,7 +49,6 @@ export function createApp(store) {
     profile: profileService(store, auth),
     interaction: interactionService(store),
     favorites: favoritesService(store),
-    search: searchService(store),
     pages: pageService(store)
   };
 
@@ -65,7 +62,6 @@ export function createApp(store) {
   app.use(authRouter(store, services, config));
   app.use(profilesRouter(store, services, config));
   app.use(favoritesRouter(store, services));
-  app.use(searchRouter(store, services));
 
   // Whitelisted vendored WebGL library assets — served from the app's own
   // static paths so rendering never depends on an external CDN, and the

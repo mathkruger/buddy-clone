@@ -12,82 +12,56 @@ const PAGES = {
     pageTitle: "Buddy Clone — make a buddy, pop a mood, get poked",
     bodyClass: "page-home"
   },
-  "/create": {
-    view: "create",
-    pageTitle: "Buddy Clone — make your buddy",
-    bodyClass: "page-create"
+  "/register": {
+    view: "register",
+    pageTitle: "Register | Buddy Clone",
+    bodyClass: "page-register"
   },
   "/login": {
     view: "login",
     pageTitle: "Log in | Buddy Clone",
     bodyClass: "page-login"
-  },
-  "/search": {
-    view: "search",
-    pageTitle: "Search buddies | Buddy Clone",
-    bodyClass: "page-search"
-  },
-  "/favorites": {
-    view: "favorites",
-    pageTitle: "My favorites | Buddy Clone",
-    bodyClass: "page-favorites"
   }
 };
 
 export function pageService(store) {
-  function lookup(username) {
-    const normalized = normalizeUsername(username);
-    const profile = store.getProfile(normalized);
-    if (!profile) {
-      return {
-        notFound: true,
-        username: normalized,
-        pageTitle: "Not found | Buddy Clone",
-        bodyClass: "page-profile"
-      };
-    }
-    return { notFound: false, profile };
-  }
-
-  function getBuddyData(username) {
-    const result = lookup(username);
-    if (result.notFound) return null;
-    const profile = result.profile;
-    if (!profile || !profile.avatarDef) return null;
-    return inlineJson(profile);
-  }
-
   return {
     pageData(route) {
       return PAGES[route];
     },
 
-    profileView(username) {
-      const found = lookup(username);
-      if (found.notFound) return found;
+    playView(username) {
+      const profile = store.getProfile(username);
+      if (!profile) {
+        return { notFound: true };
+      }
       return {
         notFound: false,
-        profile: found.profile,
-        profileJson: inlineJson(found.profile),
-        pageTitle: "Buddy and friends",
-        bodyClass: "page-profile"
+        profile,
+        profileJson: inlineJson(profile),
+        pageTitle: "Play | Buddy Clone",
+        bodyClass: "page-play"
       };
     },
 
     embedView(username) {
-      const found = lookup(username);
-      if (found.notFound) return found;
+      const name = normalizeUsername(username);
+      const profile = store.getPublicProfile(name);
+      if (!profile) {
+        return { notFound: true, username: name };
+      }
+      const publicProfile = {
+        username: profile.username,
+        avatarDef: profile.avatarDef,
+        mood: profile.mood
+      };
       return {
         notFound: false,
-        profile: found.profile,
-        profileJson: inlineJson(found.profile),
+        profile: publicProfile,
+        profileJson: inlineJson(publicProfile),
         pageTitle: "Buddy widget",
         bodyClass: "page-embed embed-shell"
       };
-    },
-
-    getBuddyData(username) {
-      return getBuddyData(username);
     }
   };
 }

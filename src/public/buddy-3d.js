@@ -420,7 +420,9 @@ export async function mountAvatar(container, options = {}) {
     }
 
     player = new AvatarAnimationPlayer(built.object, built.bones, shared.animations);
-    if (mood || !player.play(opts.animation)) {
+    // The mood animation is the looping idle: play it immediately and let the
+    // player loop it (`loop: true`) until a poke scene takes over the stage.
+    if (!player.play(opts.animation)) {
       player.play(DEFAULT_IDLE_ANIMATION);
     }
     lastHeadMaterialFrame = player.headMaterialFrame;

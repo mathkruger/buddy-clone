@@ -60,8 +60,8 @@ export const BuddySession = {
   }
 };
 
-// Wire the `#nav-auth` slot in the site header: a login link for guests, or
-// "My buddy" / "My favorites" / "Log out" for the active owner.
+// Wire the `#nav-auth` slot in the site header: a login + register link for
+// guests, or a "Play" link and "Log out" button for the active owner.
 export function initNav() {
   const slot = document.getElementById("nav-auth");
   if (!slot) return;
@@ -70,14 +70,10 @@ export function initNav() {
   const username = currentUsername;
 
   if (username) {
-    const myBuddy = document.createElement("a");
-    myBuddy.className = "nav-my-buddy";
-    myBuddy.href = `/${encodeURIComponent(username)}`;
-    myBuddy.textContent = "My buddy";
-
-    const myFavorites = document.createElement("a");
-    myFavorites.href = "/favorites";
-    myFavorites.textContent = "My favorites";
+    const play = document.createElement("a");
+    play.className = "nav-my-buddy";
+    play.href = "/play";
+    play.textContent = "Play";
 
     const logout = document.createElement("button");
     logout.type = "button";
@@ -87,12 +83,17 @@ export function initNav() {
       BuddySession.logout().then(initNav);
     });
 
-    slot.append(myBuddy, " ", myFavorites, " ", logout);
+    slot.append(play, " ", logout);
   } else {
     const login = document.createElement("a");
     login.href = "/login";
     login.textContent = "Login";
-    slot.append(login);
+
+    const register = document.createElement("a");
+    register.href = "/register";
+    register.textContent = "Register";
+
+    slot.append(login, " ", register);
   }
 }
 

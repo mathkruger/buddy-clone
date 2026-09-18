@@ -6,6 +6,7 @@ import os from "node:os";
 import path from "node:path";
 import { Store } from "../src/repository/store.js";
 import { createApp } from "../src/server.js";
+import { defaultComposition, HAIR_OPTIONS } from "../src/public/avatar.js";
 
 let baseUrl;
 let server;
@@ -144,19 +145,23 @@ describe("auth / api/auth", () => {
 });
 
 describe("POST /api/profiles", () => {
-  test("creates a profile, returns username + profile (no token), sets session", async () => {
+  test("creates a profile with just username+password, defaults the look, sets session", async () => {
     const res = await json("POST", "/api/profiles", {
       username: "Mario",
-      avatarDef: { head: "cat", eyes: "heart" },
       password: PASSWORD
     });
     assert.equal(res.status, 201);
     const body = await res.json();
     assert.equal(body.username, "mario");
-    assert.equal("token" in body, false);
-    assert.equal(body.profile.mood, "happy");
-    assert.equal(body.profile.avatarDef.head, undefined);
+    assert.equal(body.profile.username, "mario");
+    assert.equal(body.profile.mood, null);
+    assert.deepEqual(body.profile.avatarDef, defaultComposition());
+    assert.equal(body.profile.avatarDef.hair, HAIR_OPTIONS[0]);
     assert.equal(body.profile.avatarDef.eyes, "Eyes_Male");
+    assert.equal(body.profile.avatarDef.mouth, "smile");
+    assert.equal(body.profile.avatarDef.props, "none");
+    assert.equal(body.profile.avatarDef.skirt, "SkrtNone");
+    assert.equal("token" in body, false);
     assert.match(res.headers.get("set-cookie"), /buddy_token=/i);
   });
 
@@ -201,9 +206,7 @@ describe("POST /api/profiles", () => {
     assert.equal(nonString.status, 400);
   });
 
-  test("rejects a missing or non-object avatarDef", async () => {
-    const noDef = await json("POST", "/api/profiles", { username: "nodef", password: PASSWORD });
-    assert.equal(noDef.status, 400);
+  test("rejects a non-object avatarDef", async () => {
     const arrDef = await json("POST", "/api/profiles", {
       username: "arrdef",
       avatarDef: [],
@@ -230,12 +233,18 @@ describe("GET /api/profile/:username", () => {
     assert.equal(res.status, 401);
   });
 
-  test("returns the public profile to an authenticated caller", async () => {
+  test("returns the full profile to an authenticated caller", async () => {
     const { headers } = await createUser("wario");
     const res = await json("GET", "/api/profile/wario", undefined, headers);
     assert.equal(res.status, 200);
     const body = await res.json();
     assert.equal(body.username, "wario");
+    assert.equal(body.mood, null);
+    assert.deepEqual(body.avatarDef, defaultComposition());
+    assert.deepEqual(body.interactions, []);
+    assert.deepEqual(body.interactionCounts, {});
+    assert.equal(body.interactionTotal, 0);
+    assert.equal(typeof body.createdAt, "string");
     assert.equal("tokenHash" in body, false);
     assert.equal("token" in body, false);
     assert.equal("passwordHash" in body, false);
@@ -248,20 +257,56 @@ describe("GET /api/profile/:username", () => {
   });
 });
 
+describe("GET /api/profile/:username/public", () => {
+  test("requires authentication", async () => {
+    const res = await json("GET", "/api/profile/bunny/public");
+    assert.equal(res.status, 401);
+  });
+
+  test("returns exactly { username, avatarDef, mood } to an authenticated caller", async () => {
+    await createUser("bunny");
+    const { headers } = await createUser("previewer");
+    const res = await json("GET", "/api/profile/bunny/public", undefined, headers);
+    assert.equal(res.status, 200);
+    const body = await res.json();
+    assert.deepEqual(Object.keys(body).sort(), ["avatarDef", "mood", "username"]);
+    assert.equal(body.username, "bunny");
+    assert.equal(body.mood, null);
+    assert.deepEqual(body.avatarDef, defaultComposition());
+  });
+
+  test("404 for unknown usernames", async () => {
+    const { headers } = await createUser("ghostpvt");
+    const res = await json("GET", "/api/profile/ghost/public", undefined, headers);
+    assert.equal(res.status, 404);
+  });
+});
+
 describe("PUT /api/profile/:username", () => {
-  test("updates avatar and mood as the owner", async () => {
-    const { headers } = await createUser("luigi");
+  test("sets and clears the mood as the owner", async () => {
+    const { headers } = await createUser("moodsetter");
+    const none = await json("PUT", "/api/profile/moodsetter", { mood: "none" }, headers);
+    assert.equal(none.status, 200);
+    assert.equal((await none.json()).mood, null);
+
+    const happy = await json("PUT", "/api/profile/moodsetter", { mood: "happy" }, headers);
+    assert.equal(happy.status, 200);
+    assert.equal((await happy.json()).mood, "happy");
+  });
+
+  test("updates avatar with a mutation as the owner", async () => {
+    const { headers } = await createUser("lookchanger");
     const res = await json(
       "PUT",
-      "/api/profile/luigi",
-      { avatarDef: { head: "star", eyes: "wink" }, mood: "excited" },
+      "/api/profile/lookchanger",
+      { avatarDef: { eyes: "Eyes_Fem" } },
       headers
     );
     assert.equal(res.status, 200);
     const body = await res.json();
-    assert.equal(body.mood, "excited");
-    assert.equal(body.avatarDef.head, undefined);
-    assert.equal(body.avatarDef.eyes, "Eyes_Male");
+    assert.equal(body.avatarDef.eyes, "Eyes_Fem");
+    assert.equal(body.avatarDef.hair, HAIR_OPTIONS[0]);
+    assert.equal(body.mood, null);
   });
 
   test("401 without a session", async () => {
@@ -274,6 +319,13 @@ describe("PUT /api/profile/:username", () => {
     const { headers } = await createUser("mariow");
     const res = await json("PUT", "/api/profile/broluigi", { mood: "sad" }, headers);
     assert.equal(res.status, 403);
+  });
+
+  test("404 when the targeted profile no longer exists", async () => {
+    const { headers } = await createUser("doomed");
+    store._backend.db.prepare("DELETE FROM users WHERE username = ?").run("doomed");
+    const res = await json("PUT", "/api/profile/doomed", { mood: "sad" }, headers);
+    assert.equal(res.status, 404);
   });
 
   test("400 for invalid mood, avatar shape, or empty patch", async () => {
@@ -301,6 +353,11 @@ describe("POST /api/profile/:username/interactions", () => {
     const body = await res.json();
     assert.equal(body.profile.interactionTotal, 1);
     assert.deepEqual(body.profile.interactionCounts, { poke: 1 });
+
+    const fetched = await json("GET", "/api/profile/toad", undefined, headers);
+    const profile = await fetched.json();
+    assert.deepEqual(profile.interactions.at(-1), { sender: "poker", type: "poke", ts: profile.interactions.at(-1).ts });
+    assert.equal(typeof profile.interactions.at(-1).ts, "number");
   });
 
   test("rejects empty, oversized, or non-string types", async () => {
@@ -379,47 +436,27 @@ describe("interaction sender attribution", () => {
   });
 });
 
-describe("GET /api/search", () => {
-  test("requires authentication", async () => {
-    const res = await json("GET", "/api/search?q=BuB");
-    assert.equal(res.status, 401);
+describe("removed surface", () => {
+  test("GET /api/search is gone (404, no route)", async () => {
+    const { headers } = await createUser("nosearch");
+    const anon = await json("GET", "/api/search?q=bu");
+    assert.equal(anon.status, 404);
+    const authed = await json("GET", "/api/search?q=bu", undefined, headers);
+    assert.equal(authed.status, 404);
   });
 
-  test("matches usernames case-insensitively with avatar and mood", async () => {
-    const { headers } = await createUser("Bubble", PASSWORD, { head: "star" });
-    await createUser("bob");
-    const res = await json("GET", "/api/search?q=BuB", undefined, headers);
-    assert.equal(res.status, 200);
-    const body = await res.json();
-    assert.deepEqual(body.results.map((r) => r.username), ["bubble"]);
-    assert.equal(body.results[0].avatarDef.head, undefined);
-    assert.equal(typeof body.results[0].mood, "string");
-  });
+  test("removed page routes 301 to their replacements", async () => {
+    const create = await fetch(`${baseUrl}/create`, { redirect: "manual" });
+    assert.equal(create.status, 301);
+    assert.equal(create.headers.get("location"), "/register");
 
-  test("returns an empty list when nothing matches", async () => {
-    const { headers } = await createUser("bob2");
-    const res = await json("GET", "/api/search?q=zzz", undefined, headers);
-    const body = await res.json();
-    assert.deepEqual(body.results, []);
-  });
+    const search = await fetch(`${baseUrl}/search`, { redirect: "manual" });
+    assert.equal(search.status, 301);
+    assert.equal(search.headers.get("location"), "/");
 
-  test("returns an empty list for a blank query", async () => {
-    const { headers } = await createUser("blanky");
-    const res = await json("GET", "/api/search?q=%20%20", undefined, headers);
-    const body = await res.json();
-    assert.deepEqual(body.results, []);
-  });
-
-  test("does not echo a scripty query back as HTML", async () => {
-    const { headers } = await createUser("scripty");
-    const res = await json(
-      "GET",
-      `/api/search?q=${encodeURIComponent("<script>alert(1)</script>")}`,
-      undefined,
-      headers
-    );
-    assert.equal(res.status, 200);
-    assert.doesNotMatch(await res.text(), /<script>alert/);
+    const profile = await fetch(`${baseUrl}/bunny`, { redirect: "manual" });
+    assert.equal(profile.status, 301);
+    assert.equal(profile.headers.get("location"), "/play");
   });
 });
 
@@ -429,9 +466,13 @@ describe("favorites API", () => {
     assert.equal(noAuth.status, 401);
   });
 
-  test("adds, dedupes, and removes favorites as the owner", async () => {
+  test("adds, dedupes (case-normalized), and removes favorites as the owner", async () => {
     const owner = await createUser("fav-a");
     await createUser("fav-b");
+
+    const initial = await json("GET", "/api/profile/fav-a/favorites", undefined, owner.headers);
+    assert.equal(initial.status, 200);
+    assert.deepEqual((await initial.json()).favorites, []);
 
     const add = await json(
       "PUT",
@@ -445,7 +486,7 @@ describe("favorites API", () => {
     const dup = await json(
       "PUT",
       "/api/profile/fav-a/favorites",
-      { target: "fav-b" },
+      { target: "FAV-B" },
       owner.headers
     );
     assert.deepEqual((await dup.json()).favorites.map((f) => f.username), ["fav-b"]);
@@ -458,6 +499,17 @@ describe("favorites API", () => {
     );
     assert.equal(del.status, 200);
     assert.deepEqual((await del.json()).favorites, []);
+  });
+
+  test("rejects adding yourself as a favorite", async () => {
+    const { username, headers } = await createUser("fav-self");
+    const res = await json(
+      "PUT",
+      "/api/profile/fav-self/favorites",
+      { target: username },
+      headers
+    );
+    assert.equal(res.status, 400);
   });
 
   test("rejects favorites with a missing or unknown target", async () => {
@@ -528,13 +580,26 @@ describe("favorites API", () => {
 });
 
 describe("pages", () => {
-  test("profile shell embeds inert inline JSON", async () => {
-    const { headers } = await createUser("yoshi");
-    const res = await json("GET", "/yoshi", undefined, headers);
+  test("register page serves 200 with username and password fields", async () => {
+    const res = await fetch(`${baseUrl}/register`);
     assert.equal(res.status, 200);
     const html = await res.text();
-    assert.match(html, /"username":"yoshi"/);
+    assert.match(html, /id="register-username"/);
+    assert.match(html, /id="register-password"/);
+    assert.match(html, /register\.js/);
+  });
+
+  test("play screen serves 200 with the stage, four tabs, and inert inline JSON", async () => {
+    const { headers } = await createUser("yoshi");
+    const res = await json("GET", "/play", undefined, headers);
+    assert.equal(res.status, 200);
+    const html = await res.text();
+    assert.match(html, /id="play-stage"/);
+    for (const tab of ["clone", "friends", "humor", "appearance"]) {
+      assert.match(html, new RegExp(`data-tab="${tab}"`), `missing ${tab} tab`);
+    }
     assert.match(html, /<script type="application\/json" id="buddy-profile">/);
+    assert.match(html, /play\.js/);
     const jsonMatch = html.match(
       /<script type="application\/json" id="buddy-profile">([\s\S]*?)<\/script>/
     );
@@ -544,13 +609,15 @@ describe("pages", () => {
     assert.equal(JSON.parse(payload).username, "yoshi");
   });
 
-  test("404 page escapes malicious usernames", async () => {
-    const { headers } = await createUser("xsshunter");
-    const res = await json(
-      "GET",
-      `/${encodeURIComponent("<script>alert(1)</script>")}`,
-      undefined,
-      headers
+  test("play screen redirects anonymous visitors to login", async () => {
+    const res = await fetch(`${baseUrl}/play`, { redirect: "manual" });
+    assert.equal(res.status, 302);
+    assert.equal(res.headers.get("location"), "/login");
+  });
+
+  test("embed 404 page escapes malicious usernames", async () => {
+    const res = await fetch(
+      `${baseUrl}/embed/${encodeURIComponent("<script>alert(1)</script>")}`
     );
     assert.equal(res.status, 404);
     const html = await res.text();
@@ -558,23 +625,15 @@ describe("pages", () => {
     assert.match(html, /&lt;script&gt;/);
   });
 
-  test("root serves the landing page with the three entry points", async () => {
+  test("root serves the landing page with register/login CTAs and no removed links", async () => {
     const res = await fetch(`${baseUrl}/`);
     assert.equal(res.status, 200);
     const html = await res.text();
     assert.match(html, /class="entry-grid"/);
-    assert.match(html, /href="\/create"/);
+    assert.match(html, /href="\/register"/);
     assert.match(html, /href="\/login"/);
-    assert.match(html, /href="\/search"/);
-  });
-
-  test("/create serves the avatar builder with a password field", async () => {
-    const res = await fetch(`${baseUrl}/create`);
-    assert.equal(res.status, 200);
-    const html = await res.text();
-    assert.match(html, /id="builder-preview"/);
-    assert.match(html, /id="password"/);
-    assert.match(html, /builder\.js/);
+    assert.doesNotMatch(html, /href="\/create"/);
+    assert.doesNotMatch(html, /href="\/search"/);
   });
 
   test("login page serves 200 and shows a password form", async () => {
@@ -585,32 +644,16 @@ describe("pages", () => {
     assert.match(html, /\/api\/auth\/login|login\.js/);
   });
 
-  test("login page redirects an authenticated visitor to their own profile", async () => {
+  test("login page redirects an authenticated visitor to /play", async () => {
     const { headers } = await createUser("redirme");
     const res = await fetch(`${baseUrl}/login`, { headers, redirect: "manual" });
     assert.equal(res.status, 302);
-    assert.equal(res.headers.get("location"), "/redirme");
-  });
-
-  test("search, favorites and profile pages redirect anonymous visitors to login", async () => {
-    const profile = await fetch(`${baseUrl}/yoshi`, { redirect: "manual" });
-    assert.equal(profile.status, 302);
-    assert.equal(profile.headers.get("location"), "/login");
-    assert.equal((await fetch(`${baseUrl}/search`, { redirect: "manual" })).status, 302);
-    assert.equal((await fetch(`${baseUrl}/favorites`, { redirect: "manual" })).status, 302);
-  });
-
-  test("search and favorites pages serve 200 when authenticated", async () => {
-    const { headers } = await createUser("pagesdave");
-    const search = await json("GET", "/search", undefined, headers);
-    assert.equal(search.status, 200);
-    const favorites = await json("GET", "/favorites", undefined, headers);
-    assert.equal(favorites.status, 200);
+    assert.equal(res.headers.get("location"), "/play");
   });
 
   test("new pages include the site nav and session script", async () => {
     const { headers } = await createUser("pagesnav");
-    for (const page of ["/", "/create", "/login", "/search", "/favorites", "/pagesnav"]) {
+    for (const page of ["/", "/register", "/login", "/play"]) {
       const res = await fetch(`${baseUrl}${page}`, { headers });
       const html = await res.text();
       assert.match(html, /id="nav-auth"/, `${page} should include the nav slot`);
@@ -635,7 +678,7 @@ describe("3D renderer assets", () => {
   }
 
   test("every page body includes the three import map", async () => {
-    for (const page of ["/", "/create", "/login"]) {
+    for (const page of ["/", "/register", "/login"]) {
       const res = await fetch(`${baseUrl}${page}`);
       assert.equal(res.status, 200);
       const html = await res.text();
