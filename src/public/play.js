@@ -122,7 +122,7 @@ function dropStage() {
 
 async function mountSelf() {
   const token = ++selfToken;
-  stageEl.classList.remove("interaction-stage", "animated");
+  stageEl.classList.remove("interaction-live");
   if (stageController) {
     stageController.destroy();
     stageController = null;

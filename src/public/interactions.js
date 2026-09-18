@@ -1,52 +1,162 @@
 // Interaction catalog and trigger playback.
 //
-// Each interaction is staged as a three-part scene: the current viewer's buddy
-// (sender) on the left, the effect in the middle, and the target's buddy on the
-// right. `playScene` mounts the sender from the viewer's own saved profile
-// (resolved lazily and cached per page), the poke effect, and the target's
-// avatar, animates the sequence, then tears the stage back down and resolves.
-// The sender entrance stays procedural whole-object motion (`sender`); once it
-// lands, both avatars play their mapped skeletal animations from the vendored
-// subset (`senderAnim`/`targetAnim`). Identity is resolved server-side from the
-// session cookie, not from anything the browser sends.
+// Each interaction runs on a SINGLE shared frame: the current viewer's buddy
+// (sender) and the target's buddy are mounted into one camera/scene together
+// (`mountSharedStage`), and the interaction's choreography decides where each
+// buddy starts, how close they get, and whether they touch. Poke/hug/high-five/
+// kiss reach contact at an interaction-specific distance; dance stages both
+// buddies adjacent. `playScene` mounts the shared stage and resolves
+// once the choreography has run its course, then tears the stage back down.
+//
+// Choreography is declarative data owned by this module: world-space keyframe
+// tracks (offsets relative to the stage center, in buddy-scaled units), yaw
+// facing, and scheduled skeletal one-shots, plus a total duration. The
+// shared-frame renderer stays generic and just plays the supplied tracks.
+//
+// Identity is resolved server-side from the session cookie, not from anything
+// the browser sends.
 
-import { mountAvatar } from "./buddy-3d.js";
+import { mountSharedStage } from "./buddy-3d.js";
 
 export const CATALOG = {
   poke: {
     label: "Poke",
-    senderAnim: "poke1",
-    targetAnim: "poke2",
-    sender: "sender-fly-tap",
-    effect: "fx-poke"
+    choreography: {
+      duration: 6.0,
+      resting: { sender: { x: -1.0 }, target: { x: 1.0 } },
+      sender: {
+        yaw: 0.5,
+        tracks: [
+          [0, { x: -3.4, scale: 0.9 }],
+          [1.0, { x: -0.55 }],
+          [1.6, { x: -0.85, rotZ: 0.05 }],
+          [2.4, { x: -1.8 }],
+          [5.2, { x: -1.0, rotZ: 0 }]
+        ],
+        animCues: [{ t: 1.0, name: "poke1" }]
+      },
+      target: {
+        yaw: -0.5,
+        tracks: [
+          [0, { x: 1.0 }],
+          [1.0, { x: 0.92, scale: 1.02 }],
+          [1.6, { x: 1.06, rotZ: 0.04 }],
+          [2.6, { x: 1.0, rotZ: 0, scale: 1 }]
+        ],
+        animCues: [{ t: 1.25, name: "poke2" }]
+      }
+    }
   },
   hug: {
     label: "Hug",
-    senderAnim: "hug1",
-    targetAnim: "hug2",
-    sender: "sender-glide",
-    effect: "fx-hug"
+    choreography: {
+      duration: 7.0,
+      resting: { sender: { x: -1.0 }, target: { x: 1.0 } },
+      sender: {
+        yaw: 0.6,
+        tracks: [
+          [0, { x: -3.0, scale: 0.9 }],
+          [1.2, { x: 0.05 }],
+          [2.2, { x: 0.05, rotZ: 0 }],
+          [3.2, { x: -1.4 }],
+          [6.2, { x: -1.0, rotZ: 0 }]
+        ],
+        animCues: [{ t: 1.2, name: "hug1" }]
+      },
+      target: {
+        yaw: -0.6,
+        tracks: [
+          [0, { x: 1.0 }],
+          [1.2, { x: -0.05, scale: 1.03 }],
+          [2.2, { x: -0.05, rotZ: -0.03 }],
+          [3.4, { x: 1.0, rotZ: 0, scale: 1 }]
+        ],
+        animCues: [{ t: 1.4, name: "hug2" }]
+      }
+    }
   },
   highfive: {
     label: "High-five",
-    senderAnim: "gimmeFive1",
-    targetAnim: "highTen1",
-    sender: "sender-rise",
-    effect: "fx-highfive"
+    choreography: {
+      duration: 6.5,
+      resting: { sender: { x: -1.0 }, target: { x: 1.0 } },
+      sender: {
+        yaw: 0.45,
+        tracks: [
+          [0, { x: -3.1, scale: 0.9 }],
+          [1.0, { x: -0.35, rotZ: -0.06 }],
+          [2.0, { x: -1.3 }],
+          [5.9, { x: -1.0, rotZ: 0 }]
+        ],
+        animCues: [{ t: 1.0, name: "gimmeFive1" }]
+      },
+      target: {
+        yaw: -0.45,
+        tracks: [
+          [0, { x: 1.0 }],
+          [1.0, { x: 0.35, scale: 1.02 }],
+          [2.2, { x: 1.0, scale: 1 }]
+        ],
+        animCues: [{ t: 1.15, name: "highTen1" }]
+      }
+    }
   },
   kiss: {
     label: "Kiss",
-    senderAnim: "kiss1",
-    targetAnim: "kiss2",
-    sender: "sender-drift",
-    effect: "fx-kiss"
+    choreography: {
+      duration: 7.0,
+      resting: { sender: { x: -1.0 }, target: { x: 1.0 } },
+      sender: {
+        yaw: 0.6,
+        tracks: [
+          [0, { x: -3.0, scale: 0.9 }],
+          [1.3, { x: 0.0 }],
+          [2.3, { x: 0.0, rotZ: 0 }],
+          [3.3, { x: -1.4 }],
+          [6.4, { x: -1.0, rotZ: 0 }]
+        ],
+        animCues: [{ t: 1.3, name: "kiss1" }]
+      },
+      target: {
+        yaw: -0.6,
+        tracks: [
+          [0, { x: 1.0 }],
+          [1.3, { x: 0.0, scale: 1.02 }],
+          [2.3, { x: 0.0, rotZ: 0 }],
+          [3.5, { x: 1.0, scale: 1 }]
+        ],
+        animCues: [{ t: 1.5, name: "kiss2" }]
+      }
+    }
   },
   dance: {
     label: "Dance",
-    senderAnim: "jamA1",
-    targetAnim: "jamB1",
-    sender: "sender-boogie",
-    effect: "fx-dance"
+    choreography: {
+      duration: 5.0,
+      resting: { sender: { x: -1.0 }, target: { x: 1.0 } },
+      sender: {
+        yaw: 0.4,
+        tracks: [
+          [0, { x: -1.0 }],
+          [0.4, { x: -0.95, rotZ: -0.04 }],
+          [1.6, { x: -1.05, rotZ: 0.05 }],
+          [2.6, { x: -0.95, rotZ: -0.04 }],
+          [3.6, { x: -1.0, rotZ: 0 }]
+        ],
+        animCues: [{ t: 0.4, name: "jamA1" }]
+      },
+      target: {
+        yaw: -0.4,
+        tracks: [
+          [0, { x: 1.0 }],
+          [0.4, { x: 1.05, rotZ: 0.04 }],
+          [1.6, { x: 0.95, rotZ: -0.05 }],
+          [2.6, { x: 1.05, rotZ: 0.04 }],
+          [3.6, { x: 1.0, rotZ: 0 }]
+        ],
+        animCues: [{ t: 0.4, name: "jamB1" }]
+      }
+    }
   }
 };
 
@@ -62,25 +172,6 @@ const GUEST_AVATAR = {
     eye: "#3a2a68",
     bg: "#eaf7ff"
   }
-};
-
-const PAUSE_BEFORE = 220;
-
-const EFFECTS = {
-  "fx-poke": `<text x="118" y="150" font-size="34" text-anchor="middle">\u{1F91B}</text>
-    <path d="M120,132 L132,124 L126,140 Z" fill="#ffd166"/>`,
-  "fx-hug": `<text x="70" y="70" font-size="30" text-anchor="middle">\u{1F49C}</text>
-    <text x="130" y="46" font-size="22" text-anchor="middle">\u{1F497}</text>
-    <text x="48" y="120" font-size="20" text-anchor="middle">\u{1F49B}</text>`,
-  "fx-highfive": `<path d="M80,60 L100,30 L120,60 L90,52 Z" fill="#ffd166"/>
-    <path d="M60,90 L90,86 L70,112 L62,96 Z" fill="#ff8fb1"/>
-    <path d="M150,84 L128,64 L150,70 L140,48 Z" fill="#7bc8f6"/>`,
-  "fx-kiss": `<path d="M100,44 C92,36 84,38 84,46 C84,54 92,62 100,68 C108,62 116,54 116,46 C116,38 108,36 100,44 Z" fill="#ff8496"/>
-    <text x="140" y="90" font-size="20" text-anchor="middle">\u{1F495}</text>`,
-  "fx-dance": `<text x="52" y="52" font-size="24" text-anchor="middle">\u{1F3B6}</text>
-    <text x="152" y="64" font-size="26" text-anchor="middle">\u{1F3B6}</text>
-    <path d="M60,150 L70,138 L80,150 Z" fill="#a78bfa"/>
-    <path d="M128,150 L138,138 L148,150 Z" fill="#4ade80"/>`
 };
 
 function safeGet(key) {
@@ -131,8 +222,8 @@ export function resetSenderAvatar() {
   senderCache = null;
 }
 
-// Tracks the controllers currently living inside the stage so teardown can
-// stop their render loops before wiping the DOM.
+// Tracks the shared-stage controller currently living inside the stage so
+// teardown can stop its render loop before wiping the DOM.
 let stageControllers = [];
 
 function clearStage(stage) {
@@ -141,48 +232,23 @@ function clearStage(stage) {
     if (ctl && ctl.destroy) ctl.destroy();
   }
   stageControllers = [];
-  stage.classList.remove("interaction-stage", "animated");
+  stage.classList.remove("interaction-live");
   stage.innerHTML = "";
 }
 
-// Render the three-part scene into `stage`: sender | effect | target. The
-// avatars are mounted through the 3D renderer; the returned controllers drive
-// the sender entrance and the target reaction.
+// Mount a pair into `stage` through the shared-frame renderer. The returned
+// controller drives the interaction's choreography.
 async function buildStage(stage, targetProfile, sender, type) {
-  stage.classList.add("interaction-stage", "animated");
-
   const entry = CATALOG[type];
 
-  const senderCol = document.createElement("div");
-  senderCol.className = "stage-sender";
-
-  const senderCtl = await mountAvatar(senderCol, {
-    composition: sender.avatarDef,
-    mood: sender.mood,
-    label: "you",
-    orbit: true
+  return mountSharedStage(stage, {
+    label: `${entry.label} between you and ${targetProfile.username}`,
+    sender: { composition: sender.avatarDef, mood: sender.mood },
+    target: { composition: targetProfile.avatarDef, mood: targetProfile.mood }
   });
-
-  const fx = document.createElement("div");
-  fx.className = `stage-fx ${entry.effect}`;
-  fx.innerHTML = `<svg viewBox="0 0 200 220" class="fx-svg">${EFFECTS[entry.effect]}</svg>`;
-
-  const targetCol = document.createElement("div");
-  targetCol.className = "stage-target";
-
-  const targetCtl = await mountAvatar(targetCol, {
-    composition: targetProfile.avatarDef,
-    mood: targetProfile.mood,
-    label: targetProfile.username,
-    orbit: true
-  });
-
-  stage.append(senderCol, fx, targetCol);
-  requestAnimationFrame(() => fx.classList.add("go"));
-  return { senderCtl, targetCtl };
 }
 
-// Play a poke scene into `stage` and resolve once the animations have run their
+// Play a poke scene into `stage` and resolve once the choreography has run its
 // course. `type` is a CATALOG key; `target` is `{ username, avatarDef, mood }`.
 // Local playback only — nothing is recorded. Any pre-existing stage contents
 // (e.g. the viewer's own buddy) are torn down and the stage is left empty so
@@ -197,21 +263,12 @@ export async function playScene(stage, target, type) {
   clearStage(stage);
 
   const sender = await loadSenderAvatar();
-  const { senderCtl, targetCtl } = await buildStage(stage, target, sender, type);
-  const local = [senderCtl, targetCtl];
+  const ctl = await buildStage(stage, target, sender, type);
+  const local = [ctl];
   stageControllers = local;
 
-  // Sender entrance stays procedural; once it lands, the sender plays its
-  // skeletal animation. The target plays its skeletal animation a beat later.
-  const senderDone = senderCtl && senderCtl.play
-    ? senderCtl.play(entry.sender).then(() => (senderCtl.play ? senderCtl.play(entry.senderAnim) : Promise.resolve()))
-    : Promise.resolve();
-  const targetDone = new Promise((resolve) => {
-    window.setTimeout(() => resolve(targetCtl && targetCtl.play ? targetCtl.play(entry.targetAnim) : Promise.resolve()), PAUSE_BEFORE);
-  }).then((p) => p || Promise.resolve());
-
   try {
-    await Promise.all([senderDone, targetDone]);
+    await ctl.play(entry.choreography);
   } finally {
     // A newer playScene reassigns `stageControllers`, so a stale completion
     // never clears a fresh stage.
