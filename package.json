@@ -1,7 +1,7 @@
 {
   "name": "buddy-clone",
   "version": "1.0.0",
-  "description": "Buddy Poke era avatar, mood and interaction clone with original art",
+  "description": "Buddy Poke era avatar, mood and interaction clone",
   "type": "module",
   "private": true,
   "engines": {
